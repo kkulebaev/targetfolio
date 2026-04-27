@@ -29,7 +29,7 @@ const store = usePortfolioStore();
 const { source, instruments, positions, totalValue, instrumentsByTicker } = storeToRefs(store);
 
 onMounted(() => {
-  if (instruments.value.length === 0) store.loadFromMock();
+  if (source.value === "mock" && positions.value.length === 0) store.loadFromMock();
 });
 
 function onSourceChange(next: unknown) {
