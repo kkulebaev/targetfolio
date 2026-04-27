@@ -1,0 +1,31 @@
+{
+  "$schema": "https://raw.githubusercontent.com/oxc-project/oxc/main/npm/oxlint/configuration_schema.json",
+  "categories": {
+    "correctness": "error",
+    "suspicious": "warn"
+  },
+  "plugins": ["typescript", "import"],
+  "rules": {
+    "import/no-unassigned-import": "off",
+    "no-underscore-dangle": "off"
+  },
+  "ignorePatterns": ["dist", "coverage", "node_modules", "src/components/ui/**", "PRD.md"],
+  "overrides": [
+    {
+      "files": ["src/domain/**/*.ts"],
+      "rules": {
+        "no-restricted-imports": [
+          "error",
+          {
+            "patterns": [
+              {
+                "group": ["vue", "vue/*", "pinia", "pinia/*", "@/components/**", "@/stores/**"],
+                "message": "Domain layer must not import Vue, Pinia, or UI/store layers."
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
