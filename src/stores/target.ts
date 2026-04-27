@@ -1,18 +1,17 @@
 import { computed, ref } from "vue";
 import { defineStore } from "pinia";
 
-import portfolioFixture from "@/fixtures/portfolio.json";
 import { isWeightsValid, weightsTotal } from "@/domain/validation";
 import type { TargetWeight, Ticker } from "@/domain/types";
+import { getPreset, type PresetId } from "@/presets";
 
-type FixtureShape = {
-  targetWeights: TargetWeight[];
-};
+export type TargetMode = PresetId | "custom";
 
 export const useTargetStore = defineStore(
   "target",
   () => {
     const targetWeights = ref<TargetWeight[]>([]);
+    const currentPreset = ref<TargetMode>("custom");
 
     const total = computed(() => weightsTotal(targetWeights.value));
     const isValid = computed(() => isWeightsValid(targetWeights.value));
@@ -20,10 +19,12 @@ export const useTargetStore = defineStore(
     function addTicker(ticker: Ticker) {
       if (targetWeights.value.some((w) => w.ticker === ticker)) return;
       targetWeights.value.push({ ticker, weightPercent: 0 });
+      currentPreset.value = "custom";
     }
 
     function removeTicker(ticker: Ticker) {
       targetWeights.value = targetWeights.value.filter((w) => w.ticker !== ticker);
+      currentPreset.value = "custom";
     }
 
     function setWeight(ticker: Ticker, weightPercent: number) {
@@ -32,31 +33,36 @@ export const useTargetStore = defineStore(
       const current = targetWeights.value[idx];
       if (!current) return;
       targetWeights.value.splice(idx, 1, { ...current, weightPercent });
+      currentPreset.value = "custom";
     }
 
     function clear() {
       targetWeights.value = [];
+      currentPreset.value = "custom";
     }
 
-    function loadFromMock() {
-      const fixture = portfolioFixture as FixtureShape;
-      targetWeights.value = fixture.targetWeights.map((w) => ({ ...w }));
+    function applyPreset(id: PresetId) {
+      const preset = getPreset(id);
+      targetWeights.value = preset.weights.map((w) => ({ ...w }));
+      currentPreset.value = id;
     }
 
     return {
       targetWeights,
+      currentPreset,
       total,
       isValid,
       addTicker,
       removeTicker,
       setWeight,
       clear,
-      loadFromMock,
+      applyPreset,
     };
   },
   {
     persist: {
-      key: "targetfolio:target:v2",
+      key: "targetfolio:target:v3",
+      pick: ["targetWeights", "currentPreset"],
     },
   },
 );

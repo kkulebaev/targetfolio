@@ -8,6 +8,12 @@ describe("useTargetStore", () => {
     setActivePinia(createPinia());
   });
 
+  it("initial currentPreset is 'custom' on a fresh store", () => {
+    const store = useTargetStore();
+    expect(store.currentPreset).toBe("custom");
+    expect(store.targetWeights).toEqual([]);
+  });
+
   it("addTicker adds entry once and is idempotent", () => {
     const store = useTargetStore();
     store.addTicker("SBER");
@@ -37,10 +43,51 @@ describe("useTargetStore", () => {
     expect(store.targetWeights[0]!.ticker).toBe("GAZP");
   });
 
-  it("loadFromMock fills targetWeights summing to 100", () => {
+  it("applyPreset fills targetWeights summing to 100 and sets currentPreset", () => {
     const store = useTargetStore();
-    store.loadFromMock();
+    store.applyPreset("imoex");
     expect(store.targetWeights.length).toBeGreaterThan(0);
+    expect(store.isValid).toBe(true);
+    expect(store.currentPreset).toBe("imoex");
+  });
+
+  it("addTicker after applyPreset flips currentPreset to 'custom'", () => {
+    const store = useTargetStore();
+    store.applyPreset("imoex");
+    expect(store.currentPreset).toBe("imoex");
+    store.addTicker("FAKE");
+    expect(store.currentPreset).toBe("custom");
+  });
+
+  it("setWeight after applyPreset flips currentPreset to 'custom'", () => {
+    const store = useTargetStore();
+    store.applyPreset("imoex");
+    store.setWeight("SBER", 50);
+    expect(store.currentPreset).toBe("custom");
+  });
+
+  it("removeTicker after applyPreset flips currentPreset to 'custom'", () => {
+    const store = useTargetStore();
+    store.applyPreset("imoex");
+    store.removeTicker("SBER");
+    expect(store.currentPreset).toBe("custom");
+  });
+
+  it("clear flips currentPreset to 'custom'", () => {
+    const store = useTargetStore();
+    store.applyPreset("imoex");
+    store.clear();
+    expect(store.targetWeights).toEqual([]);
+    expect(store.currentPreset).toBe("custom");
+  });
+
+  it("re-applying a preset restores weights and resets mode to that preset", () => {
+    const store = useTargetStore();
+    store.applyPreset("imoex");
+    store.setWeight("SBER", 1);
+    expect(store.currentPreset).toBe("custom");
+    store.applyPreset("imoex");
+    expect(store.currentPreset).toBe("imoex");
     expect(store.isValid).toBe(true);
   });
 });

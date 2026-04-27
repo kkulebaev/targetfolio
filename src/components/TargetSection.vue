@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import { Plus, Trash2 } from "lucide-vue-next";
 import { storeToRefs } from "pinia";
 
@@ -8,6 +8,14 @@ import TablePagination from "./TablePagination.vue";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
@@ -15,6 +23,13 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import {
   Table,
   TableBody,
@@ -26,16 +41,17 @@ import {
 } from "@/components/ui/table";
 import { useTablePagination } from "@/composables/useTablePagination";
 import type { Instrument } from "@/domain/types";
+import { PRESET_LIST, PRESETS, type PresetId } from "@/presets";
 import { usePortfolioStore } from "@/stores/portfolio";
 import { useTargetStore } from "@/stores/target";
 
 const target = useTargetStore();
 const portfolio = usePortfolioStore();
-const { targetWeights, total, isValid } = storeToRefs(target);
+const { targetWeights, total, isValid, currentPreset } = storeToRefs(target);
 const { instruments, instrumentsByTicker } = storeToRefs(portfolio);
 
 onMounted(() => {
-  if (targetWeights.value.length === 0) target.loadFromMock();
+  if (targetWeights.value.length === 0) target.applyPreset("imoex");
 });
 
 const usedTickers = computed(() => new Set(targetWeights.value.map((w) => w.ticker)));
@@ -44,6 +60,35 @@ const availableInstruments = computed(() =>
 );
 
 const dialogOpen = ref(false);
+const confirmDialogOpen = ref(false);
+const pendingPresetId = ref<PresetId | null>(null);
+
+const currentPresetLabel = computed(() => {
+  if (currentPreset.value === "custom") return "Кастомный";
+  return PRESETS[currentPreset.value].name;
+});
+
+watch(confirmDialogOpen, (next) => {
+  if (!next) pendingPresetId.value = null;
+});
+
+function onPresetSelect(value: unknown) {
+  if (typeof value !== "string") return;
+  if (!(value in PRESETS)) return;
+  const presetId = value as PresetId;
+  if (currentPreset.value === presetId) return;
+  if (currentPreset.value === "custom" && targetWeights.value.length > 0) {
+    pendingPresetId.value = presetId;
+    confirmDialogOpen.value = true;
+    return;
+  }
+  target.applyPreset(presetId);
+}
+
+function confirmApplyPreset() {
+  if (pendingPresetId.value) target.applyPreset(pendingPresetId.value);
+  confirmDialogOpen.value = false;
+}
 
 const {
   pagedItems: pagedWeights,
@@ -78,30 +123,44 @@ function onInstrumentCreated(instrument: Instrument) {
 <template>
   <Card>
     <CardHeader>
-      <div class="flex items-center justify-between gap-4">
+      <div class="flex flex-wrap items-center justify-between gap-4">
         <div>
           <CardTitle>Целевой портфель</CardTitle>
           <CardDescription>Желаемое распределение весов в %</CardDescription>
         </div>
-        <DropdownMenu>
-          <DropdownMenuTrigger as-child>
-            <Button variant="outline"> <Plus class="size-4" /> Добавить тикер </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" class="max-h-72 overflow-y-auto">
-            <DropdownMenuItem
-              v-for="inst in availableInstruments"
-              :key="inst.ticker"
-              @select="target.addTicker(inst.ticker)"
-            >
-              <span class="font-medium">{{ inst.ticker }}</span>
-              <span class="text-muted-foreground ml-2 truncate">{{ inst.name }}</span>
-            </DropdownMenuItem>
-            <DropdownMenuSeparator v-if="availableInstruments.length > 0" />
-            <DropdownMenuItem @select="dialogOpen = true">
-              <Plus class="size-4" /> Новый инструмент
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <div class="flex items-center gap-2">
+          <Select :model-value="currentPreset" @update:model-value="onPresetSelect">
+            <SelectTrigger class="w-56">
+              <SelectValue>
+                <span>{{ currentPresetLabel }}</span>
+              </SelectValue>
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem v-for="preset in PRESET_LIST" :key="preset.id" :value="preset.id">
+                {{ preset.name }}
+              </SelectItem>
+            </SelectContent>
+          </Select>
+          <DropdownMenu>
+            <DropdownMenuTrigger as-child>
+              <Button variant="outline"> <Plus class="size-4" /> Добавить тикер </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" class="max-h-72 overflow-y-auto">
+              <DropdownMenuItem
+                v-for="inst in availableInstruments"
+                :key="inst.ticker"
+                @select="target.addTicker(inst.ticker)"
+              >
+                <span class="font-medium">{{ inst.ticker }}</span>
+                <span class="text-muted-foreground ml-2 truncate">{{ inst.name }}</span>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator v-if="availableInstruments.length > 0" />
+              <DropdownMenuItem @select="dialogOpen = true">
+                <Plus class="size-4" /> Новый инструмент
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
       </div>
     </CardHeader>
     <CardContent class="space-y-4">
@@ -166,4 +225,19 @@ function onInstrumentCreated(instrument: Instrument) {
     :existing-tickers="instruments.map((i) => i.ticker)"
     @created="onInstrumentCreated"
   />
+
+  <Dialog v-model:open="confirmDialogOpen">
+    <DialogContent>
+      <DialogHeader>
+        <DialogTitle>Применить пресет?</DialogTitle>
+        <DialogDescription>
+          Текущие веса будут перезаписаны. Это действие нельзя отменить.
+        </DialogDescription>
+      </DialogHeader>
+      <DialogFooter>
+        <Button variant="ghost" @click="confirmDialogOpen = false">Отмена</Button>
+        <Button @click="confirmApplyPreset">Применить</Button>
+      </DialogFooter>
+    </DialogContent>
+  </Dialog>
 </template>
