@@ -5,6 +5,7 @@ import { usePortfolioStore } from "./portfolio";
 
 describe("usePortfolioStore", () => {
   beforeEach(() => {
+    localStorage.clear();
     setActivePinia(createPinia());
   });
 
@@ -25,6 +26,7 @@ describe("usePortfolioStore", () => {
 
   it("totalValue sums quantity * price across catalog instruments", () => {
     const store = usePortfolioStore();
+    store.setSource("manual");
     store.upsertPosition({ ticker: "SBER", quantity: 10 });
     store.upsertPosition({ ticker: "GAZP", quantity: 20 });
     const sberPrice = store.instrumentsByTicker.get("SBER")!.price;
@@ -34,12 +36,14 @@ describe("usePortfolioStore", () => {
 
   it("upsertPosition rejects tickers outside the catalog", () => {
     const store = usePortfolioStore();
+    store.setSource("manual");
     store.upsertPosition({ ticker: "FAKE", quantity: 10 });
     expect(store.positions.find((p) => p.ticker === "FAKE")).toBeUndefined();
   });
 
   it("removePosition drops the entry", () => {
     const store = usePortfolioStore();
+    store.setSource("manual");
     store.upsertPosition({ ticker: "SBER", quantity: 10 });
     store.removePosition("SBER");
     expect(store.positions.find((p) => p.ticker === "SBER")).toBeUndefined();

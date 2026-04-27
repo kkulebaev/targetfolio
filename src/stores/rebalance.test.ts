@@ -7,6 +7,7 @@ import { useTargetStore } from "./target";
 
 describe("useRebalanceStore", () => {
   beforeEach(() => {
+    localStorage.clear();
     setActivePinia(createPinia());
   });
 

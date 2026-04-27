@@ -1,4 +1,4 @@
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
 import { defineStore } from "pinia";
 
 import { INSTRUMENTS, INSTRUMENTS_BY_TICKER } from "@/catalog/instruments";
@@ -12,11 +12,14 @@ import {
 } from "@/lib/tinkoff";
 import {
   clearSavedToken as clearSavedTokenFromStorage,
+  loadSavedSource,
   loadSavedToken,
+  saveSource,
   saveToken as saveTokenToStorage,
-} from "@/lib/tinkoff-storage";
+  type Source,
+} from "@/lib/portfolio-storage";
 
-export type Source = "mock" | "manual" | "tinkoff";
+export type { Source };
 export type TinkoffStatus = "idle" | "loading" | "success" | "error";
 
 type FixtureShape = {
@@ -24,9 +27,11 @@ type FixtureShape = {
 };
 
 export const usePortfolioStore = defineStore("portfolio", () => {
-  const source = ref<Source>("mock");
+  const source = ref<Source>(loadSavedSource() ?? "tinkoff");
   const localPositions = ref<Position[]>([]);
   const tinkoffPositions = ref<Position[]>([]);
+
+  watch(source, (next) => saveSource(next));
 
   const savedToken = loadSavedToken();
   const tinkoffToken = ref(savedToken ?? "");

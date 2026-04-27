@@ -56,11 +56,15 @@ const isXl = useIsXl();
 
 onMounted(() => {
   if (source.value === "mock" && positions.value.length === 0) store.loadFromMock();
+  if (source.value === "tinkoff" && tinkoffToken.value && tinkoffStatus.value === "idle") {
+    void store.loadFromTinkoff();
+  }
 });
 
 function onSourceChange(next: unknown) {
   if (next !== "mock" && next !== "manual" && next !== "tinkoff") return;
   store.setSource(next);
+  if (next === "mock" && positions.value.length === 0) store.loadFromMock();
   if (next === "tinkoff" && tinkoffToken.value && tinkoffStatus.value === "idle") {
     void store.loadFromTinkoff();
   }
