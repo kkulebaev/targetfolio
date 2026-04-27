@@ -37,6 +37,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { useIsXl } from "@/composables/useIsXl";
 import { useTablePagination } from "@/composables/useTablePagination";
 import { PRESET_LIST, PRESETS, type PresetId } from "@/presets";
 import { usePortfolioStore } from "@/stores/portfolio";
@@ -46,6 +47,7 @@ const target = useTargetStore();
 const portfolio = usePortfolioStore();
 const { targetWeights, total, isValid, currentPreset } = storeToRefs(target);
 const { instruments, instrumentsByTicker } = storeToRefs(portfolio);
+const isXl = useIsXl();
 
 onMounted(() => {
   if (targetWeights.value.length === 0) target.applyPreset("imoex");
@@ -118,7 +120,7 @@ function onAddTicker(ticker: string) {
 </script>
 
 <template>
-  <Card class="h-full">
+  <Card class="h-full min-h-0">
     <CardHeader>
       <div class="flex flex-wrap items-center justify-between gap-4">
         <div>
@@ -158,8 +160,8 @@ function onAddTicker(ticker: string) {
         </div>
       </div>
     </CardHeader>
-    <CardContent class="flex flex-1 flex-col gap-4">
-      <Table>
+    <CardContent class="flex min-h-0 flex-1 flex-col gap-4">
+      <Table class="min-h-0 flex-1">
         <TableHeader>
           <TableRow>
             <TableHead>Тикер</TableHead>
@@ -172,7 +174,11 @@ function onAddTicker(ticker: string) {
           <TableEmpty v-if="targetWeights.length === 0" :colspan="4">
             Добавьте позиции в целевой портфель
           </TableEmpty>
-          <TableRow v-for="weight in pagedWeights" :key="weight.ticker" class="h-12">
+          <TableRow
+            v-for="weight in isXl ? targetWeights : pagedWeights"
+            :key="weight.ticker"
+            class="h-12"
+          >
             <TableCell class="font-medium">{{ weight.ticker }}</TableCell>
             <TableCell>{{ instrumentsByTicker.get(weight.ticker)?.name ?? "—" }}</TableCell>
             <TableCell class="text-right">
@@ -201,6 +207,7 @@ function onAddTicker(ticker: string) {
       </Table>
 
       <TablePagination
+        v-if="!isXl"
         :page="currentPage"
         :page-size="pageSize"
         :total="totalItems"

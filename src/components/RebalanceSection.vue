@@ -14,6 +14,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { useIsXl } from "@/composables/useIsXl";
 import { useTablePagination } from "@/composables/useTablePagination";
 import type { BuyRecommendation } from "@/domain/types";
 import { usePortfolioStore } from "@/stores/portfolio";
@@ -23,6 +24,7 @@ const rebalance = useRebalanceStore();
 const portfolio = usePortfolioStore();
 const { state, cashAvailable } = storeToRefs(rebalance);
 const { instrumentsByTicker } = storeToRefs(portfolio);
+const isXl = useIsXl();
 
 const cashModel = computed({
   get: () => cashAvailable.value,
@@ -55,12 +57,12 @@ function formatRub(value: number): string {
 </script>
 
 <template>
-  <Card>
+  <Card class="h-full min-h-0">
     <CardHeader>
       <CardTitle>Рекомендации</CardTitle>
       <CardDescription>Что докупить, чтобы приблизиться к таргету</CardDescription>
     </CardHeader>
-    <CardContent class="space-y-4">
+    <CardContent class="flex min-h-0 flex-1 flex-col gap-4">
       <div class="grid max-w-sm gap-2">
         <Label for="cash">Свободно для покупки, ₽</Label>
         <Input
@@ -105,7 +107,7 @@ function formatRub(value: number): string {
         </p>
       </div>
       <template v-else>
-        <Table>
+        <Table class="min-h-0 flex-1">
           <TableHeader>
             <TableRow>
               <TableHead>Тикер</TableHead>
@@ -116,7 +118,10 @@ function formatRub(value: number): string {
             </TableRow>
           </TableHeader>
           <TableBody>
-            <TableRow v-for="rec in pagedRecommendations" :key="rec.ticker">
+            <TableRow
+              v-for="rec in isXl ? recommendations : pagedRecommendations"
+              :key="rec.ticker"
+            >
               <TableCell class="font-medium">{{ rec.ticker }}</TableCell>
               <TableCell>{{ instrumentsByTicker.get(rec.ticker)?.name ?? "—" }}</TableCell>
               <TableCell class="text-right">{{ rec.lotsToBuy }}</TableCell>
@@ -127,6 +132,7 @@ function formatRub(value: number): string {
         </Table>
 
         <TablePagination
+          v-if="!isXl"
           :page="currentPage"
           :page-size="pageSize"
           :total="totalItems"

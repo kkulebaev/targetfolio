@@ -23,12 +23,14 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { useIsXl } from "@/composables/useIsXl";
 import { useTablePagination } from "@/composables/useTablePagination";
 import { validatePosition } from "@/domain/validation";
 import { usePortfolioStore } from "@/stores/portfolio";
 
 const store = usePortfolioStore();
 const { source, instruments, positions, totalValue, instrumentsByTicker } = storeToRefs(store);
+const isXl = useIsXl();
 
 onMounted(() => {
   if (source.value === "mock" && positions.value.length === 0) store.loadFromMock();
@@ -97,7 +99,7 @@ function formatRub(value: number): string {
 </script>
 
 <template>
-  <Card class="h-full">
+  <Card class="h-full min-h-0">
     <CardHeader>
       <div class="flex items-center justify-between gap-4">
         <div>
@@ -117,8 +119,8 @@ function formatRub(value: number): string {
         </Select>
       </div>
     </CardHeader>
-    <CardContent class="flex flex-1 flex-col gap-4">
-      <Table>
+    <CardContent class="flex min-h-0 flex-1 flex-col gap-4">
+      <Table class="min-h-0 flex-1">
         <TableHeader>
           <TableRow>
             <TableHead>Тикер</TableHead>
@@ -134,7 +136,11 @@ function formatRub(value: number): string {
           <TableEmpty v-if="positions.length === 0" :colspan="source === 'manual' ? 7 : 6">
             Позиций нет
           </TableEmpty>
-          <TableRow v-for="position in pagedPositions" :key="position.ticker" class="h-12">
+          <TableRow
+            v-for="position in isXl ? positions : pagedPositions"
+            :key="position.ticker"
+            class="h-12"
+          >
             <TableCell class="font-medium">{{ position.ticker }}</TableCell>
             <TableCell>
               {{ instrumentsByTicker.get(position.ticker)?.name ?? "—" }}
@@ -182,6 +188,7 @@ function formatRub(value: number): string {
       </Table>
 
       <TablePagination
+        v-if="!isXl"
         :page="currentPage"
         :page-size="pageSize"
         :total="totalItems"

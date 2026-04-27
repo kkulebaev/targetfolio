@@ -9,7 +9,9 @@ import { Toaster } from "@/components/ui/sonner";
 </script>
 
 <template>
-  <div class="bg-background text-foreground min-h-screen">
+  <div
+    class="bg-background text-foreground flex min-h-screen flex-col xl:h-screen xl:min-h-0 xl:overflow-hidden"
+  >
     <header class="border-b">
       <div class="flex items-center justify-between p-4 md:p-6">
         <div class="flex items-center gap-2">
@@ -20,7 +22,9 @@ import { Toaster } from "@/components/ui/sonner";
       </div>
     </header>
 
-    <main class="grid grid-cols-1 gap-6 p-4 md:p-6 xl:grid-cols-2">
+    <main
+      class="grid grid-cols-1 gap-6 p-4 md:p-6 xl:min-h-0 xl:flex-1 xl:grid-cols-2 xl:grid-rows-[3fr_2fr]"
+    >
       <PortfolioSection />
       <TargetSection />
       <RebalanceSection class="xl:col-span-2" />
