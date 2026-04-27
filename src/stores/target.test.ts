@@ -51,12 +51,20 @@ describe("useTargetStore", () => {
     expect(store.currentPreset).toBe("imoex");
   });
 
-  it("addTicker after applyPreset flips currentPreset to 'custom'", () => {
+  it("addTicker rejects ticker outside the catalog", () => {
+    const store = useTargetStore();
+    store.addTicker("FAKE");
+    expect(store.targetWeights).toHaveLength(0);
+    expect(store.currentPreset).toBe("custom");
+  });
+
+  it("addTicker is a no-op for tickers already in targetWeights", () => {
     const store = useTargetStore();
     store.applyPreset("imoex");
+    const before = store.targetWeights.length;
+    store.addTicker("SBER");
+    expect(store.targetWeights.length).toBe(before);
     expect(store.currentPreset).toBe("imoex");
-    store.addTicker("FAKE");
-    expect(store.currentPreset).toBe("custom");
   });
 
   it("setWeight after applyPreset flips currentPreset to 'custom'", () => {

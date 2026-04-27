@@ -8,32 +8,40 @@ describe("usePortfolioStore", () => {
     setActivePinia(createPinia());
   });
 
-  it("loadFromMock fills instruments and positions from fixture", () => {
+  it("instruments and instrumentsByTicker are sourced from the catalog", () => {
     const store = usePortfolioStore();
-    store.loadFromMock();
     expect(store.instruments.length).toBeGreaterThan(0);
-    expect(store.positions.length).toBeGreaterThan(0);
-    expect(store.source).toBe("mock");
     const sber = store.instrumentsByTicker.get("SBER");
     expect(sber).toBeDefined();
     expect(sber!.lotSize).toBe(1);
   });
 
-  it("totalValue sums quantity * price across known instruments", () => {
+  it("loadFromMock fills positions from fixture", () => {
     const store = usePortfolioStore();
-    store.upsertInstrument({ ticker: "SBER", name: "Сбер", lotSize: 10, price: 300 });
-    store.upsertInstrument({ ticker: "GAZP", name: "Газпром", lotSize: 10, price: 150 });
-    store.upsertPosition({ ticker: "SBER", quantity: 10 });
-    store.upsertPosition({ ticker: "GAZP", quantity: 20 });
-    expect(store.totalValue).toBe(10 * 300 + 20 * 150);
+    store.loadFromMock();
+    expect(store.positions.length).toBeGreaterThan(0);
+    expect(store.source).toBe("mock");
   });
 
-  it("removeInstrument also drops matching positions", () => {
+  it("totalValue sums quantity * price across catalog instruments", () => {
     const store = usePortfolioStore();
-    store.upsertInstrument({ ticker: "SBER", name: "Сбер", lotSize: 10, price: 300 });
     store.upsertPosition({ ticker: "SBER", quantity: 10 });
-    store.removeInstrument("SBER");
-    expect(store.instruments.find((i) => i.ticker === "SBER")).toBeUndefined();
+    store.upsertPosition({ ticker: "GAZP", quantity: 20 });
+    const sberPrice = store.instrumentsByTicker.get("SBER")!.price;
+    const gazpPrice = store.instrumentsByTicker.get("GAZP")!.price;
+    expect(store.totalValue).toBe(10 * sberPrice + 20 * gazpPrice);
+  });
+
+  it("upsertPosition rejects tickers outside the catalog", () => {
+    const store = usePortfolioStore();
+    store.upsertPosition({ ticker: "FAKE", quantity: 10 });
+    expect(store.positions.find((p) => p.ticker === "FAKE")).toBeUndefined();
+  });
+
+  it("removePosition drops the entry", () => {
+    const store = usePortfolioStore();
+    store.upsertPosition({ ticker: "SBER", quantity: 10 });
+    store.removePosition("SBER");
     expect(store.positions.find((p) => p.ticker === "SBER")).toBeUndefined();
   });
 });

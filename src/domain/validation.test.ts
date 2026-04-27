@@ -2,50 +2,10 @@ import { describe, expect, it } from "vitest";
 
 import {
   isWeightsValid,
-  parsePersistedState,
-  validateInstrument,
   validatePosition,
   validateTargetWeight,
   weightsTotal,
 } from "./validation";
-
-describe("validateInstrument", () => {
-  it("accepts a valid instrument", () => {
-    const result = validateInstrument({ ticker: "SBER", name: "Сбер", lotSize: 10, price: 300 });
-    expect(result.ok).toBe(true);
-  });
-
-  it("rejects null and non-objects", () => {
-    expect(validateInstrument(null).ok).toBe(false);
-    expect(validateInstrument("foo").ok).toBe(false);
-    expect(validateInstrument(42).ok).toBe(false);
-  });
-
-  it("rejects empty or whitespace ticker", () => {
-    expect(validateInstrument({ ticker: "", name: "x", lotSize: 1, price: 1 }).ok).toBe(false);
-    expect(validateInstrument({ ticker: "   ", name: "x", lotSize: 1, price: 1 }).ok).toBe(false);
-  });
-
-  it("rejects non-integer lotSize", () => {
-    expect(validateInstrument({ ticker: "X", name: "x", lotSize: 1.5, price: 1 }).ok).toBe(false);
-  });
-
-  it("rejects lotSize < 1", () => {
-    expect(validateInstrument({ ticker: "X", name: "x", lotSize: 0, price: 1 }).ok).toBe(false);
-  });
-
-  it("rejects price <= 0", () => {
-    expect(validateInstrument({ ticker: "X", name: "x", lotSize: 1, price: 0 }).ok).toBe(false);
-    expect(validateInstrument({ ticker: "X", name: "x", lotSize: 1, price: -1 }).ok).toBe(false);
-  });
-
-  it("rejects non-finite price", () => {
-    expect(validateInstrument({ ticker: "X", name: "x", lotSize: 1, price: NaN }).ok).toBe(false);
-    expect(validateInstrument({ ticker: "X", name: "x", lotSize: 1, price: Infinity }).ok).toBe(
-      false,
-    );
-  });
-});
 
 describe("validatePosition", () => {
   it("accepts a valid position", () => {
@@ -124,69 +84,5 @@ describe("isWeightsValid", () => {
         { ticker: "B", weightPercent: 49.5 },
       ]),
     ).toBe(false);
-  });
-});
-
-describe("parsePersistedState", () => {
-  it("parses a valid payload", () => {
-    const raw = {
-      _schemaVersion: 1,
-      targetWeights: [{ ticker: "SBER", weightPercent: 60 }],
-      instruments: [{ ticker: "SBER", name: "Сбер", lotSize: 10, price: 300 }],
-    };
-    const result = parsePersistedState(raw);
-    expect(result).not.toBeNull();
-    expect(result!.targetWeights).toHaveLength(1);
-    expect(result!.instruments).toHaveLength(1);
-  });
-
-  it("returns null for null or non-object input", () => {
-    expect(parsePersistedState(null)).toBeNull();
-    expect(parsePersistedState(42)).toBeNull();
-    expect(parsePersistedState("foo")).toBeNull();
-  });
-
-  it("returns null for missing or wrong schema version", () => {
-    expect(parsePersistedState({ targetWeights: [], instruments: [] })).toBeNull();
-    expect(
-      parsePersistedState({ _schemaVersion: 2, targetWeights: [], instruments: [] }),
-    ).toBeNull();
-  });
-
-  it("returns null when targetWeights or instruments are not arrays", () => {
-    expect(
-      parsePersistedState({ _schemaVersion: 1, targetWeights: {}, instruments: [] }),
-    ).toBeNull();
-    expect(
-      parsePersistedState({ _schemaVersion: 1, targetWeights: [], instruments: {} }),
-    ).toBeNull();
-  });
-
-  it("returns null when any item fails validation", () => {
-    expect(
-      parsePersistedState({
-        _schemaVersion: 1,
-        targetWeights: [{ ticker: "SBER", weightPercent: 200 }],
-        instruments: [],
-      }),
-    ).toBeNull();
-    expect(
-      parsePersistedState({
-        _schemaVersion: 1,
-        targetWeights: [],
-        instruments: [{ ticker: "X", name: "x", lotSize: 0, price: 1 }],
-      }),
-    ).toBeNull();
-  });
-
-  it("accepts empty arrays", () => {
-    const result = parsePersistedState({
-      _schemaVersion: 1,
-      targetWeights: [],
-      instruments: [],
-    });
-    expect(result).not.toBeNull();
-    expect(result!.targetWeights).toEqual([]);
-    expect(result!.instruments).toEqual([]);
   });
 });

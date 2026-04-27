@@ -1,6 +1,7 @@
 import { computed, ref } from "vue";
 import { defineStore } from "pinia";
 
+import { INSTRUMENTS_BY_TICKER } from "@/catalog/instruments";
 import { isWeightsValid, weightsTotal } from "@/domain/validation";
 import type { TargetWeight, Ticker } from "@/domain/types";
 import { getPreset, type PresetId } from "@/presets";
@@ -17,8 +18,9 @@ export const useTargetStore = defineStore(
     const isValid = computed(() => isWeightsValid(targetWeights.value));
 
     function addTicker(ticker: Ticker) {
+      if (!INSTRUMENTS_BY_TICKER.has(ticker)) return;
       if (targetWeights.value.some((w) => w.ticker === ticker)) return;
-      targetWeights.value.push({ ticker, weightPercent: 0 });
+      targetWeights.value.unshift({ ticker, weightPercent: 0 });
       currentPreset.value = "custom";
     }
 

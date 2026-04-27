@@ -3,7 +3,6 @@ import { computed, onMounted, ref, watch } from "vue";
 import { Plus, Trash2 } from "lucide-vue-next";
 import { storeToRefs } from "pinia";
 
-import NewInstrumentDialog from "./NewInstrumentDialog.vue";
 import TablePagination from "./TablePagination.vue";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -19,7 +18,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
@@ -40,7 +38,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useTablePagination } from "@/composables/useTablePagination";
-import type { Instrument } from "@/domain/types";
 import { PRESET_LIST, PRESETS, type PresetId } from "@/presets";
 import { usePortfolioStore } from "@/stores/portfolio";
 import { useTargetStore } from "@/stores/target";
@@ -59,7 +56,6 @@ const availableInstruments = computed(() =>
   instruments.value.filter((i) => !usedTickers.value.has(i.ticker)),
 );
 
-const dialogOpen = ref(false);
 const confirmDialogOpen = ref(false);
 const pendingPresetId = ref<PresetId | null>(null);
 
@@ -114,9 +110,9 @@ function onWeightInput(ticker: string, raw: string) {
   target.setWeight(ticker, clamped);
 }
 
-function onInstrumentCreated(instrument: Instrument) {
-  portfolio.upsertInstrument(instrument);
-  target.addTicker(instrument.ticker);
+function onAddTicker(ticker: string) {
+  target.addTicker(ticker);
+  setPage(1);
 }
 </script>
 
@@ -143,20 +139,18 @@ function onInstrumentCreated(instrument: Instrument) {
           </Select>
           <DropdownMenu>
             <DropdownMenuTrigger as-child>
-              <Button variant="outline"> <Plus class="size-4" /> Добавить тикер </Button>
+              <Button variant="outline" :disabled="availableInstruments.length === 0">
+                <Plus class="size-4" /> Добавить
+              </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" class="max-h-72 overflow-y-auto">
               <DropdownMenuItem
                 v-for="inst in availableInstruments"
                 :key="inst.ticker"
-                @select="target.addTicker(inst.ticker)"
+                @select="onAddTicker(inst.ticker)"
               >
                 <span class="font-medium">{{ inst.ticker }}</span>
                 <span class="text-muted-foreground ml-2 truncate">{{ inst.name }}</span>
-              </DropdownMenuItem>
-              <DropdownMenuSeparator v-if="availableInstruments.length > 0" />
-              <DropdownMenuItem @select="dialogOpen = true">
-                <Plus class="size-4" /> Новый инструмент
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -219,12 +213,6 @@ function onInstrumentCreated(instrument: Instrument) {
       </div>
     </CardContent>
   </Card>
-
-  <NewInstrumentDialog
-    v-model:open="dialogOpen"
-    :existing-tickers="instruments.map((i) => i.ticker)"
-    @created="onInstrumentCreated"
-  />
 
   <Dialog v-model:open="confirmDialogOpen">
     <DialogContent>
