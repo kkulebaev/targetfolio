@@ -36,4 +36,11 @@ describe("useTargetStore", () => {
     expect(store.targetWeights).toHaveLength(1);
     expect(store.targetWeights[0]!.ticker).toBe("GAZP");
   });
+
+  it("loadFromMock fills targetWeights summing to 100", () => {
+    const store = useTargetStore();
+    store.loadFromMock();
+    expect(store.targetWeights.length).toBeGreaterThan(0);
+    expect(store.isValid).toBe(true);
+  });
 });

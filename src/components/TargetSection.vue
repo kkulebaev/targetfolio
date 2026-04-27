@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { Plus, Trash2 } from "lucide-vue-next";
 import { storeToRefs } from "pinia";
 
@@ -31,6 +31,10 @@ const target = useTargetStore();
 const portfolio = usePortfolioStore();
 const { targetWeights, total, isValid } = storeToRefs(target);
 const { instruments, instrumentsByTicker } = storeToRefs(portfolio);
+
+onMounted(() => {
+  if (targetWeights.value.length === 0) target.loadFromMock();
+});
 
 const usedTickers = computed(() => new Set(targetWeights.value.map((w) => w.ticker)));
 const availableInstruments = computed(() =>

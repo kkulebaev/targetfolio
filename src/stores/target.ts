@@ -1,8 +1,13 @@
 import { computed, ref } from "vue";
 import { defineStore } from "pinia";
 
+import portfolioFixture from "@/fixtures/portfolio.json";
 import { isWeightsValid, weightsTotal } from "@/domain/validation";
 import type { TargetWeight, Ticker } from "@/domain/types";
+
+type FixtureShape = {
+  targetWeights: TargetWeight[];
+};
 
 export const useTargetStore = defineStore(
   "target",
@@ -33,6 +38,11 @@ export const useTargetStore = defineStore(
       targetWeights.value = [];
     }
 
+    function loadFromMock() {
+      const fixture = portfolioFixture as FixtureShape;
+      targetWeights.value = fixture.targetWeights.map((w) => ({ ...w }));
+    }
+
     return {
       targetWeights,
       total,
@@ -41,11 +51,12 @@ export const useTargetStore = defineStore(
       removeTicker,
       setWeight,
       clear,
+      loadFromMock,
     };
   },
   {
     persist: {
-      key: "targetfolio:target:v1",
+      key: "targetfolio:target:v2",
     },
   },
 );
