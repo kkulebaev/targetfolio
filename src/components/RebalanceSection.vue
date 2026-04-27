@@ -2,6 +2,7 @@
 import { computed } from "vue";
 import { storeToRefs } from "pinia";
 
+import TablePagination from "./TablePagination.vue";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -13,6 +14,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { useTablePagination } from "@/composables/useTablePagination";
+import type { BuyRecommendation } from "@/domain/types";
 import { usePortfolioStore } from "@/stores/portfolio";
 import { useRebalanceStore } from "@/stores/rebalance";
 
@@ -24,6 +27,21 @@ const { instrumentsByTicker } = storeToRefs(portfolio);
 const cashModel = computed({
   get: () => cashAvailable.value,
   set: (next: number) => rebalance.setCash(Number.isFinite(next) ? next : 0),
+});
+
+const recommendations = computed<BuyRecommendation[]>(() =>
+  state.value.status === "ok" ? state.value.result.recommendations : [],
+);
+
+const {
+  pagedItems: pagedRecommendations,
+  currentPage,
+  pageSize,
+  totalItems,
+  setPage,
+  setPageSize,
+} = useTablePagination(recommendations, {
+  storageKey: "targetfolio:pagination:rebalance",
 });
 
 function formatRub(value: number): string {
@@ -97,7 +115,7 @@ function formatRub(value: number): string {
             </TableRow>
           </TableHeader>
           <TableBody>
-            <TableRow v-for="rec in state.result.recommendations" :key="rec.ticker">
+            <TableRow v-for="rec in pagedRecommendations" :key="rec.ticker">
               <TableCell class="font-medium">{{ rec.ticker }}</TableCell>
               <TableCell>{{ instrumentsByTicker.get(rec.ticker)?.name ?? "—" }}</TableCell>
               <TableCell class="text-right">{{ rec.lotsToBuy }}</TableCell>
@@ -106,6 +124,14 @@ function formatRub(value: number): string {
             </TableRow>
           </TableBody>
         </Table>
+
+        <TablePagination
+          :page="currentPage"
+          :page-size="pageSize"
+          :total="totalItems"
+          @update:page="setPage"
+          @update:page-size="setPageSize"
+        />
 
         <div class="flex items-center justify-between border-t pt-4">
           <span class="text-muted-foreground text-sm">Неиспользованный остаток</span>

@@ -3,6 +3,7 @@ import { computed, onMounted, ref } from "vue";
 import { Plus, Trash2 } from "lucide-vue-next";
 import { storeToRefs } from "pinia";
 
+import TablePagination from "./TablePagination.vue";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -22,6 +23,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { useTablePagination } from "@/composables/useTablePagination";
 import { validatePosition } from "@/domain/validation";
 import { usePortfolioStore } from "@/stores/portfolio";
 
@@ -35,6 +37,17 @@ onMounted(() => {
 function onSourceChange(next: unknown) {
   if (next === "mock" || next === "manual") store.setSource(next);
 }
+
+const {
+  pagedItems: pagedPositions,
+  currentPage,
+  pageSize,
+  totalItems,
+  setPage,
+  setPageSize,
+} = useTablePagination(positions, {
+  storageKey: "targetfolio:pagination:portfolio",
+});
 
 const newTicker = ref("");
 const newQuantity = ref<number | undefined>(undefined);
@@ -120,7 +133,7 @@ function formatRub(value: number): string {
           <TableEmpty v-if="positions.length === 0" :colspan="source === 'manual' ? 7 : 6">
             Позиций нет
           </TableEmpty>
-          <TableRow v-for="position in positions" :key="position.ticker">
+          <TableRow v-for="position in pagedPositions" :key="position.ticker">
             <TableCell class="font-medium">{{ position.ticker }}</TableCell>
             <TableCell>
               {{ instrumentsByTicker.get(position.ticker)?.name ?? "—" }}
@@ -166,6 +179,14 @@ function formatRub(value: number): string {
           </TableRow>
         </TableBody>
       </Table>
+
+      <TablePagination
+        :page="currentPage"
+        :page-size="pageSize"
+        :total="totalItems"
+        @update:page="setPage"
+        @update:page-size="setPageSize"
+      />
 
       <div v-if="source === 'manual'" class="border-t pt-4">
         <div class="flex flex-wrap items-end gap-3">
