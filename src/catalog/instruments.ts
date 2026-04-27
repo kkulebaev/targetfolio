@@ -1,7 +1,10 @@
 import type { Instrument, Ticker } from "@/domain/types";
+import figis from "./figis.json";
+
+const FIGI_BY_TICKER = figis as Record<string, string>;
 
 // Snapshot 2026-04-27. IMOEX index constituents (46 issuers). lotSize simplified to 1.
-export const INSTRUMENTS: Instrument[] = [
+const RAW_INSTRUMENTS: Omit<Instrument, "figi">[] = [
   { ticker: "AFKS", name: "АФК Система", lotSize: 1, price: 11.877 },
   { ticker: "AFLT", name: "Аэрофлот", lotSize: 1, price: 48.54 },
   { ticker: "ALRS", name: "Алроса", lotSize: 1, price: 29.12 },
@@ -49,6 +52,11 @@ export const INSTRUMENTS: Instrument[] = [
   { ticker: "X5", name: "X5", lotSize: 1, price: 2388.5 },
   { ticker: "YDEX", name: "Яндекс", lotSize: 1, price: 4165.5 },
 ];
+
+export const INSTRUMENTS: Instrument[] = RAW_INSTRUMENTS.map((i) => {
+  const figi = FIGI_BY_TICKER[i.ticker];
+  return figi ? { ...i, figi } : i;
+});
 
 export const INSTRUMENTS_BY_TICKER: ReadonlyMap<Ticker, Instrument> = new Map(
   INSTRUMENTS.map((i) => [i.ticker, i]),

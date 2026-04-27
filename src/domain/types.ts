@@ -5,6 +5,7 @@ export type Instrument = {
   name: string;
   lotSize: number;
   price: number;
+  figi?: string;
 };
 
 export type Position = {

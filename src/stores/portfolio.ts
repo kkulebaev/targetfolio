@@ -4,8 +4,15 @@ import { defineStore } from "pinia";
 import { INSTRUMENTS, INSTRUMENTS_BY_TICKER } from "@/catalog/instruments";
 import portfolioFixture from "@/fixtures/portfolio.json";
 import type { Position, Ticker } from "@/domain/types";
+import {
+  getAccounts,
+  getPortfolio,
+  quotationToNumber,
+  type TinkoffAccount,
+} from "@/lib/tinkoff";
 
-export type Source = "mock" | "manual";
+export type Source = "mock" | "manual" | "tinkoff";
+export type TinkoffStatus = "idle" | "loading" | "success" | "error";
 
 type FixtureShape = {
   positions: Position[];
@@ -13,7 +20,19 @@ type FixtureShape = {
 
 export const usePortfolioStore = defineStore("portfolio", () => {
   const source = ref<Source>("mock");
-  const positions = ref<Position[]>([]);
+  const localPositions = ref<Position[]>([]);
+  const tinkoffPositions = ref<Position[]>([]);
+
+  const tinkoffToken = ref("");
+  const tinkoffAccounts = ref<TinkoffAccount[]>([]);
+  const tinkoffAccountId = ref<string | null>(null);
+  const tinkoffStatus = ref<TinkoffStatus>("idle");
+  const tinkoffError = ref<string | null>(null);
+  const tinkoffSkippedCount = ref(0);
+
+  const positions = computed<Position[]>(() =>
+    source.value === "tinkoff" ? tinkoffPositions.value : localPositions.value,
+  );
 
   const instruments = computed(() => INSTRUMENTS);
   const instrumentsByTicker = computed(() => INSTRUMENTS_BY_TICKER);
@@ -30,7 +49,7 @@ export const usePortfolioStore = defineStore("portfolio", () => {
 
   function loadFromMock() {
     const fixture = portfolioFixture as FixtureShape;
-    positions.value = fixture.positions.map((p) => ({ ...p }));
+    localPositions.value = fixture.positions.map((p) => ({ ...p }));
     source.value = "mock";
   }
 
@@ -40,20 +59,85 @@ export const usePortfolioStore = defineStore("portfolio", () => {
 
   function upsertPosition(position: Position) {
     if (!INSTRUMENTS_BY_TICKER.has(position.ticker)) return;
-    const idx = positions.value.findIndex((p) => p.ticker === position.ticker);
+    const idx = localPositions.value.findIndex((p) => p.ticker === position.ticker);
     if (idx >= 0) {
-      positions.value.splice(idx, 1, position);
+      localPositions.value.splice(idx, 1, position);
     } else {
-      positions.value.push(position);
+      localPositions.value.push(position);
     }
   }
 
   function removePosition(ticker: Ticker) {
-    positions.value = positions.value.filter((p) => p.ticker !== ticker);
+    localPositions.value = localPositions.value.filter((p) => p.ticker !== ticker);
   }
 
   function clearManualPositions() {
-    positions.value = [];
+    localPositions.value = [];
+  }
+
+  function setTinkoffToken(token: string) {
+    tinkoffToken.value = token;
+  }
+
+  function resetTinkoff() {
+    tinkoffToken.value = "";
+    tinkoffAccounts.value = [];
+    tinkoffAccountId.value = null;
+    tinkoffPositions.value = [];
+    tinkoffStatus.value = "idle";
+    tinkoffError.value = null;
+    tinkoffSkippedCount.value = 0;
+  }
+
+  function setTinkoffAccountId(id: string) {
+    tinkoffAccountId.value = id;
+  }
+
+  async function loadFromTinkoff() {
+    const token = tinkoffToken.value.trim();
+    if (!token) {
+      tinkoffError.value = "Введите токен";
+      tinkoffStatus.value = "error";
+      return;
+    }
+    tinkoffStatus.value = "loading";
+    tinkoffError.value = null;
+    try {
+      if (tinkoffAccounts.value.length === 0) {
+        tinkoffAccounts.value = await getAccounts(token);
+      }
+      const accounts = tinkoffAccounts.value;
+      if (accounts.length === 0) throw new Error("В аккаунте нет счетов");
+      if (!tinkoffAccountId.value || !accounts.some((a) => a.id === tinkoffAccountId.value)) {
+        tinkoffAccountId.value = accounts[0]!.id;
+      }
+      const raw = await getPortfolio(token, tinkoffAccountId.value);
+
+      const figiToTicker = new Map<string, Ticker>();
+      for (const inst of INSTRUMENTS) {
+        if (inst.figi) figiToTicker.set(inst.figi, inst.ticker);
+      }
+
+      const matched: Position[] = [];
+      let skipped = 0;
+      for (const p of raw) {
+        const ticker = figiToTicker.get(p.figi);
+        if (!ticker) {
+          skipped += 1;
+          continue;
+        }
+        const qty = Math.round(quotationToNumber(p.quantity));
+        if (qty <= 0) continue;
+        matched.push({ ticker, quantity: qty });
+      }
+
+      tinkoffPositions.value = matched;
+      tinkoffSkippedCount.value = skipped;
+      tinkoffStatus.value = "success";
+    } catch (err) {
+      tinkoffError.value = err instanceof Error ? err.message : String(err);
+      tinkoffStatus.value = "error";
+    }
   }
 
   return {
@@ -62,10 +146,20 @@ export const usePortfolioStore = defineStore("portfolio", () => {
     positions,
     instrumentsByTicker,
     totalValue,
+    tinkoffToken,
+    tinkoffAccounts,
+    tinkoffAccountId,
+    tinkoffStatus,
+    tinkoffError,
+    tinkoffSkippedCount,
     loadFromMock,
     setSource,
     upsertPosition,
     removePosition,
     clearManualPositions,
+    setTinkoffToken,
+    setTinkoffAccountId,
+    resetTinkoff,
+    loadFromTinkoff,
   };
 });

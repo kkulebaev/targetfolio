@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from "vue";
-import { Plus, Trash2 } from "lucide-vue-next";
+import { computed, onMounted, ref, watch } from "vue";
+import { Plus, RefreshCw, Trash2 } from "lucide-vue-next";
 import { storeToRefs } from "pinia";
 
 import TablePagination from "./TablePagination.vue";
@@ -34,10 +34,23 @@ import {
 import { useIsXl } from "@/composables/useIsXl";
 import { useTablePagination } from "@/composables/useTablePagination";
 import { validatePosition } from "@/domain/validation";
+import type { TinkoffAccount } from "@/lib/tinkoff";
 import { usePortfolioStore } from "@/stores/portfolio";
 
 const store = usePortfolioStore();
-const { source, instruments, positions, totalValue, instrumentsByTicker } = storeToRefs(store);
+const {
+  source,
+  instruments,
+  positions,
+  totalValue,
+  instrumentsByTicker,
+  tinkoffToken,
+  tinkoffAccounts,
+  tinkoffAccountId,
+  tinkoffStatus,
+  tinkoffError,
+  tinkoffSkippedCount,
+} = storeToRefs(store);
 const isXl = useIsXl();
 
 onMounted(() => {
@@ -45,8 +58,69 @@ onMounted(() => {
 });
 
 function onSourceChange(next: unknown) {
-  if (next === "mock" || next === "manual") store.setSource(next);
+  if (next !== "mock" && next !== "manual" && next !== "tinkoff") return;
+  store.setSource(next);
+  if (next === "tinkoff" && tinkoffToken.value && tinkoffStatus.value === "idle") {
+    void store.loadFromTinkoff();
+  }
 }
+
+const tokenInput = ref("");
+const showTokenForm = ref(true);
+
+const isTinkoff = computed(() => source.value === "tinkoff");
+const needsTokenForm = computed(() => isTinkoff.value && showTokenForm.value);
+
+watch(tinkoffStatus, (status) => {
+  if (status === "success") showTokenForm.value = false;
+});
+
+function onLoadTinkoff() {
+  if (!tokenInput.value.trim()) return;
+  store.setTinkoffToken(tokenInput.value.trim());
+  void store.loadFromTinkoff();
+}
+
+function onChangeToken() {
+  tokenInput.value = "";
+  showTokenForm.value = true;
+}
+
+function onCancelChangeToken() {
+  tokenInput.value = "";
+  showTokenForm.value = false;
+}
+
+function onRefreshTinkoff() {
+  void store.loadFromTinkoff();
+}
+
+function onTinkoffAccountChange(id: unknown) {
+  if (typeof id !== "string") return;
+  store.setTinkoffAccountId(id);
+  void store.loadFromTinkoff();
+}
+
+function accountLabel(a: TinkoffAccount): string {
+  return a.name || a.id;
+}
+
+const sourceLabel = computed(() => {
+  if (source.value === "mock") return "демо";
+  if (source.value === "tinkoff") return "Тинькофф";
+  return "ручной ввод";
+});
+
+const emptyText = computed(() => {
+  if (isTinkoff.value) {
+    if (tinkoffStatus.value === "loading") return "Загрузка…";
+    if (tinkoffStatus.value === "idle") return "Введите токен Тинькофф и нажмите «Загрузить»";
+    if (tinkoffStatus.value === "error") return "Не удалось загрузить портфель";
+  }
+  return "Позиций нет";
+});
+
+const colspan = computed(() => (source.value === "manual" ? 7 : 6));
 
 const {
   pagedItems: pagedPositions,
@@ -116,14 +190,27 @@ function formatRub(value: number): string {
 <template>
   <Card class="h-full min-h-0">
     <CardHeader>
-      <div class="flex items-center justify-between gap-4">
+      <div class="flex flex-wrap items-center justify-between gap-4">
         <div>
           <CardTitle>Текущий портфель</CardTitle>
-          <CardDescription
-            >Источник данных: {{ source === "mock" ? "демо" : "ручной ввод" }}</CardDescription
-          >
+          <CardDescription>Источник данных: {{ sourceLabel }}</CardDescription>
         </div>
-        <div class="flex items-center gap-2">
+        <div class="flex flex-wrap items-center gap-2">
+          <Select
+            v-if="isTinkoff && tinkoffAccounts.length > 1"
+            :model-value="tinkoffAccountId ?? undefined"
+            :disabled="tinkoffStatus === 'loading'"
+            @update:model-value="onTinkoffAccountChange"
+          >
+            <SelectTrigger class="w-56">
+              <SelectValue placeholder="Счёт" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem v-for="acc in tinkoffAccounts" :key="acc.id" :value="acc.id">
+                {{ accountLabel(acc) }}
+              </SelectItem>
+            </SelectContent>
+          </Select>
           <Select :model-value="source" @update:model-value="onSourceChange">
             <SelectTrigger class="w-44">
               <SelectValue />
@@ -131,8 +218,22 @@ function formatRub(value: number): string {
             <SelectContent>
               <SelectItem value="mock">Демо</SelectItem>
               <SelectItem value="manual">Ручной ввод</SelectItem>
+              <SelectItem value="tinkoff">Тинькофф</SelectItem>
             </SelectContent>
           </Select>
+          <Button
+            v-if="isTinkoff && tinkoffToken && !showTokenForm"
+            variant="ghost"
+            size="icon-sm"
+            aria-label="Обновить портфель"
+            :disabled="tinkoffStatus === 'loading'"
+            @click="onRefreshTinkoff"
+          >
+            <RefreshCw
+              class="size-4"
+              :class="{ 'animate-spin': tinkoffStatus === 'loading' }"
+            />
+          </Button>
           <Button
             v-if="source === 'manual'"
             variant="ghost"
@@ -147,7 +248,45 @@ function formatRub(value: number): string {
       </div>
     </CardHeader>
     <CardContent class="flex min-h-0 flex-1 flex-col gap-4">
-      <Table class="min-h-0 flex-1">
+      <div v-if="isTinkoff && needsTokenForm" class="flex flex-wrap items-end gap-3">
+        <div class="grid min-w-64 flex-1 gap-2">
+          <label class="text-sm font-medium">Токен Тинькофф (read-only)</label>
+          <Input
+            v-model="tokenInput"
+            type="password"
+            placeholder="t.xxx…"
+            autocomplete="off"
+            @keydown.enter="onLoadTinkoff"
+          />
+        </div>
+        <Button :disabled="!tokenInput.trim() || tinkoffStatus === 'loading'" @click="onLoadTinkoff">
+          {{ tinkoffStatus === "loading" ? "Загрузка…" : "Загрузить" }}
+        </Button>
+        <Button v-if="tinkoffStatus === 'success'" variant="ghost" @click="onCancelChangeToken">
+          Отмена
+        </Button>
+      </div>
+
+      <div
+        v-else-if="isTinkoff && tinkoffToken"
+        class="text-muted-foreground flex items-center gap-2 text-sm"
+      >
+        <span>Токен задан</span>
+        <Button variant="ghost" size="sm" @click="onChangeToken">Изменить</Button>
+      </div>
+
+      <p
+        v-if="isTinkoff && tinkoffStatus === 'error' && tinkoffError"
+        class="text-destructive bg-destructive/5 border-destructive/30 flex items-start justify-between gap-3 rounded-md border p-3 text-sm"
+      >
+        <span>{{ tinkoffError }}</span>
+        <Button size="sm" variant="ghost" @click="onRefreshTinkoff">Повторить</Button>
+      </p>
+
+      <Table
+        class="min-h-0 flex-1 transition-opacity"
+        :class="{ 'opacity-60': isTinkoff && tinkoffStatus === 'loading' }"
+      >
         <TableHeader>
           <TableRow>
             <TableHead>Тикер</TableHead>
@@ -160,8 +299,8 @@ function formatRub(value: number): string {
           </TableRow>
         </TableHeader>
         <TableBody>
-          <TableEmpty v-if="positions.length === 0" :colspan="source === 'manual' ? 7 : 6">
-            Позиций нет
+          <TableEmpty v-if="positions.length === 0" :colspan="colspan">
+            {{ emptyText }}
           </TableEmpty>
           <TableRow
             v-for="position in isXl ? positions : pagedPositions"
@@ -213,6 +352,13 @@ function formatRub(value: number): string {
           </TableRow>
         </TableBody>
       </Table>
+
+      <p
+        v-if="isTinkoff && tinkoffSkippedCount > 0"
+        class="text-muted-foreground text-sm"
+      >
+        Не показано {{ tinkoffSkippedCount }} позиций вне списка MOEX shares.
+      </p>
 
       <TablePagination
         v-if="!isXl"
