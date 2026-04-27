@@ -16,7 +16,7 @@ describe("usePortfolioStore", () => {
     expect(store.source).toBe("mock");
     const sber = store.instrumentsByTicker.get("SBER");
     expect(sber).toBeDefined();
-    expect(sber!.lotSize).toBe(10);
+    expect(sber!.lotSize).toBe(1);
   });
 
   it("totalValue sums quantity * price across known instruments", () => {

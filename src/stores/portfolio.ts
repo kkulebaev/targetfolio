@@ -96,7 +96,7 @@ export const usePortfolioStore = defineStore(
   },
   {
     persist: {
-      key: "targetfolio:portfolio:v1",
+      key: "targetfolio:portfolio:v2",
       pick: ["instruments"],
     },
   },
