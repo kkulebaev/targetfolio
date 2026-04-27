@@ -45,6 +45,7 @@ const {
   totalValue,
   instrumentsByTicker,
   tinkoffToken,
+  tinkoffTokenSaved,
   tinkoffAccounts,
   tinkoffAccountId,
   tinkoffStatus,
@@ -66,7 +67,7 @@ function onSourceChange(next: unknown) {
 }
 
 const tokenInput = ref("");
-const showTokenForm = ref(true);
+const showTokenForm = ref(!tinkoffToken.value);
 
 const isTinkoff = computed(() => source.value === "tinkoff");
 const needsTokenForm = computed(() => isTinkoff.value && showTokenForm.value);
@@ -82,8 +83,17 @@ function onLoadTinkoff() {
 }
 
 function onChangeToken() {
+  if (tinkoffTokenSaved.value) store.clearSavedTinkoffToken();
   tokenInput.value = "";
   showTokenForm.value = true;
+}
+
+function onSaveToken() {
+  store.saveTinkoffToken();
+}
+
+function onDeleteSavedToken() {
+  store.clearSavedTinkoffToken();
 }
 
 function onCancelChangeToken() {
@@ -271,8 +281,24 @@ function formatRub(value: number): string {
         v-else-if="isTinkoff && tinkoffToken"
         class="text-muted-foreground flex items-center gap-2 text-sm"
       >
-        <span>Токен задан</span>
+        <span>{{ tinkoffTokenSaved ? "Токен сохранён в браузере" : "Токен задан" }}</span>
         <Button variant="ghost" size="sm" @click="onChangeToken">Изменить</Button>
+        <Button
+          v-if="tinkoffStatus === 'success' && !tinkoffTokenSaved"
+          variant="ghost"
+          size="sm"
+          @click="onSaveToken"
+        >
+          Сохранить
+        </Button>
+        <Button
+          v-if="tinkoffTokenSaved"
+          variant="ghost"
+          size="sm"
+          @click="onDeleteSavedToken"
+        >
+          Удалить сохранённый
+        </Button>
       </div>
 
       <p

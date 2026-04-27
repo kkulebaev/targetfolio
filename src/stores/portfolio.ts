@@ -10,6 +10,11 @@ import {
   quotationToNumber,
   type TinkoffAccount,
 } from "@/lib/tinkoff";
+import {
+  clearSavedToken as clearSavedTokenFromStorage,
+  loadSavedToken,
+  saveToken as saveTokenToStorage,
+} from "@/lib/tinkoff-storage";
 
 export type Source = "mock" | "manual" | "tinkoff";
 export type TinkoffStatus = "idle" | "loading" | "success" | "error";
@@ -23,7 +28,9 @@ export const usePortfolioStore = defineStore("portfolio", () => {
   const localPositions = ref<Position[]>([]);
   const tinkoffPositions = ref<Position[]>([]);
 
-  const tinkoffToken = ref("");
+  const savedToken = loadSavedToken();
+  const tinkoffToken = ref(savedToken ?? "");
+  const tinkoffTokenSaved = ref(savedToken !== null);
   const tinkoffAccounts = ref<TinkoffAccount[]>([]);
   const tinkoffAccountId = ref<string | null>(null);
   const tinkoffStatus = ref<TinkoffStatus>("idle");
@@ -79,8 +86,22 @@ export const usePortfolioStore = defineStore("portfolio", () => {
     tinkoffToken.value = token;
   }
 
+  function saveTinkoffToken() {
+    const token = tinkoffToken.value.trim();
+    if (!token) return;
+    saveTokenToStorage(token);
+    tinkoffTokenSaved.value = true;
+  }
+
+  function clearSavedTinkoffToken() {
+    clearSavedTokenFromStorage();
+    tinkoffTokenSaved.value = false;
+  }
+
   function resetTinkoff() {
+    clearSavedTokenFromStorage();
     tinkoffToken.value = "";
+    tinkoffTokenSaved.value = false;
     tinkoffAccounts.value = [];
     tinkoffAccountId.value = null;
     tinkoffPositions.value = [];
@@ -147,6 +168,7 @@ export const usePortfolioStore = defineStore("portfolio", () => {
     instrumentsByTicker,
     totalValue,
     tinkoffToken,
+    tinkoffTokenSaved,
     tinkoffAccounts,
     tinkoffAccountId,
     tinkoffStatus,
@@ -158,6 +180,8 @@ export const usePortfolioStore = defineStore("portfolio", () => {
     removePosition,
     clearManualPositions,
     setTinkoffToken,
+    saveTinkoffToken,
+    clearSavedTinkoffToken,
     setTinkoffAccountId,
     resetTinkoff,
     loadFromTinkoff,
