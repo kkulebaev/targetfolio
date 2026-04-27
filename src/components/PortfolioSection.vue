@@ -6,6 +6,14 @@ import { storeToRefs } from "pinia";
 import TablePagination from "./TablePagination.vue";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -55,6 +63,7 @@ pageSize.value = 10;
 const newTicker = ref("");
 const newQuantity = ref<number | undefined>(undefined);
 const addError = ref<string | null>(null);
+const clearDialogOpen = ref(false);
 
 const availableInstrumentsForAdd = computed(() => {
   const usedTickers = new Set(positions.value.map((p) => p.ticker));
@@ -89,6 +98,12 @@ function updateQuantity(ticker: string, raw: string) {
   store.upsertPosition({ ticker, quantity: num });
 }
 
+function confirmClear() {
+  store.clearManualPositions();
+  setPage(1);
+  clearDialogOpen.value = false;
+}
+
 function formatRub(value: number): string {
   return new Intl.NumberFormat("ru-RU", {
     style: "currency",
@@ -108,15 +123,27 @@ function formatRub(value: number): string {
             >Источник данных: {{ source === "mock" ? "демо" : "ручной ввод" }}</CardDescription
           >
         </div>
-        <Select :model-value="source" @update:model-value="onSourceChange">
-          <SelectTrigger class="w-44">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="mock">Демо</SelectItem>
-            <SelectItem value="manual">Ручной ввод</SelectItem>
-          </SelectContent>
-        </Select>
+        <div class="flex items-center gap-2">
+          <Select :model-value="source" @update:model-value="onSourceChange">
+            <SelectTrigger class="w-44">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="mock">Демо</SelectItem>
+              <SelectItem value="manual">Ручной ввод</SelectItem>
+            </SelectContent>
+          </Select>
+          <Button
+            v-if="source === 'manual'"
+            variant="ghost"
+            size="icon-sm"
+            aria-label="Очистить портфель"
+            :disabled="positions.length === 0"
+            @click="clearDialogOpen = true"
+          >
+            <Trash2 class="size-4" />
+          </Button>
+        </div>
       </div>
     </CardHeader>
     <CardContent class="flex min-h-0 flex-1 flex-col gap-4">
@@ -238,4 +265,19 @@ function formatRub(value: number): string {
       </div>
     </CardContent>
   </Card>
+
+  <Dialog v-model:open="clearDialogOpen">
+    <DialogContent>
+      <DialogHeader>
+        <DialogTitle>Очистить портфель?</DialogTitle>
+        <DialogDescription>
+          Все позиции будут удалены. Это действие нельзя отменить.
+        </DialogDescription>
+      </DialogHeader>
+      <DialogFooter>
+        <Button variant="ghost" @click="clearDialogOpen = false">Отмена</Button>
+        <Button variant="destructive" @click="confirmClear">Очистить</Button>
+      </DialogFooter>
+    </DialogContent>
+  </Dialog>
 </template>

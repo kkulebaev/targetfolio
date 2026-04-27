@@ -41,7 +41,7 @@ import { useIsXl } from "@/composables/useIsXl";
 import { useTablePagination } from "@/composables/useTablePagination";
 import { PRESET_LIST, PRESETS, type PresetId } from "@/presets";
 import { usePortfolioStore } from "@/stores/portfolio";
-import { useTargetStore } from "@/stores/target";
+import { TARGET_STORAGE_KEY, useTargetStore } from "@/stores/target";
 
 const target = useTargetStore();
 const portfolio = usePortfolioStore();
@@ -50,7 +50,7 @@ const { instruments, instrumentsByTicker } = storeToRefs(portfolio);
 const isXl = useIsXl();
 
 onMounted(() => {
-  if (targetWeights.value.length === 0) target.applyPreset("imoex");
+  if (localStorage.getItem(TARGET_STORAGE_KEY) === null) target.applyPreset("imoex");
 });
 
 const usedTickers = computed(() => new Set(targetWeights.value.map((w) => w.ticker)));
@@ -60,6 +60,7 @@ const availableInstruments = computed(() =>
 
 const confirmDialogOpen = ref(false);
 const pendingPresetId = ref<PresetId | null>(null);
+const clearDialogOpen = ref(false);
 
 const currentPresetLabel = computed(() => {
   if (currentPreset.value === "custom") return "Кастомный";
@@ -117,6 +118,12 @@ function onAddTicker(ticker: string) {
   target.addTicker(ticker);
   setPage(1);
 }
+
+function confirmClear() {
+  target.clear();
+  setPage(1);
+  clearDialogOpen.value = false;
+}
 </script>
 
 <template>
@@ -157,6 +164,15 @@ function onAddTicker(ticker: string) {
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
+          <Button
+            variant="ghost"
+            size="icon-sm"
+            aria-label="Очистить целевой портфель"
+            :disabled="targetWeights.length === 0"
+            @click="clearDialogOpen = true"
+          >
+            <Trash2 class="size-4" />
+          </Button>
         </div>
       </div>
     </CardHeader>
@@ -232,6 +248,21 @@ function onAddTicker(ticker: string) {
       <DialogFooter>
         <Button variant="ghost" @click="confirmDialogOpen = false">Отмена</Button>
         <Button @click="confirmApplyPreset">Применить</Button>
+      </DialogFooter>
+    </DialogContent>
+  </Dialog>
+
+  <Dialog v-model:open="clearDialogOpen">
+    <DialogContent>
+      <DialogHeader>
+        <DialogTitle>Очистить целевой портфель?</DialogTitle>
+        <DialogDescription>
+          Все веса будут удалены и сбросится выбранный пресет. Это действие нельзя отменить.
+        </DialogDescription>
+      </DialogHeader>
+      <DialogFooter>
+        <Button variant="ghost" @click="clearDialogOpen = false">Отмена</Button>
+        <Button variant="destructive" @click="confirmClear">Очистить</Button>
       </DialogFooter>
     </DialogContent>
   </Dialog>

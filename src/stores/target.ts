@@ -8,6 +8,8 @@ import { getPreset, type PresetId } from "@/presets";
 
 export type TargetMode = PresetId | "custom";
 
+export const TARGET_STORAGE_KEY = "targetfolio:target:v3";
+
 export const useTargetStore = defineStore(
   "target",
   () => {
@@ -63,7 +65,7 @@ export const useTargetStore = defineStore(
   },
   {
     persist: {
-      key: "targetfolio:target:v3",
+      key: TARGET_STORAGE_KEY,
       pick: ["targetWeights", "currentPreset"],
     },
   },
