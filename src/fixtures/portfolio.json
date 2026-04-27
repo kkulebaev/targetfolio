@@ -1,0 +1,22 @@
+{
+  "_snapshotDate": "2026-04-27",
+  "_note": "Snapshot prices, illustrative only. Update when needed.",
+  "instruments": [
+    { "ticker": "SBER", "name": "Сбербанк ао", "lotSize": 10, "price": 318.5 },
+    { "ticker": "GAZP", "name": "Газпром", "lotSize": 10, "price": 135.2 },
+    { "ticker": "LKOH", "name": "Лукойл", "lotSize": 1, "price": 7415 },
+    { "ticker": "YDEX", "name": "Яндекс", "lotSize": 1, "price": 4280 },
+    { "ticker": "TMOS", "name": "Тинькофф МосБиржа БПИФ", "lotSize": 1, "price": 7.52 },
+    { "ticker": "TGLD", "name": "Тинькофф Золото БПИФ", "lotSize": 1, "price": 12.4 },
+    { "ticker": "LQDT", "name": "ВТБ Ликвидность БПИФ", "lotSize": 10, "price": 1.46 }
+  ],
+  "positions": [
+    { "ticker": "SBER", "quantity": 100 },
+    { "ticker": "GAZP", "quantity": 100 },
+    { "ticker": "LKOH", "quantity": 5 },
+    { "ticker": "YDEX", "quantity": 4 },
+    { "ticker": "TMOS", "quantity": 200 },
+    { "ticker": "TGLD", "quantity": 500 },
+    { "ticker": "LQDT", "quantity": 100 }
+  ]
+}
