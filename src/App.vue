@@ -9,16 +9,16 @@ import { Toaster } from "@/components/ui/sonner";
 <template>
   <div class="bg-background text-foreground min-h-screen">
     <header class="border-b">
-      <div class="mx-auto flex max-w-6xl items-center justify-between p-6">
+      <div class="flex items-center justify-between p-4 md:p-6">
         <h1 class="text-xl font-semibold tracking-tight">Targetfolio</h1>
         <ThemeToggle />
       </div>
     </header>
 
-    <main class="mx-auto grid max-w-6xl gap-6 p-6">
+    <main class="grid grid-cols-1 gap-6 p-4 md:p-6 xl:grid-cols-2">
       <PortfolioSection />
       <TargetSection />
-      <RebalanceSection />
+      <RebalanceSection class="xl:col-span-2" />
     </main>
 
     <Toaster rich-colors position="top-right" />

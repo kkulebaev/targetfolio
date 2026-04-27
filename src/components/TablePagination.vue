@@ -11,58 +11,28 @@ import {
 } from "reka-ui";
 
 import { Button } from "@/components/ui/button";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { PAGE_SIZE_ALL } from "@/composables/useTablePagination";
 
 type Props = {
   page: number;
   pageSize: number;
   total: number;
-  pageSizeOptions?: number[];
 };
 
-const props = withDefaults(defineProps<Props>(), {
-  pageSizeOptions: () => [10, 25, 50],
-});
+const props = defineProps<Props>();
 
 const emit = defineEmits<{
   "update:page": [value: number];
-  "update:pageSize": [value: number];
 }>();
 
-const isAll = computed(() => props.pageSize === PAGE_SIZE_ALL);
+const isVisible = computed(() => props.total > 0);
 
-const minOption = computed(() => Math.min(...props.pageSizeOptions));
-
-const isVisible = computed(() => {
-  if (props.total === 0) return false;
-  if (props.total <= minOption.value && !isAll.value && props.pageSize >= props.total) {
-    return false;
-  }
-  return true;
-});
-
-const showNav = computed(() => !isAll.value && props.total > props.pageSize);
+const showNav = computed(() => props.total > props.pageSize);
 
 const range = computed(() => {
   if (props.total === 0) return { from: 0, to: 0 };
-  if (isAll.value) return { from: 1, to: props.total };
   const from = (props.page - 1) * props.pageSize + 1;
   const to = Math.min(from + props.pageSize - 1, props.total);
   return { from, to };
-});
-
-const itemsPerPage = computed(() => (isAll.value ? Math.max(props.total, 1) : props.pageSize));
-
-const sizeModel = computed({
-  get: () => String(props.pageSize),
-  set: (value: string) => emit("update:pageSize", Number(value)),
 });
 
 function onPageChange(value: number) {
@@ -75,25 +45,12 @@ function onPageChange(value: number) {
     v-if="isVisible"
     class="text-muted-foreground flex flex-wrap items-center justify-between gap-3 pt-2 text-sm"
   >
-    <div class="flex items-center gap-3">
-      <span>{{ range.from }}–{{ range.to }} из {{ total }}</span>
-      <Select v-model="sizeModel">
-        <SelectTrigger class="h-8 w-20">
-          <SelectValue />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem v-for="opt in pageSizeOptions" :key="opt" :value="String(opt)">
-            {{ opt }}
-          </SelectItem>
-          <SelectItem :value="String(PAGE_SIZE_ALL)">Все</SelectItem>
-        </SelectContent>
-      </Select>
-    </div>
+    <span>{{ range.from }}–{{ range.to }} из {{ total }}</span>
 
     <PaginationRoot
       v-if="showNav"
       :page="page"
-      :items-per-page="itemsPerPage"
+      :items-per-page="pageSize"
       :total="total"
       :sibling-count="1"
       show-edges

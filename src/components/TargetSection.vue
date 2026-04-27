@@ -92,10 +92,11 @@ const {
   pageSize,
   totalItems,
   setPage,
-  setPageSize,
 } = useTablePagination(targetWeights, {
   storageKey: "targetfolio:pagination:target",
 });
+
+pageSize.value = 10;
 
 const totalColor = computed(() => {
   if (isValid.value) return "text-emerald-600 dark:text-emerald-400";
@@ -117,7 +118,7 @@ function onAddTicker(ticker: string) {
 </script>
 
 <template>
-  <Card>
+  <Card class="h-full">
     <CardHeader>
       <div class="flex flex-wrap items-center justify-between gap-4">
         <div>
@@ -157,7 +158,7 @@ function onAddTicker(ticker: string) {
         </div>
       </div>
     </CardHeader>
-    <CardContent class="space-y-4">
+    <CardContent class="flex flex-1 flex-col gap-4">
       <Table>
         <TableHeader>
           <TableRow>
@@ -171,7 +172,7 @@ function onAddTicker(ticker: string) {
           <TableEmpty v-if="targetWeights.length === 0" :colspan="4">
             Добавьте позиции в целевой портфель
           </TableEmpty>
-          <TableRow v-for="weight in pagedWeights" :key="weight.ticker">
+          <TableRow v-for="weight in pagedWeights" :key="weight.ticker" class="h-12">
             <TableCell class="font-medium">{{ weight.ticker }}</TableCell>
             <TableCell>{{ instrumentsByTicker.get(weight.ticker)?.name ?? "—" }}</TableCell>
             <TableCell class="text-right">
@@ -204,10 +205,9 @@ function onAddTicker(ticker: string) {
         :page-size="pageSize"
         :total="totalItems"
         @update:page="setPage"
-        @update:page-size="setPageSize"
       />
 
-      <div class="flex items-center justify-between border-t pt-4">
+      <div class="mt-auto flex items-center justify-between border-t pt-4">
         <span class="text-muted-foreground text-sm">Сумма весов</span>
         <span :class="['text-lg font-semibold', totalColor]"> {{ total.toFixed(1) }}% </span>
       </div>

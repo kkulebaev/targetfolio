@@ -44,10 +44,11 @@ const {
   pageSize,
   totalItems,
   setPage,
-  setPageSize,
 } = useTablePagination(positions, {
   storageKey: "targetfolio:pagination:portfolio",
 });
+
+pageSize.value = 10;
 
 const newTicker = ref("");
 const newQuantity = ref<number | undefined>(undefined);
@@ -96,7 +97,7 @@ function formatRub(value: number): string {
 </script>
 
 <template>
-  <Card>
+  <Card class="h-full">
     <CardHeader>
       <div class="flex items-center justify-between gap-4">
         <div>
@@ -116,7 +117,7 @@ function formatRub(value: number): string {
         </Select>
       </div>
     </CardHeader>
-    <CardContent class="space-y-4">
+    <CardContent class="flex flex-1 flex-col gap-4">
       <Table>
         <TableHeader>
           <TableRow>
@@ -133,7 +134,7 @@ function formatRub(value: number): string {
           <TableEmpty v-if="positions.length === 0" :colspan="source === 'manual' ? 7 : 6">
             Позиций нет
           </TableEmpty>
-          <TableRow v-for="position in pagedPositions" :key="position.ticker">
+          <TableRow v-for="position in pagedPositions" :key="position.ticker" class="h-12">
             <TableCell class="font-medium">{{ position.ticker }}</TableCell>
             <TableCell>
               {{ instrumentsByTicker.get(position.ticker)?.name ?? "—" }}
@@ -185,7 +186,6 @@ function formatRub(value: number): string {
         :page-size="pageSize"
         :total="totalItems"
         @update:page="setPage"
-        @update:page-size="setPageSize"
       />
 
       <div v-if="source === 'manual'" class="border-t pt-4">
@@ -225,7 +225,7 @@ function formatRub(value: number): string {
         <p v-if="addError" class="text-destructive mt-2 text-sm">{{ addError }}</p>
       </div>
 
-      <div class="flex items-center justify-between border-t pt-4">
+      <div class="mt-auto flex items-center justify-between border-t pt-4">
         <span class="text-muted-foreground text-sm">Суммарная стоимость</span>
         <span class="text-lg font-semibold">{{ formatRub(totalValue) }}</span>
       </div>

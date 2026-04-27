@@ -39,10 +39,11 @@ const {
   pageSize,
   totalItems,
   setPage,
-  setPageSize,
 } = useTablePagination(recommendations, {
   storageKey: "targetfolio:pagination:rebalance",
 });
+
+pageSize.value = 10;
 
 function formatRub(value: number): string {
   return new Intl.NumberFormat("ru-RU", {
@@ -130,7 +131,6 @@ function formatRub(value: number): string {
           :page-size="pageSize"
           :total="totalItems"
           @update:page="setPage"
-          @update:page-size="setPageSize"
         />
 
         <div class="flex items-center justify-between border-t pt-4">
