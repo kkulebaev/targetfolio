@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { Target } from "lucide-vue-next";
+
 import PortfolioSection from "@/components/PortfolioSection.vue";
 import RebalanceSection from "@/components/RebalanceSection.vue";
 import TargetSection from "@/components/TargetSection.vue";
@@ -10,7 +12,10 @@ import { Toaster } from "@/components/ui/sonner";
   <div class="bg-background text-foreground min-h-screen">
     <header class="border-b">
       <div class="flex items-center justify-between p-4 md:p-6">
-        <h1 class="text-xl font-semibold tracking-tight">Targetfolio</h1>
+        <div class="flex items-center gap-2">
+          <Target class="size-6" />
+          <h1 class="text-xl font-semibold tracking-tight">Targetfolio</h1>
+        </div>
         <ThemeToggle />
       </div>
     </header>
