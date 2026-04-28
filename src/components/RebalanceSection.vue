@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { computed } from "vue";
+import { X } from "lucide-vue-next";
 import { storeToRefs } from "pinia";
 
 import TablePagination from "./TablePagination.vue";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -67,14 +69,26 @@ function formatRub(value: number): string {
     <CardContent class="flex min-h-0 flex-1 flex-col gap-4">
       <div class="grid max-w-sm gap-2">
         <Label for="cash">Свободно для покупки, ₽</Label>
-        <Input
-          id="cash"
-          v-model.number="cashModel"
-          type="number"
-          min="0"
-          step="100"
-          placeholder="0"
-        />
+        <div class="flex items-center gap-2">
+          <Input
+            id="cash"
+            v-model.number="cashModel"
+            type="number"
+            min="0"
+            step="100"
+            placeholder="0"
+            class="flex-1"
+          />
+          <Button
+            variant="ghost"
+            size="icon-sm"
+            aria-label="Очистить сумму"
+            :disabled="!cashAvailable"
+            @click="rebalance.setCash(0)"
+          >
+            <X class="size-4" />
+          </Button>
+        </div>
       </div>
 
       <p
