@@ -35,6 +35,13 @@ const cashModel = computed({
   set: (next: number) => rebalance.setCash(Number.isFinite(next) ? next : 0),
 });
 
+const QUICK_ADD_AMOUNTS = [1000, 5000, 10000, 50000, 100000] as const;
+const numberFormatter = new Intl.NumberFormat("ru-RU");
+
+function addCash(amount: number) {
+  rebalance.setCash(cashAvailable.value + amount);
+}
+
 const recommendations = computed<BuyRecommendation[]>(() =>
   state.value.status === "ok" ? state.value.result.recommendations : [],
 );
@@ -67,7 +74,7 @@ function formatRub(value: number): string {
       <CardDescription>Что докупить, чтобы приблизиться к таргету</CardDescription>
     </CardHeader>
     <CardContent class="flex min-h-0 flex-1 flex-col gap-4">
-      <div class="grid max-w-sm gap-2">
+      <div class="grid w-fit max-w-full gap-2">
         <Label for="cash">Свободно для покупки, ₽</Label>
         <div class="flex items-center gap-2">
           <Input
@@ -87,6 +94,17 @@ function formatRub(value: number): string {
             @click="rebalance.setCash(0)"
           >
             <X class="size-4" />
+          </Button>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <Button
+            v-for="amount in QUICK_ADD_AMOUNTS"
+            :key="amount"
+            variant="outline"
+            size="sm"
+            @click="addCash(amount)"
+          >
+            +{{ numberFormatter.format(amount) }}
           </Button>
         </div>
       </div>
