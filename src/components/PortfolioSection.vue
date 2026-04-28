@@ -136,7 +136,18 @@ const emptyText = computed(() => {
   return "Позиций нет";
 });
 
-const colspan = computed(() => (source.value === "manual" ? 7 : 6));
+const colspan = computed(() => (source.value === "manual" ? 8 : 7));
+
+function positionValue(ticker: string, quantity: number): number | null {
+  const inst = instrumentsByTicker.value.get(ticker);
+  return inst ? quantity * inst.price : null;
+}
+
+function positionWeight(ticker: string, quantity: number): number | null {
+  const value = positionValue(ticker, quantity);
+  if (value === null || totalValue.value <= 0) return null;
+  return (value / totalValue.value) * 100;
+}
 
 const {
   sortedItems: sortedPositions,
@@ -151,10 +162,8 @@ const {
     lotSize: (p) => instrumentsByTicker.value.get(p.ticker)?.lotSize ?? null,
     price: (p) => instrumentsByTicker.value.get(p.ticker)?.price ?? null,
     quantity: (p) => p.quantity,
-    value: (p) => {
-      const inst = instrumentsByTicker.value.get(p.ticker);
-      return inst ? p.quantity * inst.price : null;
-    },
+    value: (p) => positionValue(p.ticker, p.quantity),
+    weightPercent: (p) => positionWeight(p.ticker, p.quantity),
   },
 });
 
@@ -414,6 +423,16 @@ function formatRub(value: number): string {
             >
               Стоимость ₽
             </SortableTableHead>
+            <SortableTableHead
+              sort-key="weightPercent"
+              :active="sortKey"
+              :dir="sortDir"
+              align="right"
+              class="w-20 text-right"
+              @toggle="toggleSort"
+            >
+              Вес %
+            </SortableTableHead>
             <TableHead v-if="source === 'manual'" class="w-12" />
           </TableRow>
         </TableHeader>
@@ -455,6 +474,12 @@ function formatRub(value: number): string {
             <TableCell class="text-right">
               <template v-if="instrumentsByTicker.get(position.ticker)">
                 {{ formatRub(position.quantity * instrumentsByTicker.get(position.ticker)!.price) }}
+              </template>
+              <template v-else>—</template>
+            </TableCell>
+            <TableCell class="text-right">
+              <template v-if="positionWeight(position.ticker, position.quantity) !== null">
+                {{ positionWeight(position.ticker, position.quantity)!.toFixed(2) }}%
               </template>
               <template v-else>—</template>
             </TableCell>
