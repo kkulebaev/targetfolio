@@ -330,17 +330,17 @@ function formatRub(value: number): string {
       </p>
 
       <Table
-        class="min-h-0 flex-1 transition-opacity"
+        class="min-h-0 flex-1 table-fixed transition-opacity"
         :class="{ 'opacity-60': isTinkoff && tinkoffStatus === 'loading' }"
       >
         <TableHeader>
           <TableRow>
-            <TableHead>Тикер</TableHead>
+            <TableHead class="w-24">Тикер</TableHead>
             <TableHead>Название</TableHead>
-            <TableHead class="text-right">Лот</TableHead>
-            <TableHead class="text-right">Цена ₽</TableHead>
-            <TableHead class="text-right">Кол-во</TableHead>
-            <TableHead class="text-right">Стоимость ₽</TableHead>
+            <TableHead class="w-16 text-right">Лот</TableHead>
+            <TableHead class="w-28 text-right">Цена ₽</TableHead>
+            <TableHead class="w-32 text-right">Кол-во</TableHead>
+            <TableHead class="w-32 text-right">Стоимость ₽</TableHead>
             <TableHead v-if="source === 'manual'" class="w-12" />
           </TableRow>
         </TableHeader>
@@ -354,7 +354,7 @@ function formatRub(value: number): string {
             class="h-12"
           >
             <TableCell class="font-medium">{{ position.ticker }}</TableCell>
-            <TableCell>
+            <TableCell class="truncate">
               {{ instrumentsByTicker.get(position.ticker)?.name ?? "—" }}
             </TableCell>
             <TableCell class="text-right">

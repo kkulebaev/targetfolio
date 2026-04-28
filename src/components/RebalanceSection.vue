@@ -115,14 +115,14 @@ function formatRub(value: number): string {
         </p>
       </div>
       <template v-else>
-        <Table class="min-h-0 flex-1">
+        <Table class="min-h-0 flex-1 table-fixed">
           <TableHeader>
             <TableRow>
-              <TableHead>Тикер</TableHead>
+              <TableHead class="w-24">Тикер</TableHead>
               <TableHead>Название</TableHead>
-              <TableHead class="text-right">Лотов</TableHead>
-              <TableHead class="text-right">Акций</TableHead>
-              <TableHead class="text-right">Стоимость ₽</TableHead>
+              <TableHead class="w-20 text-right">Лотов</TableHead>
+              <TableHead class="w-20 text-right">Акций</TableHead>
+              <TableHead class="w-32 text-right">Стоимость ₽</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -131,7 +131,9 @@ function formatRub(value: number): string {
               :key="rec.ticker"
             >
               <TableCell class="font-medium">{{ rec.ticker }}</TableCell>
-              <TableCell>{{ instrumentsByTicker.get(rec.ticker)?.name ?? "—" }}</TableCell>
+              <TableCell class="truncate">
+                {{ instrumentsByTicker.get(rec.ticker)?.name ?? "—" }}
+              </TableCell>
               <TableCell class="text-right">{{ rec.lotsToBuy }}</TableCell>
               <TableCell class="text-right">{{ rec.sharesToBuy }}</TableCell>
               <TableCell class="text-right">{{ formatRub(rec.estimatedCost) }}</TableCell>

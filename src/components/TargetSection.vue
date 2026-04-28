@@ -173,12 +173,12 @@ function confirmClear() {
       </div>
     </CardHeader>
     <CardContent class="flex min-h-0 flex-1 flex-col gap-4">
-      <Table class="min-h-0 flex-1">
+      <Table class="min-h-0 flex-1 table-fixed">
         <TableHeader>
           <TableRow>
-            <TableHead>Тикер</TableHead>
+            <TableHead class="w-24">Тикер</TableHead>
             <TableHead>Название</TableHead>
-            <TableHead class="text-right">Вес %</TableHead>
+            <TableHead class="w-32 text-right">Вес %</TableHead>
             <TableHead class="w-12" />
           </TableRow>
         </TableHeader>
@@ -192,7 +192,9 @@ function confirmClear() {
             class="h-12"
           >
             <TableCell class="font-medium">{{ weight.ticker }}</TableCell>
-            <TableCell>{{ instrumentsByTicker.get(weight.ticker)?.name ?? "—" }}</TableCell>
+            <TableCell class="truncate">
+              {{ instrumentsByTicker.get(weight.ticker)?.name ?? "—" }}
+            </TableCell>
             <TableCell class="text-right">
               <Input
                 type="number"
