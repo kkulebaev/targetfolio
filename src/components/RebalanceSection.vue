@@ -23,8 +23,10 @@ import { useRebalanceStore } from "@/stores/rebalance";
 const rebalance = useRebalanceStore();
 const portfolio = usePortfolioStore();
 const { state, cashAvailable } = storeToRefs(rebalance);
-const { instrumentsByTicker } = storeToRefs(portfolio);
+const { instrumentsByTicker, source, tinkoffStatus } = storeToRefs(portfolio);
 const isXl = useIsXl();
+
+const isLoading = computed(() => source.value === "tinkoff" && tinkoffStatus.value === "loading");
 
 const cashModel = computed({
   get: () => cashAvailable.value,
@@ -76,7 +78,13 @@ function formatRub(value: number): string {
       </div>
 
       <p
-        v-if="state.status === 'no-targets'"
+        v-if="isLoading"
+        class="text-muted-foreground rounded-md border border-dashed p-4 text-sm"
+      >
+        Загрузка портфеля…
+      </p>
+      <p
+        v-else-if="state.status === 'no-targets'"
         class="text-muted-foreground rounded-md border border-dashed p-4 text-sm"
       >
         Добавьте позиции в целевой портфель.
