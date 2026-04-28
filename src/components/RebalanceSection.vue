@@ -3,21 +3,16 @@ import { computed } from "vue";
 import { X } from "lucide-vue-next";
 import { storeToRefs } from "pinia";
 
+import SortableTableHead from "./SortableTableHead.vue";
 import TablePagination from "./TablePagination.vue";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/components/ui/table";
 import { useIsXl } from "@/composables/useIsXl";
 import { useTablePagination } from "@/composables/useTablePagination";
+import { useTableSort } from "@/composables/useTableSort";
 import type { BuyRecommendation } from "@/domain/types";
 import { usePortfolioStore } from "@/stores/portfolio";
 import { useRebalanceStore } from "@/stores/rebalance";
@@ -51,12 +46,28 @@ const recommendations = computed<BuyRecommendation[]>(() =>
 );
 
 const {
+  sortedItems: sortedRecommendations,
+  sortKey,
+  sortDir,
+  toggle: toggleSort,
+} = useTableSort(recommendations, {
+  storageKey: "targetfolio:sort:rebalance",
+  accessors: {
+    ticker: (r) => r.ticker,
+    name: (r) => instrumentsByTicker.value.get(r.ticker)?.name ?? "",
+    lotsToBuy: (r) => r.lotsToBuy,
+    sharesToBuy: (r) => r.sharesToBuy,
+    estimatedCost: (r) => r.estimatedCost,
+  },
+});
+
+const {
   pagedItems: pagedRecommendations,
   currentPage,
   pageSize,
   totalItems,
   setPage,
-} = useTablePagination(recommendations, {
+} = useTablePagination(sortedRecommendations, {
   storageKey: "targetfolio:pagination:rebalance",
 });
 
@@ -153,16 +164,58 @@ function formatRub(value: number): string {
         <Table class="min-h-0 flex-1 table-fixed">
           <TableHeader>
             <TableRow>
-              <TableHead class="w-24">Тикер</TableHead>
-              <TableHead>Название</TableHead>
-              <TableHead class="w-20 text-right">Лотов</TableHead>
-              <TableHead class="w-20 text-right">Акций</TableHead>
-              <TableHead class="w-32 text-right">Стоимость ₽</TableHead>
+              <SortableTableHead
+                sort-key="ticker"
+                :active="sortKey"
+                :dir="sortDir"
+                class="w-24"
+                @toggle="toggleSort"
+              >
+                Тикер
+              </SortableTableHead>
+              <SortableTableHead
+                sort-key="name"
+                :active="sortKey"
+                :dir="sortDir"
+                @toggle="toggleSort"
+              >
+                Название
+              </SortableTableHead>
+              <SortableTableHead
+                sort-key="lotsToBuy"
+                :active="sortKey"
+                :dir="sortDir"
+                align="right"
+                class="w-20 text-right"
+                @toggle="toggleSort"
+              >
+                Лотов
+              </SortableTableHead>
+              <SortableTableHead
+                sort-key="sharesToBuy"
+                :active="sortKey"
+                :dir="sortDir"
+                align="right"
+                class="w-20 text-right"
+                @toggle="toggleSort"
+              >
+                Акций
+              </SortableTableHead>
+              <SortableTableHead
+                sort-key="estimatedCost"
+                :active="sortKey"
+                :dir="sortDir"
+                align="right"
+                class="w-32 text-right"
+                @toggle="toggleSort"
+              >
+                Стоимость ₽
+              </SortableTableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             <TableRow
-              v-for="rec in isXl ? recommendations : pagedRecommendations"
+              v-for="rec in isXl ? sortedRecommendations : pagedRecommendations"
               :key="rec.ticker"
             >
               <TableCell class="font-medium">{{ rec.ticker }}</TableCell>

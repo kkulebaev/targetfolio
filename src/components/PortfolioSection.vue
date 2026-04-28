@@ -3,6 +3,7 @@ import { computed, onMounted, ref, watch } from "vue";
 import { Plus, RefreshCw, Trash2 } from "lucide-vue-next";
 import { storeToRefs } from "pinia";
 
+import SortableTableHead from "./SortableTableHead.vue";
 import TablePagination from "./TablePagination.vue";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -33,6 +34,7 @@ import {
 } from "@/components/ui/table";
 import { useIsXl } from "@/composables/useIsXl";
 import { useTablePagination } from "@/composables/useTablePagination";
+import { useTableSort } from "@/composables/useTableSort";
 import { validatePosition } from "@/domain/validation";
 import type { TinkoffAccount } from "@/lib/tinkoff";
 import { usePortfolioStore } from "@/stores/portfolio";
@@ -137,12 +139,32 @@ const emptyText = computed(() => {
 const colspan = computed(() => (source.value === "manual" ? 7 : 6));
 
 const {
+  sortedItems: sortedPositions,
+  sortKey,
+  sortDir,
+  toggle: toggleSort,
+} = useTableSort(positions, {
+  storageKey: "targetfolio:sort:portfolio",
+  accessors: {
+    ticker: (p) => p.ticker,
+    name: (p) => instrumentsByTicker.value.get(p.ticker)?.name ?? "",
+    lotSize: (p) => instrumentsByTicker.value.get(p.ticker)?.lotSize ?? null,
+    price: (p) => instrumentsByTicker.value.get(p.ticker)?.price ?? null,
+    quantity: (p) => p.quantity,
+    value: (p) => {
+      const inst = instrumentsByTicker.value.get(p.ticker);
+      return inst ? p.quantity * inst.price : null;
+    },
+  },
+});
+
+const {
   pagedItems: pagedPositions,
   currentPage,
   pageSize,
   totalItems,
   setPage,
-} = useTablePagination(positions, {
+} = useTablePagination(sortedPositions, {
   storageKey: "targetfolio:pagination:portfolio",
 });
 
@@ -335,12 +357,63 @@ function formatRub(value: number): string {
       >
         <TableHeader>
           <TableRow>
-            <TableHead class="w-24">Тикер</TableHead>
-            <TableHead>Название</TableHead>
-            <TableHead class="w-16 text-right">Лот</TableHead>
-            <TableHead class="w-28 text-right">Цена ₽</TableHead>
-            <TableHead class="w-32 text-right">Кол-во</TableHead>
-            <TableHead class="w-32 text-right">Стоимость ₽</TableHead>
+            <SortableTableHead
+              sort-key="ticker"
+              :active="sortKey"
+              :dir="sortDir"
+              class="w-24"
+              @toggle="toggleSort"
+            >
+              Тикер
+            </SortableTableHead>
+            <SortableTableHead
+              sort-key="name"
+              :active="sortKey"
+              :dir="sortDir"
+              @toggle="toggleSort"
+            >
+              Название
+            </SortableTableHead>
+            <SortableTableHead
+              sort-key="lotSize"
+              :active="sortKey"
+              :dir="sortDir"
+              align="right"
+              class="w-16 text-right"
+              @toggle="toggleSort"
+            >
+              Лот
+            </SortableTableHead>
+            <SortableTableHead
+              sort-key="price"
+              :active="sortKey"
+              :dir="sortDir"
+              align="right"
+              class="w-28 text-right"
+              @toggle="toggleSort"
+            >
+              Цена ₽
+            </SortableTableHead>
+            <SortableTableHead
+              sort-key="quantity"
+              :active="sortKey"
+              :dir="sortDir"
+              align="right"
+              class="w-32 text-right"
+              @toggle="toggleSort"
+            >
+              Кол-во
+            </SortableTableHead>
+            <SortableTableHead
+              sort-key="value"
+              :active="sortKey"
+              :dir="sortDir"
+              align="right"
+              class="w-32 text-right"
+              @toggle="toggleSort"
+            >
+              Стоимость ₽
+            </SortableTableHead>
             <TableHead v-if="source === 'manual'" class="w-12" />
           </TableRow>
         </TableHeader>
@@ -349,7 +422,7 @@ function formatRub(value: number): string {
             {{ emptyText }}
           </TableEmpty>
           <TableRow
-            v-for="position in isXl ? positions : pagedPositions"
+            v-for="position in isXl ? sortedPositions : pagedPositions"
             :key="position.ticker"
             class="h-12"
           >

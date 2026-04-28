@@ -3,6 +3,7 @@ import { computed, ref, watch } from "vue";
 import { Plus, Trash2 } from "lucide-vue-next";
 import { storeToRefs } from "pinia";
 
+import SortableTableHead from "./SortableTableHead.vue";
 import TablePagination from "./TablePagination.vue";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -39,6 +40,7 @@ import {
 } from "@/components/ui/table";
 import { useIsXl } from "@/composables/useIsXl";
 import { useTablePagination } from "@/composables/useTablePagination";
+import { useTableSort } from "@/composables/useTableSort";
 import { PRESET_LIST, PRESETS, type PresetId } from "@/presets";
 import { usePortfolioStore } from "@/stores/portfolio";
 import { useTargetStore } from "@/stores/target";
@@ -86,12 +88,26 @@ function confirmApplyPreset() {
 }
 
 const {
+  sortedItems: sortedWeights,
+  sortKey,
+  sortDir,
+  toggle: toggleSort,
+} = useTableSort(targetWeights, {
+  storageKey: "targetfolio:sort:target",
+  accessors: {
+    ticker: (w) => w.ticker,
+    name: (w) => instrumentsByTicker.value.get(w.ticker)?.name ?? "",
+    weightPercent: (w) => w.weightPercent,
+  },
+});
+
+const {
   pagedItems: pagedWeights,
   currentPage,
   pageSize,
   totalItems,
   setPage,
-} = useTablePagination(targetWeights, {
+} = useTablePagination(sortedWeights, {
   storageKey: "targetfolio:pagination:target",
 });
 
@@ -176,9 +192,33 @@ function confirmClear() {
       <Table class="min-h-0 flex-1 table-fixed">
         <TableHeader>
           <TableRow>
-            <TableHead class="w-24">Тикер</TableHead>
-            <TableHead>Название</TableHead>
-            <TableHead class="w-32 text-right">Вес %</TableHead>
+            <SortableTableHead
+              sort-key="ticker"
+              :active="sortKey"
+              :dir="sortDir"
+              class="w-24"
+              @toggle="toggleSort"
+            >
+              Тикер
+            </SortableTableHead>
+            <SortableTableHead
+              sort-key="name"
+              :active="sortKey"
+              :dir="sortDir"
+              @toggle="toggleSort"
+            >
+              Название
+            </SortableTableHead>
+            <SortableTableHead
+              sort-key="weightPercent"
+              :active="sortKey"
+              :dir="sortDir"
+              align="right"
+              class="w-32 text-right"
+              @toggle="toggleSort"
+            >
+              Вес %
+            </SortableTableHead>
             <TableHead class="w-12" />
           </TableRow>
         </TableHeader>
@@ -187,7 +227,7 @@ function confirmClear() {
             Добавьте позиции в целевой портфель
           </TableEmpty>
           <TableRow
-            v-for="weight in isXl ? targetWeights : pagedWeights"
+            v-for="weight in isXl ? sortedWeights : pagedWeights"
             :key="weight.ticker"
             class="h-12"
           >
