@@ -29,3 +29,17 @@ export type RebalanceResult = {
   recommendations: BuyRecommendation[];
   unusedCash: number;
 };
+
+export type IndexCode = string;
+
+export type IndexConstituent = {
+  ticker: Ticker;
+  weight: number;
+};
+
+export type Index = {
+  code: IndexCode;
+  name: string;
+  fetchedAt: string;
+  constituents: IndexConstituent[];
+};
