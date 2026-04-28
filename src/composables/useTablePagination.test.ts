@@ -11,7 +11,7 @@ function makeItems(n: number): number[] {
 
 describe("useTablePagination", () => {
   beforeEach(() => {
-    localStorage.clear();
+    sessionStorage.clear();
   });
 
   it("slices items by current page and page size", () => {
@@ -102,7 +102,7 @@ describe("useTablePagination", () => {
   });
 
   it("recovers from invalid persisted pageSize value", () => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(-7));
+    sessionStorage.setItem(STORAGE_KEY, JSON.stringify(-7));
     const items = ref(makeItems(25));
     const p = useTablePagination(items, { storageKey: STORAGE_KEY, defaultPageSize: 10 });
 

@@ -24,7 +24,7 @@ export function useTablePagination<T>(
   options: UseTablePaginationOptions,
 ): UseTablePaginationReturn<T> {
   const fallback = options.defaultPageSize ?? 10;
-  const pageSize = useStorage<number>(options.storageKey, fallback);
+  const pageSize = useStorage<number>(options.storageKey, fallback, window.sessionStorage);
 
   if (
     !Number.isFinite(pageSize.value) ||
