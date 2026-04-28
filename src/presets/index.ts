@@ -4,6 +4,8 @@ import type { IndexConstituent, TargetWeight } from "@/domain/types";
 
 export type PresetId = string;
 
+export const DEFAULT_PRESET_ID: PresetId = "imoex";
+
 export type Preset = {
   id: PresetId;
   name: string;

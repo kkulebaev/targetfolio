@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, ref, watch } from "vue";
+import { computed, ref, watch } from "vue";
 import { Plus, Trash2 } from "lucide-vue-next";
 import { storeToRefs } from "pinia";
 
@@ -41,17 +41,13 @@ import { useIsXl } from "@/composables/useIsXl";
 import { useTablePagination } from "@/composables/useTablePagination";
 import { PRESET_LIST, PRESETS, type PresetId } from "@/presets";
 import { usePortfolioStore } from "@/stores/portfolio";
-import { TARGET_STORAGE_KEY, useTargetStore } from "@/stores/target";
+import { useTargetStore } from "@/stores/target";
 
 const target = useTargetStore();
 const portfolio = usePortfolioStore();
 const { targetWeights, total, isValid, currentPreset } = storeToRefs(target);
 const { instruments, instrumentsByTicker } = storeToRefs(portfolio);
 const isXl = useIsXl();
-
-onMounted(() => {
-  if (localStorage.getItem(TARGET_STORAGE_KEY) === null) target.applyPreset("imoex");
-});
 
 const usedTickers = computed(() => new Set(targetWeights.value.map((w) => w.ticker)));
 const availableInstruments = computed(() =>
