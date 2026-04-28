@@ -147,6 +147,7 @@ export const usePortfolioStore = defineStore("portfolio", () => {
       const matched: Position[] = [];
       let skipped = 0;
       for (const p of raw) {
+        if (p.instrumentType === "currency") continue;
         const ticker = figiToTicker.get(p.figi);
         if (!ticker) {
           skipped += 1;
