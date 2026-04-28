@@ -451,7 +451,11 @@ function formatRub(value: number): string {
         <p v-if="addError" class="text-destructive mt-2 text-sm">{{ addError }}</p>
       </div>
 
-      <div class="mt-auto flex items-center justify-between border-t pt-4">
+      <p class="text-muted-foreground mt-auto text-xs">
+        Цена бумаги — закрытие последнего торгового дня
+      </p>
+
+      <div class="flex items-center justify-between border-t pt-4">
         <span class="text-muted-foreground text-sm">Суммарная стоимость</span>
         <span class="text-lg font-semibold">{{ formatRub(totalValue) }}</span>
       </div>
