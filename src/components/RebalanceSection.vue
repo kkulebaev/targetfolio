@@ -30,13 +30,17 @@ const isXl = useIsXl();
 
 const isLoading = computed(() => source.value === "tinkoff" && tinkoffStatus.value === "loading");
 
-const cashModel = computed({
-  get: () => cashAvailable.value,
-  set: (next: number) => rebalance.setCash(Number.isFinite(next) ? next : 0),
-});
-
 const QUICK_ADD_AMOUNTS = [1000, 5000, 10000, 50000, 100000] as const;
 const numberFormatter = new Intl.NumberFormat("ru-RU");
+
+const cashModel = computed({
+  get: () => (cashAvailable.value > 0 ? numberFormatter.format(cashAvailable.value) : ""),
+  set: (raw: string) => {
+    const digits = raw.replace(/\D/g, "");
+    const parsed = digits === "" ? 0 : Number(digits);
+    rebalance.setCash(Number.isFinite(parsed) ? parsed : 0);
+  },
+});
 
 function addCash(amount: number) {
   rebalance.setCash(cashAvailable.value + amount);
@@ -79,12 +83,11 @@ function formatRub(value: number): string {
         <div class="flex items-center gap-2">
           <Input
             id="cash"
-            v-model.number="cashModel"
-            type="number"
-            min="0"
-            step="100"
+            v-model="cashModel"
+            type="text"
+            inputmode="numeric"
             placeholder="0"
-            class="flex-1 [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+            class="flex-1"
           />
           <Button
             variant="ghost"
