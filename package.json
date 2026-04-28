@@ -13,7 +13,8 @@
     "lint": "oxlint .",
     "format": "oxfmt .",
     "format:check": "oxfmt --check .",
-    "typecheck": "vue-tsc --noEmit"
+    "typecheck": "vue-tsc --noEmit",
+    "catalog:fetch": "node scripts/fetch-catalog.mjs"
   },
   "dependencies": {
     "@tanstack/vue-table": "^8.21.3",

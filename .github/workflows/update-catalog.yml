@@ -1,0 +1,40 @@
+name: Update catalog
+
+on:
+  schedule:
+    - cron: "0 16 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - run: pnpm catalog:fetch
+        env:
+          TINKOFF_TOKEN: ${{ secrets.TINKOFF_TOKEN }}
+
+      - name: Commit and push if changed
+        run: |
+          if git diff --quiet src/catalog/instruments.json; then
+            echo "No changes in catalog"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/catalog/instruments.json
+          git commit -m "chore(catalog): refresh instruments and close prices"
+          git push
