@@ -47,6 +47,7 @@ export const useTargetStore = defineStore(
 
     function applyPreset(id: PresetId) {
       const preset = getPreset(id);
+      if (!preset) return;
       targetWeights.value = preset.weights.map((w) => ({ ...w }));
       currentPreset.value = id;
     }

@@ -64,7 +64,7 @@ const clearDialogOpen = ref(false);
 
 const currentPresetLabel = computed(() => {
   if (currentPreset.value === "custom") return "Кастомный";
-  return PRESETS[currentPreset.value].name;
+  return PRESETS[currentPreset.value]?.name ?? "Кастомный";
 });
 
 watch(confirmDialogOpen, (next) => {
@@ -136,7 +136,7 @@ function confirmClear() {
         </div>
         <div class="flex items-center gap-2">
           <Select :model-value="currentPreset" @update:model-value="onPresetSelect">
-            <SelectTrigger class="w-56">
+            <SelectTrigger class="w-80">
               <SelectValue>
                 <span>{{ currentPresetLabel }}</span>
               </SelectValue>
