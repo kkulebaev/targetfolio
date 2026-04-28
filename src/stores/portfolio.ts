@@ -82,6 +82,19 @@ export const usePortfolioStore = defineStore("portfolio", () => {
     localPositions.value = [];
   }
 
+  function setManualPositions(items: readonly Position[]) {
+    const seen = new Set<Ticker>();
+    const valid: Position[] = [];
+    for (const item of items) {
+      if (!INSTRUMENTS_BY_TICKER.has(item.ticker)) continue;
+      if (seen.has(item.ticker)) continue;
+      if (!Number.isInteger(item.quantity) || item.quantity < 0) continue;
+      seen.add(item.ticker);
+      valid.push({ ticker: item.ticker, quantity: item.quantity });
+    }
+    localPositions.value = valid;
+  }
+
   function setTinkoffToken(token: string) {
     tinkoffToken.value = token;
   }
@@ -180,6 +193,7 @@ export const usePortfolioStore = defineStore("portfolio", () => {
     upsertPosition,
     removePosition,
     clearManualPositions,
+    setManualPositions,
     setTinkoffToken,
     saveTinkoffToken,
     clearSavedTinkoffToken,

@@ -7,10 +7,12 @@ import TargetSection from "@/components/TargetSection.vue";
 import ThemeToggle from "@/components/ThemeToggle.vue";
 import { Toaster } from "@/components/ui/sonner";
 import { useCashUrlSync } from "@/composables/useCashUrlSync";
+import { useManualPositionsUrlSync } from "@/composables/useManualPositionsUrlSync";
 import { useSourceUrlSync } from "@/composables/useSourceUrlSync";
 import { useTargetUrlSync } from "@/composables/useTargetUrlSync";
 
 useSourceUrlSync();
+useManualPositionsUrlSync();
 useTargetUrlSync();
 useCashUrlSync();
 </script>
