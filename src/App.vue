@@ -1,15 +1,18 @@
 <script setup lang="ts">
-import { Target } from "lucide-vue-next";
+import { Github, Target } from "lucide-vue-next";
 
 import PortfolioSection from "@/components/PortfolioSection.vue";
 import RebalanceSection from "@/components/RebalanceSection.vue";
 import TargetSection from "@/components/TargetSection.vue";
 import ThemeToggle from "@/components/ThemeToggle.vue";
+import { Button } from "@/components/ui/button";
 import { Toaster } from "@/components/ui/sonner";
 import { useCashUrlSync } from "@/composables/useCashUrlSync";
 import { useManualPositionsUrlSync } from "@/composables/useManualPositionsUrlSync";
 import { useSourceUrlSync } from "@/composables/useSourceUrlSync";
 import { useTargetUrlSync } from "@/composables/useTargetUrlSync";
+
+const REPO_URL = "https://github.com/kkulebaev/targetfolio";
 
 useSourceUrlSync();
 useManualPositionsUrlSync();
@@ -27,7 +30,14 @@ useCashUrlSync();
           <Target class="size-6" />
           <h1 class="text-xl font-semibold tracking-tight">Targetfolio</h1>
         </div>
-        <ThemeToggle />
+        <div class="flex items-center gap-1">
+          <Button variant="ghost" size="icon" as-child aria-label="GitHub репозиторий">
+            <a :href="REPO_URL" target="_blank" rel="noopener noreferrer">
+              <Github class="size-4" />
+            </a>
+          </Button>
+          <ThemeToggle />
+        </div>
       </div>
     </header>
 
