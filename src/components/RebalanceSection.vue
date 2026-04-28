@@ -84,7 +84,7 @@ function formatRub(value: number): string {
             min="0"
             step="100"
             placeholder="0"
-            class="flex-1"
+            class="flex-1 [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
           />
           <Button
             variant="ghost"

@@ -201,7 +201,7 @@ function confirmClear() {
                 min="0"
                 max="100"
                 step="0.1"
-                class="ml-auto h-8 w-24 text-right"
+                class="ml-auto h-8 w-24 text-right [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
                 :model-value="weight.weightPercent"
                 @update:model-value="(v) => onWeightInput(weight.ticker, String(v))"
               />
