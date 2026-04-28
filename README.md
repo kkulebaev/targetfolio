@@ -10,9 +10,14 @@
 
 <br />
 
-[![License](https://img.shields.io/github/license/kkulebaev/targetfolio?style=for-the-badge)](LICENSE)
-[![Last commit](https://img.shields.io/github/last-commit/kkulebaev/targetfolio?style=for-the-badge)](https://github.com/kkulebaev/targetfolio/commits/main)
-[![Repo size](https://img.shields.io/github/repo-size/kkulebaev/targetfolio?style=for-the-badge)](https://github.com/kkulebaev/targetfolio)
+[**🚀 Открыть демо →**](https://targetfolio-production.up.railway.app/)
+
+<br />
+
+[![Live Demo](https://img.shields.io/badge/Live-Demo-success?style=for-the-badge&logo=railway&logoColor=white)](https://targetfolio-production.up.railway.app/)
+[![Status](https://img.shields.io/badge/status-active-success?style=for-the-badge)](https://github.com/kkulebaev/targetfolio)
+[![Open Issues](https://img.shields.io/github/issues/kkulebaev/targetfolio?style=for-the-badge&logo=github)](https://github.com/kkulebaev/targetfolio/issues)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-blue?style=for-the-badge)](https://github.com/kkulebaev/targetfolio/pulls)
 
 [![Vue](https://img.shields.io/badge/Vue%203-35495E?style=for-the-badge&logo=vuedotjs&logoColor=4FC08D)](https://vuejs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
