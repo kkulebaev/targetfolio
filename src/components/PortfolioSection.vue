@@ -121,14 +121,14 @@ function accountLabel(a: TinkoffAccount): string {
 
 const sourceLabel = computed(() => {
   if (source.value === "mock") return "демо";
-  if (source.value === "tinkoff") return "Тинькофф";
+  if (source.value === "tinkoff") return "Т-Инвестиции";
   return "ручной ввод";
 });
 
 const emptyText = computed(() => {
   if (isTinkoff.value) {
     if (tinkoffStatus.value === "loading") return "Загрузка…";
-    if (tinkoffStatus.value === "idle") return "Введите токен Тинькофф и нажмите «Загрузить»";
+    if (tinkoffStatus.value === "idle") return "Введите токен Т-Инвестиций и нажмите «Загрузить»";
     if (tinkoffStatus.value === "error") return "Не удалось загрузить портфель";
   }
   return "Позиций нет";
@@ -232,7 +232,7 @@ function formatRub(value: number): string {
             <SelectContent>
               <SelectItem value="mock">Демо</SelectItem>
               <SelectItem value="manual">Ручной ввод</SelectItem>
-              <SelectItem value="tinkoff">Тинькофф</SelectItem>
+              <SelectItem value="tinkoff">Т-Инвестиции</SelectItem>
             </SelectContent>
           </Select>
           <Button
@@ -262,23 +262,39 @@ function formatRub(value: number): string {
       </div>
     </CardHeader>
     <CardContent class="flex min-h-0 flex-1 flex-col gap-4">
-      <div v-if="isTinkoff && needsTokenForm" class="flex flex-wrap items-end gap-3">
-        <div class="grid min-w-64 flex-1 gap-2">
-          <label class="text-sm font-medium">Токен Тинькофф (read-only)</label>
-          <Input
-            v-model="tokenInput"
-            type="password"
-            placeholder="t.xxx…"
-            autocomplete="off"
-            @keydown.enter="onLoadTinkoff"
-          />
+      <div v-if="isTinkoff && needsTokenForm" class="grid gap-3">
+        <p class="text-muted-foreground text-sm">
+          Чтобы загрузить портфель, создайте read-only токен в&nbsp;настройках Т-Инвестиций и&nbsp;вставьте его ниже.
+          <a
+            href="https://developer.tbank.ru/invest/intro/intro/token"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-primary font-medium underline underline-offset-2"
+          >
+            Как получить токен
+          </a>
+        </p>
+        <div class="flex flex-wrap items-end gap-3">
+          <div class="grid min-w-64 flex-1 gap-2">
+            <label class="text-sm font-medium">Токен Т-Инвестиций (read-only)</label>
+            <Input
+              v-model="tokenInput"
+              type="password"
+              placeholder="t.xxx…"
+              autocomplete="off"
+              @keydown.enter="onLoadTinkoff"
+            />
+          </div>
+          <Button
+            :disabled="!tokenInput.trim() || tinkoffStatus === 'loading'"
+            @click="onLoadTinkoff"
+          >
+            {{ tinkoffStatus === "loading" ? "Загрузка…" : "Загрузить" }}
+          </Button>
+          <Button v-if="tinkoffStatus === 'success'" variant="ghost" @click="onCancelChangeToken">
+            Отмена
+          </Button>
         </div>
-        <Button :disabled="!tokenInput.trim() || tinkoffStatus === 'loading'" @click="onLoadTinkoff">
-          {{ tinkoffStatus === "loading" ? "Загрузка…" : "Загрузить" }}
-        </Button>
-        <Button v-if="tinkoffStatus === 'success'" variant="ghost" @click="onCancelChangeToken">
-          Отмена
-        </Button>
       </div>
 
       <div
