@@ -6,11 +6,13 @@ import RebalanceSection from "@/components/RebalanceSection.vue";
 import TargetSection from "@/components/TargetSection.vue";
 import ThemeToggle from "@/components/ThemeToggle.vue";
 import { Toaster } from "@/components/ui/sonner";
+import { useCashUrlSync } from "@/composables/useCashUrlSync";
 import { useSourceUrlSync } from "@/composables/useSourceUrlSync";
 import { useTargetUrlSync } from "@/composables/useTargetUrlSync";
 
 useSourceUrlSync();
 useTargetUrlSync();
+useCashUrlSync();
 </script>
 
 <template>
