@@ -330,9 +330,9 @@ function formatRub(value: number): string {
 
       <div
         v-else-if="isTinkoff && tinkoffToken"
-        class="text-muted-foreground flex items-center gap-2 text-sm"
+        class="text-muted-foreground -ml-3 flex flex-wrap items-center gap-y-1 text-sm"
       >
-        <span>{{ tinkoffTokenSaved ? "Токен сохранён в браузере" : "Токен задан" }}</span>
+        <span class="px-3">{{ tinkoffTokenSaved ? "Токен сохранён в браузере" : "Токен задан" }}</span>
         <Button variant="ghost" size="sm" @click="onChangeToken">Изменить</Button>
         <Button
           v-if="tinkoffStatus === 'success' && !tinkoffTokenSaved"

@@ -146,9 +146,9 @@ function confirmClear() {
           <CardTitle>Целевой портфель</CardTitle>
           <CardDescription>Желаемое распределение весов в %</CardDescription>
         </div>
-        <div class="flex items-center gap-2">
+        <div class="flex flex-wrap items-center gap-2">
           <Select :model-value="currentPreset" @update:model-value="onPresetSelect">
-            <SelectTrigger class="w-80">
+            <SelectTrigger class="w-full sm:w-80">
               <SelectValue>
                 <span>{{ currentPresetLabel }}</span>
               </SelectValue>
