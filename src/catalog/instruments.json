@@ -3,7 +3,7 @@
     "ticker": "ABIO",
     "name": "Артген",
     "lotSize": 10,
-    "price": 55.28,
+    "price": 55.16,
     "figi": "TCS10A0JNAB6",
     "currency": "rub"
   },
@@ -11,7 +11,7 @@
     "ticker": "ABRD",
     "name": "АбрауДюрсо",
     "lotSize": 10,
-    "price": 145,
+    "price": 144.6,
     "figi": "BBG002W2FT69",
     "currency": "rub"
   },
@@ -19,7 +19,7 @@
     "ticker": "AFKS",
     "name": "АФК Система",
     "lotSize": 100,
-    "price": 11.034,
+    "price": 11.045,
     "figi": "BBG004S68614",
     "currency": "rub"
   },
@@ -27,7 +27,7 @@
     "ticker": "AFLT",
     "name": "Аэрофлот",
     "lotSize": 10,
-    "price": 46.92,
+    "price": 47.73,
     "figi": "BBG004S683W7",
     "currency": "rub"
   },
@@ -35,7 +35,7 @@
     "ticker": "AKRN",
     "name": "Акрон",
     "lotSize": 1,
-    "price": 19902,
+    "price": 19916,
     "figi": "BBG004S688G4",
     "currency": "rub"
   },
@@ -43,7 +43,7 @@
     "ticker": "ALRS",
     "name": "АЛРОСА",
     "lotSize": 10,
-    "price": 27.99,
+    "price": 28.53,
     "figi": "BBG004S68B31",
     "currency": "rub"
   },
@@ -51,7 +51,7 @@
     "ticker": "APRI",
     "name": "АПРИ",
     "lotSize": 10,
-    "price": 15.77,
+    "price": 15.69,
     "figi": "TCS00A108LJ5",
     "currency": "rub"
   },
@@ -59,7 +59,7 @@
     "ticker": "APTK",
     "name": "Аптечная сеть 36,6",
     "lotSize": 10,
-    "price": 7.064,
+    "price": 7.044,
     "figi": "BBG000K3STR7",
     "currency": "rub"
   },
@@ -67,7 +67,7 @@
     "ticker": "AQUA",
     "name": "ИНАРКТИКА",
     "lotSize": 1,
-    "price": 401.8,
+    "price": 406.2,
     "figi": "BBG000W325F7",
     "currency": "rub"
   },
@@ -75,7 +75,7 @@
     "ticker": "ARSA",
     "name": "Арсагера",
     "lotSize": 100,
-    "price": 7.9399999999999995,
+    "price": 7.93,
     "figi": "BBG000VBMPW5",
     "currency": "rub"
   },
@@ -83,7 +83,7 @@
     "ticker": "ASSB",
     "name": "Астраханская энергосбытовая компания",
     "lotSize": 1000,
-    "price": 3.025,
+    "price": 3.06,
     "figi": "BBG000FJ8645",
     "currency": "rub"
   },
@@ -91,7 +91,7 @@
     "ticker": "ASTR",
     "name": "Группа Астра",
     "lotSize": 1,
-    "price": 279.7,
+    "price": 279.3,
     "figi": "RU000A106T36",
     "currency": "rub"
   },
@@ -99,7 +99,7 @@
     "ticker": "AVAN",
     "name": "Авангард Банк",
     "lotSize": 1,
-    "price": 652,
+    "price": 649,
     "figi": "BBG000BTX3H2",
     "currency": "rub"
   },
@@ -107,7 +107,7 @@
     "ticker": "BANE",
     "name": "Башнефть",
     "lotSize": 1,
-    "price": 1436.5,
+    "price": 1419,
     "figi": "BBG004S68758",
     "currency": "rub"
   },
@@ -115,7 +115,7 @@
     "ticker": "BANEP",
     "name": "Башнефть - привилегированные акции",
     "lotSize": 1,
-    "price": 998,
+    "price": 985,
     "figi": "BBG004S686N0",
     "currency": "rub"
   },
@@ -123,7 +123,7 @@
     "ticker": "BAZA",
     "name": "ГК БАЗИС",
     "lotSize": 10,
-    "price": 119.3,
+    "price": 120.54,
     "figi": "TCS00A10CTQ0",
     "currency": "rub"
   },
@@ -131,7 +131,7 @@
     "ticker": "BELU",
     "name": "Novabev Group",
     "lotSize": 1,
-    "price": 358.4,
+    "price": 356.2,
     "figi": "BBG000TY1CD1",
     "currency": "rub"
   },
@@ -139,7 +139,7 @@
     "ticker": "BISVP",
     "name": "Башинформсвязь - Акции привилегированные",
     "lotSize": 100,
-    "price": 10.24,
+    "price": 10.39,
     "figi": "BBG000KGXMN1",
     "currency": "rub"
   },
@@ -147,7 +147,7 @@
     "ticker": "BLNG",
     "name": "Белон",
     "lotSize": 100,
-    "price": 10.82,
+    "price": 10.77,
     "figi": "TCS20A0J2QG8",
     "currency": "rub"
   },
@@ -155,7 +155,7 @@
     "ticker": "BRZL",
     "name": "Бурятзолото",
     "lotSize": 1,
-    "price": 1606,
+    "price": 1612,
     "figi": "BBG002B24058",
     "currency": "rub"
   },
@@ -163,7 +163,7 @@
     "ticker": "BSPB",
     "name": "Банк Санкт-Петербург",
     "lotSize": 10,
-    "price": 340,
+    "price": 339.56,
     "figi": "BBG000QJW156",
     "currency": "rub"
   },
@@ -171,7 +171,7 @@
     "ticker": "BSPBP",
     "name": "Банк Санкт-Петербург",
     "lotSize": 100,
-    "price": 49.55,
+    "price": 49.35,
     "figi": "BBG00Z197548",
     "currency": "rub"
   },
@@ -179,7 +179,7 @@
     "ticker": "BTBR",
     "name": "В2В-РТС",
     "lotSize": 1,
-    "price": 130.09,
+    "price": 130.19,
     "figi": "TCS00A104U43",
     "currency": "rub"
   },
@@ -187,7 +187,7 @@
     "ticker": "CARM",
     "name": "КарМани",
     "lotSize": 100,
-    "price": 1.1335,
+    "price": 1.119,
     "figi": "TCS00A105NV2",
     "currency": "rub"
   },
@@ -195,7 +195,7 @@
     "ticker": "CBOM",
     "name": "МКБ",
     "lotSize": 100,
-    "price": 6.284,
+    "price": 6.196,
     "figi": "BBG009GSYN76",
     "currency": "rub"
   },
@@ -203,7 +203,7 @@
     "ticker": "CHGZ",
     "name": "РН-Западная Сибирь",
     "lotSize": 10,
-    "price": 126,
+    "price": 116.2,
     "figi": "BBG000NLLWQ5",
     "currency": "rub"
   },
@@ -211,7 +211,7 @@
     "ticker": "CHKZ",
     "name": "Челябинский кузнечно-прессовый завод",
     "lotSize": 1,
-    "price": 16550,
+    "price": 16600,
     "figi": "BBG000VQM8Q7",
     "currency": "rub"
   },
@@ -219,7 +219,7 @@
     "ticker": "CHMF",
     "name": "Северсталь",
     "lotSize": 1,
-    "price": 747,
+    "price": 742,
     "figi": "BBG00475K6C3",
     "currency": "rub"
   },
@@ -227,7 +227,7 @@
     "ticker": "CHMK",
     "name": "ЧМК",
     "lotSize": 1,
-    "price": 3960,
+    "price": 3940,
     "figi": "BBG000RP8V70",
     "currency": "rub"
   },
@@ -235,7 +235,7 @@
     "ticker": "CNRU",
     "name": "Циан",
     "lotSize": 1,
-    "price": 618,
+    "price": 616.6,
     "figi": "TCS00A10ANA1",
     "currency": "rub"
   },
@@ -243,7 +243,7 @@
     "ticker": "CNTL",
     "name": "Центральный Телеграф",
     "lotSize": 100,
-    "price": 9.06,
+    "price": 9.02,
     "figi": "BBG000BBV4M5",
     "currency": "rub"
   },
@@ -251,7 +251,7 @@
     "ticker": "CNTLP",
     "name": "Центральный Телеграф - акции привилегированные",
     "lotSize": 100,
-    "price": 5.5,
+    "price": 5.52,
     "figi": "BBG0027F0Y27",
     "currency": "rub"
   },
@@ -259,7 +259,7 @@
     "ticker": "DATA",
     "name": "Группа Аренадата",
     "lotSize": 1,
-    "price": 95.62,
+    "price": 96.56,
     "figi": "TCS00A108ZR8",
     "currency": "rub"
   },
@@ -267,7 +267,7 @@
     "ticker": "DELI",
     "name": "Делимобиль",
     "lotSize": 1,
-    "price": 76.35,
+    "price": 76.5,
     "figi": "TCS00A107J11",
     "currency": "rub"
   },
@@ -275,7 +275,7 @@
     "ticker": "DIAS",
     "name": "Диасофт",
     "lotSize": 1,
-    "price": 1391.5,
+    "price": 1390,
     "figi": "TCS00A107ER5",
     "currency": "rub"
   },
@@ -283,7 +283,7 @@
     "ticker": "DIOD",
     "name": "ДИОД",
     "lotSize": 100,
-    "price": 9.24,
+    "price": 9.28,
     "figi": "BBG000R0L782",
     "currency": "rub"
   },
@@ -291,7 +291,7 @@
     "ticker": "DOMRF",
     "name": "ДОМ.РФ",
     "lotSize": 1,
-    "price": 2222.1,
+    "price": 2227.1,
     "figi": "TCS00A0ZZFU5",
     "currency": "rub"
   },
@@ -307,7 +307,7 @@
     "ticker": "DZRD",
     "name": "Донской завод радиодеталей",
     "lotSize": 1,
-    "price": 1880,
+    "price": 2190,
     "figi": "BBG001CPLYK8",
     "currency": "rub"
   },
@@ -315,7 +315,7 @@
     "ticker": "DZRDP",
     "name": "Донской завод радиодеталей - привилегированные акции",
     "lotSize": 1,
-    "price": 1920,
+    "price": 2190,
     "figi": "BBG001CPLZX1",
     "currency": "rub"
   },
@@ -323,7 +323,7 @@
     "ticker": "EELT",
     "name": "Европейская Электротехника",
     "lotSize": 10,
-    "price": 8.32,
+    "price": 8.38,
     "figi": "BBG001V474L5",
     "currency": "rub"
   },
@@ -331,7 +331,7 @@
     "ticker": "ELFV",
     "name": "ЭЛ5-Энерго",
     "lotSize": 1000,
-    "price": 0.4674,
+    "price": 0.4688,
     "figi": "BBG000F6YPH8",
     "currency": "rub"
   },
@@ -339,7 +339,7 @@
     "ticker": "ENPG",
     "name": "Эн+",
     "lotSize": 1,
-    "price": 410.3,
+    "price": 401,
     "figi": "BBG000RMWQD4",
     "currency": "rub"
   },
@@ -347,7 +347,7 @@
     "ticker": "ETLN",
     "name": "Эталон Груп",
     "lotSize": 1,
-    "price": 28.34,
+    "price": 28.18,
     "figi": "TCS50A10C1L6",
     "currency": "rub"
   },
@@ -355,7 +355,7 @@
     "ticker": "EUTR",
     "name": "ЕвроТранс",
     "lotSize": 1,
-    "price": 81.5,
+    "price": 80.95,
     "figi": "TCS00A1002V2",
     "currency": "rub"
   },
@@ -363,7 +363,7 @@
     "ticker": "FEES",
     "name": "ФСК Россети",
     "lotSize": 10000,
-    "price": 0.0672,
+    "price": 0.06658,
     "figi": "BBG00475JZZ6",
     "currency": "rub"
   },
@@ -371,7 +371,7 @@
     "ticker": "FESH",
     "name": "ДВМП",
     "lotSize": 10,
-    "price": 69.82,
+    "price": 69.48,
     "figi": "BBG000QF1Q17",
     "currency": "rub"
   },
@@ -379,7 +379,7 @@
     "ticker": "FIXR",
     "name": "Фикс Прайс",
     "lotSize": 1000,
-    "price": 0.6692,
+    "price": 0.6713,
     "figi": "TCS40A10B5G8",
     "currency": "rub"
   },
@@ -387,7 +387,7 @@
     "ticker": "FLOT",
     "name": "Совкомфлот",
     "lotSize": 10,
-    "price": 80.9,
+    "price": 78.89,
     "figi": "BBG000R04X57",
     "currency": "rub"
   },
@@ -395,7 +395,7 @@
     "ticker": "GAZA",
     "name": "ГАЗ - обыкновенные акции",
     "lotSize": 10,
-    "price": 448,
+    "price": 451,
     "figi": "TCS109034268",
     "currency": "rub"
   },
@@ -403,7 +403,7 @@
     "ticker": "GAZAP",
     "name": "ГАЗ ап",
     "lotSize": 10,
-    "price": 357,
+    "price": 373,
     "figi": "TCS00A0ZYHF5",
     "currency": "rub"
   },
@@ -411,7 +411,7 @@
     "ticker": "GAZP",
     "name": "Газпром",
     "lotSize": 10,
-    "price": 120.05,
+    "price": 118.73,
     "figi": "BBG004730RP0",
     "currency": "rub"
   },
@@ -419,7 +419,7 @@
     "ticker": "GCHE",
     "name": "Группа Черкизово",
     "lotSize": 1,
-    "price": 3440,
+    "price": 3433,
     "figi": "BBG000RTHVK7",
     "currency": "rub"
   },
@@ -427,7 +427,7 @@
     "ticker": "GECO",
     "name": "Генетико",
     "lotSize": 10,
-    "price": 19.98,
+    "price": 19.88,
     "figi": "TCS00A105BN4",
     "currency": "rub"
   },
@@ -435,7 +435,7 @@
     "ticker": "GEMA",
     "name": "Гемабанк",
     "lotSize": 10,
-    "price": 124,
+    "price": 125.7,
     "figi": "BBG00PT8QHK7",
     "currency": "rub"
   },
@@ -443,7 +443,7 @@
     "ticker": "GEMC",
     "name": "ЮМГ",
     "lotSize": 1,
-    "price": 804.5,
+    "price": 803,
     "figi": "TCS00A107JE2",
     "currency": "rub"
   },
@@ -451,7 +451,7 @@
     "ticker": "GLRX",
     "name": "Глоракс",
     "lotSize": 1,
-    "price": 57.61,
+    "price": 57.39,
     "figi": "TCS00A10CRQ4",
     "currency": "rub"
   },
@@ -459,7 +459,7 @@
     "ticker": "GMKN",
     "name": "Норильский никель",
     "lotSize": 10,
-    "price": 126.6,
+    "price": 128.5,
     "figi": "BBG004731489",
     "currency": "rub"
   },
@@ -467,7 +467,7 @@
     "ticker": "GTRK",
     "name": "ГТМ",
     "lotSize": 10,
-    "price": 75.8,
+    "price": 75.1,
     "figi": "TCS03A0ZYD22",
     "currency": "rub"
   },
@@ -475,7 +475,7 @@
     "ticker": "HEAD",
     "name": "Хэдхантер",
     "lotSize": 1,
-    "price": 2920,
+    "price": 2924,
     "figi": "TCS20A107662",
     "currency": "rub"
   },
@@ -483,7 +483,7 @@
     "ticker": "HIMCP",
     "name": "ПАО \"Химпром\" (Ч) (ап-О)",
     "lotSize": 100,
-    "price": 17.7,
+    "price": 18.06,
     "figi": "TCS009099006",
     "currency": "rub"
   },
@@ -491,7 +491,7 @@
     "ticker": "HNFG",
     "name": "HENDERSON",
     "lotSize": 1,
-    "price": 395.4,
+    "price": 395,
     "figi": "TCS00A106XF2",
     "currency": "rub"
   },
@@ -499,7 +499,7 @@
     "ticker": "HYDR",
     "name": "РусГидро",
     "lotSize": 1000,
-    "price": 0.3902,
+    "price": 0.3887,
     "figi": "BBG00475K2X9",
     "currency": "rub"
   },
@@ -507,7 +507,7 @@
     "ticker": "IGST",
     "name": "Ижсталь",
     "lotSize": 1,
-    "price": 4060,
+    "price": 3940,
     "figi": "BBG002B2JF59",
     "currency": "rub"
   },
@@ -515,7 +515,7 @@
     "ticker": "IGSTP",
     "name": "Ижсталь - привилегированные акции",
     "lotSize": 1,
-    "price": 3120,
+    "price": 3110,
     "figi": "BBG002B2JCL8",
     "currency": "rub"
   },
@@ -523,7 +523,7 @@
     "ticker": "IRAO",
     "name": "Интер",
     "lotSize": 100,
-    "price": 3.153,
+    "price": 3.14,
     "figi": "BBG004S68473",
     "currency": "rub"
   },
@@ -531,7 +531,7 @@
     "ticker": "IRKT",
     "name": "Яковлев",
     "lotSize": 100,
-    "price": 22.12,
+    "price": 21.92,
     "figi": "BBG000FWGSZ5",
     "currency": "rub"
   },
@@ -539,7 +539,7 @@
     "ticker": "IVAT",
     "name": "IVA Technologies",
     "lotSize": 1,
-    "price": 122,
+    "price": 125.65,
     "figi": "TCS00A108GD8",
     "currency": "rub"
   },
@@ -547,7 +547,7 @@
     "ticker": "JNOS",
     "name": "Славнефть ЯНОС",
     "lotSize": 100,
-    "price": 39.98,
+    "price": 37,
     "figi": "BBG000CVM618",
     "currency": "rub"
   },
@@ -555,7 +555,7 @@
     "ticker": "JNOSP",
     "name": "Славнефть ЯНОС - привилегированные акции",
     "lotSize": 100,
-    "price": 16.9,
+    "price": 15.9,
     "figi": "BBG000CVM887",
     "currency": "rub"
   },
@@ -563,7 +563,7 @@
     "ticker": "KAZT",
     "name": "КуйбышевАзот",
     "lotSize": 10,
-    "price": 410.4,
+    "price": 410.2,
     "figi": "BBG002B9MYC1",
     "currency": "rub"
   },
@@ -579,7 +579,7 @@
     "ticker": "KBSB",
     "name": "ТНС энерго Кубань",
     "lotSize": 10,
-    "price": 972,
+    "price": 978,
     "figi": "BBG000BSCKB5",
     "currency": "rub"
   },
@@ -587,7 +587,7 @@
     "ticker": "KCHE",
     "name": "Камчатскэнерго",
     "lotSize": 10000,
-    "price": 0.357,
+    "price": 0.355,
     "figi": "BBG000P69JH9",
     "currency": "rub"
   },
@@ -595,7 +595,7 @@
     "ticker": "KCHEP",
     "name": "Камчатскэнерго - привилегированные акции",
     "lotSize": 10000,
-    "price": 0.685,
+    "price": 0.675,
     "figi": "BBG000J5X8M9",
     "currency": "rub"
   },
@@ -603,7 +603,7 @@
     "ticker": "KFBA",
     "name": "ИНГРАД",
     "lotSize": 1,
-    "price": 1765,
+    "price": 1775,
     "figi": "TCS10A0DJ9B4",
     "currency": "rub"
   },
@@ -611,7 +611,7 @@
     "ticker": "KLSB",
     "name": "Калужская сбытовая компания",
     "lotSize": 100,
-    "price": 18.87,
+    "price": 19.07,
     "figi": "BBG000DBD6F6",
     "currency": "rub"
   },
@@ -619,7 +619,7 @@
     "ticker": "KLVZ",
     "name": "Кристалл",
     "lotSize": 100,
-    "price": 2.754,
+    "price": 2.66,
     "figi": "TCS00A107KX0",
     "currency": "rub"
   },
@@ -627,7 +627,7 @@
     "ticker": "KMAZ",
     "name": "КАМАЗ",
     "lotSize": 10,
-    "price": 70.3,
+    "price": 70,
     "figi": "BBG000LNHHJ9",
     "currency": "rub"
   },
@@ -635,7 +635,7 @@
     "ticker": "KMEZ",
     "name": "Ковровский механический завод",
     "lotSize": 1,
-    "price": 1062,
+    "price": 1060,
     "figi": "BBG000Q136G4",
     "currency": "rub"
   },
@@ -643,7 +643,7 @@
     "ticker": "KOGK",
     "name": "Коршуновский ГОК",
     "lotSize": 1,
-    "price": 298.6,
+    "price": 302.4,
     "figi": "BBG000R41LN8",
     "currency": "rub"
   },
@@ -659,7 +659,7 @@
     "ticker": "KRKNP",
     "name": "Саратовский НПЗ - акции привилегированные",
     "lotSize": 1,
-    "price": 6820,
+    "price": 6780,
     "figi": "BBG002B2J5X0",
     "currency": "rub"
   },
@@ -667,7 +667,7 @@
     "ticker": "KRKOP",
     "name": "Красный котельщик-ап-О",
     "lotSize": 100,
-    "price": 15.02,
+    "price": 14.94,
     "figi": "TCS009098131",
     "currency": "rub"
   },
@@ -675,7 +675,7 @@
     "ticker": "KROT",
     "name": "Красный Октябрь",
     "lotSize": 10,
-    "price": 1200,
+    "price": 1156,
     "figi": "BBG000NLB2G3",
     "currency": "rub"
   },
@@ -683,7 +683,7 @@
     "ticker": "KROTP",
     "name": "Красный Октябрь - привилегированные акции",
     "lotSize": 10,
-    "price": 473,
+    "price": 474,
     "figi": "BBG000NLB601",
     "currency": "rub"
   },
@@ -691,7 +691,7 @@
     "ticker": "KRSB",
     "name": "Красноярскэнергосбыт",
     "lotSize": 100,
-    "price": 22.92,
+    "price": 22.48,
     "figi": "BBG000VPC602",
     "currency": "rub"
   },
@@ -699,7 +699,7 @@
     "ticker": "KRSBP",
     "name": "Красноярскэнергосбыт - привилегированные акции",
     "lotSize": 100,
-    "price": 23.68,
+    "price": 22.82,
     "figi": "BBG000VPC6Y5",
     "currency": "rub"
   },
@@ -707,7 +707,7 @@
     "ticker": "KUZB",
     "name": "Кузнецкий Банк",
     "lotSize": 10000,
-    "price": 0.03095,
+    "price": 0.03085,
     "figi": "BBG003C53JK1",
     "currency": "rub"
   },
@@ -715,7 +715,7 @@
     "ticker": "KZOS",
     "name": "Казаньоргсинтез",
     "lotSize": 10,
-    "price": 56.9,
+    "price": 57.6,
     "figi": "BBG0029SFXB3",
     "currency": "rub"
   },
@@ -723,7 +723,7 @@
     "ticker": "KZOSP",
     "name": "Казаньоргсинтез - акции привилегированные",
     "lotSize": 10,
-    "price": 14.26,
+    "price": 14.4,
     "figi": "BBG0029SG1C1",
     "currency": "rub"
   },
@@ -731,7 +731,7 @@
     "ticker": "LEAS",
     "name": "Европлан",
     "lotSize": 1,
-    "price": 617.6,
+    "price": 619,
     "figi": "TCS00A0ZZFS9",
     "currency": "rub"
   },
@@ -739,7 +739,7 @@
     "ticker": "LENT",
     "name": "Лента",
     "lotSize": 1,
-    "price": 1903,
+    "price": 1804,
     "figi": "BBG0063FKTD9",
     "currency": "rub"
   },
@@ -747,7 +747,7 @@
     "ticker": "LIFE",
     "name": "Фармсинтез",
     "lotSize": 100,
-    "price": 2.8449999999999998,
+    "price": 2.795,
     "figi": "TCS10A0JR514",
     "currency": "rub"
   },
@@ -755,7 +755,7 @@
     "ticker": "LKOH",
     "name": "ЛУКОЙЛ",
     "lotSize": 1,
-    "price": 5225.5,
+    "price": 5135,
     "figi": "BBG004731032",
     "currency": "rub"
   },
@@ -763,7 +763,7 @@
     "ticker": "LMBZ",
     "name": "Ламбумиз",
     "lotSize": 1,
-    "price": 409.5,
+    "price": 421,
     "figi": "TCS00A108ZX6",
     "currency": "rub"
   },
@@ -771,7 +771,7 @@
     "ticker": "LPSB",
     "name": "Липецкая энергосбытовая компания",
     "lotSize": 100,
-    "price": 58.75,
+    "price": 58.35,
     "figi": "BBG000DD0BC8",
     "currency": "rub"
   },
@@ -779,7 +779,7 @@
     "ticker": "LSNG",
     "name": "Россети Ленэнерго",
     "lotSize": 100,
-    "price": 14.86,
+    "price": 14.95,
     "figi": "BBG000NLC9Z6",
     "currency": "rub"
   },
@@ -787,7 +787,7 @@
     "ticker": "LSNGP",
     "name": "Россети Ленэнерго - акции привилегированные",
     "lotSize": 10,
-    "price": 358.8,
+    "price": 352.65,
     "figi": "BBG000NLCCM3",
     "currency": "rub"
   },
@@ -795,7 +795,7 @@
     "ticker": "LSRG",
     "name": "Группа ЛСР",
     "lotSize": 1,
-    "price": 625.2,
+    "price": 625,
     "figi": "BBG004S68C39",
     "currency": "rub"
   },
@@ -803,7 +803,7 @@
     "ticker": "LVHK",
     "name": "Левенгук",
     "lotSize": 100,
-    "price": 23.6,
+    "price": 24.15,
     "figi": "BBG003NZBX32",
     "currency": "rub"
   },
@@ -811,7 +811,7 @@
     "ticker": "MAGE",
     "name": "Магаданэнерго",
     "lotSize": 100,
-    "price": 2.82,
+    "price": 2.85,
     "figi": "BBG0018X73Z4",
     "currency": "rub"
   },
@@ -819,7 +819,7 @@
     "ticker": "MAGEP",
     "name": "Магаданэнерго - привилегированные акции",
     "lotSize": 100,
-    "price": 2.21,
+    "price": 2.22,
     "figi": "BBG0018X75N2",
     "currency": "rub"
   },
@@ -827,7 +827,7 @@
     "ticker": "MAGN",
     "name": "Магнитогорский металлургический комбинат",
     "lotSize": 10,
-    "price": 24.705,
+    "price": 24.9,
     "figi": "BBG004S68507",
     "currency": "rub"
   },
@@ -835,7 +835,7 @@
     "ticker": "MBNK",
     "name": "МТС-Банк",
     "lotSize": 1,
-    "price": 1299,
+    "price": 1293,
     "figi": "TCS00A0JRH43",
     "currency": "rub"
   },
@@ -843,7 +843,7 @@
     "ticker": "MDMG",
     "name": "Мать и дитя",
     "lotSize": 1,
-    "price": 1309.5,
+    "price": 1293.3,
     "figi": "TCS00Y3XYV94",
     "currency": "rub"
   },
@@ -851,7 +851,7 @@
     "ticker": "MFGS",
     "name": "Славнефть-Мегионнефтегаз",
     "lotSize": 10,
-    "price": 412,
+    "price": 389,
     "figi": "BBG000NLK3N3",
     "currency": "rub"
   },
@@ -859,7 +859,7 @@
     "ticker": "MFGSP",
     "name": "Славнефть-Мегионнефтегаз - привилегированные акции",
     "lotSize": 10,
-    "price": 293.5,
+    "price": 280.5,
     "figi": "BBG000NLL888",
     "currency": "rub"
   },
@@ -867,7 +867,7 @@
     "ticker": "MGKL",
     "name": "МГКЛ",
     "lotSize": 100,
-    "price": 2.4335,
+    "price": 2.4505,
     "figi": "TCS00A0JVJQ8",
     "currency": "rub"
   },
@@ -875,7 +875,7 @@
     "ticker": "MGNT",
     "name": "Магнит",
     "lotSize": 1,
-    "price": 2551,
+    "price": 2557.5,
     "figi": "BBG004RVFCY3",
     "currency": "rub"
   },
@@ -883,7 +883,7 @@
     "ticker": "MGTS",
     "name": "МГТС",
     "lotSize": 1,
-    "price": 1082,
+    "price": 1074,
     "figi": "BBG000NT5184",
     "currency": "rub"
   },
@@ -891,7 +891,7 @@
     "ticker": "MGTSP",
     "name": "МГТС - акции привилегированные",
     "lotSize": 1,
-    "price": 742,
+    "price": 734,
     "figi": "BBG000PZ0833",
     "currency": "rub"
   },
@@ -899,7 +899,7 @@
     "ticker": "MISB",
     "name": "ТНС энерго Марий Эл",
     "lotSize": 100,
-    "price": 51.1,
+    "price": 51,
     "figi": "BBG000DD65R9",
     "currency": "rub"
   },
@@ -907,7 +907,7 @@
     "ticker": "MISBP",
     "name": "ТНС энерго Марий Эл - привилегированные акции",
     "lotSize": 100,
-    "price": 55.9,
+    "price": 56.4,
     "figi": "BBG000DD66T5",
     "currency": "rub"
   },
@@ -915,7 +915,7 @@
     "ticker": "MOEX",
     "name": "ПАО Московская Биржа",
     "lotSize": 10,
-    "price": 169.73,
+    "price": 167.73,
     "figi": "BBG004730JJ5",
     "currency": "rub"
   },
@@ -923,7 +923,7 @@
     "ticker": "MRKC",
     "name": "Россети Центр",
     "lotSize": 1000,
-    "price": 0.8566,
+    "price": 0.8422,
     "figi": "BBG000VH7TZ8",
     "currency": "rub"
   },
@@ -931,7 +931,7 @@
     "ticker": "MRKK",
     "name": "МРСК Северного Кавказа",
     "lotSize": 10,
-    "price": 18.56,
+    "price": 19.66,
     "figi": "BBG000V95X70",
     "currency": "rub"
   },
@@ -939,7 +939,7 @@
     "ticker": "MRKP",
     "name": "Россети Центр и Приволжье",
     "lotSize": 10000,
-    "price": 0.6176,
+    "price": 0.6147,
     "figi": "BBG000VG1034",
     "currency": "rub"
   },
@@ -947,7 +947,7 @@
     "ticker": "MRKS",
     "name": "Россети Сибирь",
     "lotSize": 1000,
-    "price": 0.476,
+    "price": 0.4835,
     "figi": "BBG000VJMH65",
     "currency": "rub"
   },
@@ -955,7 +955,7 @@
     "ticker": "MRKU",
     "name": "Россети Урал",
     "lotSize": 10000,
-    "price": 0.6306,
+    "price": 0.6226,
     "figi": "BBG000VKG4R5",
     "currency": "rub"
   },
@@ -963,7 +963,7 @@
     "ticker": "MRKV",
     "name": "Россети Волга",
     "lotSize": 10000,
-    "price": 0.1876,
+    "price": 0.18995,
     "figi": "BBG000PKWCQ7",
     "currency": "rub"
   },
@@ -971,7 +971,7 @@
     "ticker": "MRKY",
     "name": "Россети Юг",
     "lotSize": 10000,
-    "price": 0.07195,
+    "price": 0.07605,
     "figi": "BBG000C7P5M7",
     "currency": "rub"
   },
@@ -979,7 +979,7 @@
     "ticker": "MRKZ",
     "name": "Россети Северо-Запад",
     "lotSize": 10000,
-    "price": 0.10245,
+    "price": 0.12495,
     "figi": "BBG000TJ6F42",
     "currency": "rub"
   },
@@ -987,7 +987,7 @@
     "ticker": "MRSB",
     "name": "Мордовская энергосбытовая компания",
     "lotSize": 10000,
-    "price": 0.844,
+    "price": 0.85,
     "figi": "BBG000MFYK81",
     "currency": "rub"
   },
@@ -995,7 +995,7 @@
     "ticker": "MSNG",
     "name": "Мосэнерго",
     "lotSize": 1000,
-    "price": 1.9449999999999998,
+    "price": 1.9485000000000001,
     "figi": "BBG004S687W8",
     "currency": "rub"
   },
@@ -1003,7 +1003,7 @@
     "ticker": "MSRS",
     "name": "Россети Московский регион",
     "lotSize": 1000,
-    "price": 1.9215,
+    "price": 1.9705,
     "figi": "BBG004S687G6",
     "currency": "rub"
   },
@@ -1011,7 +1011,7 @@
     "ticker": "MSTT",
     "name": "Мостотрест",
     "lotSize": 10,
-    "price": 103.65,
+    "price": 101.55,
     "figi": "BBG004S68DD6",
     "currency": "rub"
   },
@@ -1019,7 +1019,7 @@
     "ticker": "MTLR",
     "name": "Мечел",
     "lotSize": 1,
-    "price": 57.55,
+    "price": 57.26,
     "figi": "BBG004S68598",
     "currency": "rub"
   },
@@ -1027,7 +1027,7 @@
     "ticker": "MTLRP",
     "name": "Мечел - Привилегированные акции",
     "lotSize": 10,
-    "price": 52.85,
+    "price": 52.4,
     "figi": "BBG004S68FR6",
     "currency": "rub"
   },
@@ -1035,7 +1035,7 @@
     "ticker": "MTSS",
     "name": "МТС",
     "lotSize": 10,
-    "price": 218.4,
+    "price": 218.6,
     "figi": "BBG004S681W1",
     "currency": "rub"
   },
@@ -1051,7 +1051,7 @@
     "ticker": "NAUK",
     "name": "НПО Наука",
     "lotSize": 10,
-    "price": 505,
+    "price": 509,
     "figi": "BBG002BLR408",
     "currency": "rub"
   },
@@ -1059,7 +1059,7 @@
     "ticker": "NFAZ",
     "name": "НЕФАЗ",
     "lotSize": 10,
-    "price": 252,
+    "price": 258,
     "figi": "BBG00226CJM0",
     "currency": "rub"
   },
@@ -1067,7 +1067,7 @@
     "ticker": "NKHP",
     "name": "НКХП",
     "lotSize": 10,
-    "price": 479,
+    "price": 474,
     "figi": "BBG00BGKYH17",
     "currency": "rub"
   },
@@ -1075,7 +1075,7 @@
     "ticker": "NKNC",
     "name": "Нижнекамскнефтехим",
     "lotSize": 10,
-    "price": 71.95,
+    "price": 70.55,
     "figi": "BBG000GQSRR5",
     "currency": "rub"
   },
@@ -1083,7 +1083,7 @@
     "ticker": "NKNCP",
     "name": "Нижнекамскнефтехим (привилегированные)",
     "lotSize": 10,
-    "price": 50.44,
+    "price": 50.46,
     "figi": "BBG000GQSVC2",
     "currency": "rub"
   },
@@ -1091,7 +1091,7 @@
     "ticker": "NKSH",
     "name": "Нижнекамскшина",
     "lotSize": 100,
-    "price": 36.9,
+    "price": 36.8,
     "figi": "BBG002B9P9K4",
     "currency": "rub"
   },
@@ -1099,7 +1099,7 @@
     "ticker": "NLMK",
     "name": "НЛМК",
     "lotSize": 10,
-    "price": 86,
+    "price": 85.46,
     "figi": "BBG004S681B4",
     "currency": "rub"
   },
@@ -1107,7 +1107,7 @@
     "ticker": "NMTP",
     "name": "НМТП",
     "lotSize": 100,
-    "price": 8.475,
+    "price": 8.395,
     "figi": "BBG004S68BR5",
     "currency": "rub"
   },
@@ -1115,7 +1115,7 @@
     "ticker": "NNSB",
     "name": "ТНС энерго Нижний Новгород",
     "lotSize": 1,
-    "price": 3810,
+    "price": 3910,
     "figi": "BBG000J1TPS9",
     "currency": "rub"
   },
@@ -1123,7 +1123,7 @@
     "ticker": "NNSBP",
     "name": "ТНС энерго Нижний Новгород - привилегированные акции",
     "lotSize": 1,
-    "price": 1346,
+    "price": 1350,
     "figi": "BBG000J1Z285",
     "currency": "rub"
   },
@@ -1131,7 +1131,7 @@
     "ticker": "NSVZ",
     "name": "Наука-Связь",
     "lotSize": 10,
-    "price": 231,
+    "price": 231.5,
     "figi": "BBG002BCQK67",
     "currency": "rub"
   },
@@ -1139,7 +1139,7 @@
     "ticker": "NVTK",
     "name": "НОВАТЭК",
     "lotSize": 1,
-    "price": 1159,
+    "price": 1155.2,
     "figi": "BBG00475KKY8",
     "currency": "rub"
   },
@@ -1147,7 +1147,7 @@
     "ticker": "OGKB",
     "name": "Вторая генерирующая компания оптового рынка электроэнергии",
     "lotSize": 1000,
-    "price": 0.2969,
+    "price": 0.2964,
     "figi": "BBG000RK52V1",
     "currency": "rub"
   },
@@ -1155,7 +1155,7 @@
     "ticker": "OMZZP",
     "name": "ОМЗ (Группа Уралмаш-Ижора) - привилегированные акции",
     "lotSize": 1,
-    "price": 10240,
+    "price": 10220,
     "figi": "BBG000CV9JM2",
     "currency": "rub"
   },
@@ -1163,7 +1163,7 @@
     "ticker": "OZON",
     "name": "Озон",
     "lotSize": 1,
-    "price": 4135,
+    "price": 4217,
     "figi": "TCS80A10CW95",
     "currency": "rub"
   },
@@ -1171,7 +1171,7 @@
     "ticker": "OZPH",
     "name": "Озон Фармацевтика",
     "lotSize": 10,
-    "price": 48.06,
+    "price": 47.79,
     "figi": "TCS00A109B25",
     "currency": "rub"
   },
@@ -1187,7 +1187,7 @@
     "ticker": "PHOR",
     "name": "ФосАгро",
     "lotSize": 1,
-    "price": 6750,
+    "price": 6755,
     "figi": "BBG004S689R0",
     "currency": "rub"
   },
@@ -1195,7 +1195,7 @@
     "ticker": "PIKK",
     "name": "ПИК-Специализированный застройщик",
     "lotSize": 1,
-    "price": 537,
+    "price": 536.7,
     "figi": "BBG004S68BH6",
     "currency": "rub"
   },
@@ -1203,7 +1203,7 @@
     "ticker": "PLZL",
     "name": "Полюс",
     "lotSize": 1,
-    "price": 2069.2,
+    "price": 2173,
     "figi": "BBG000R607Y3",
     "currency": "rub"
   },
@@ -1211,7 +1211,7 @@
     "ticker": "PMSB",
     "name": "Пермэнергосбыт",
     "lotSize": 10,
-    "price": 539.5,
+    "price": 532.9,
     "figi": "BBG000MZL0Y6",
     "currency": "rub"
   },
@@ -1219,7 +1219,7 @@
     "ticker": "PMSBP",
     "name": "Пермэнергосбыт - акции привилегированные",
     "lotSize": 10,
-    "price": 569.8,
+    "price": 569,
     "figi": "BBG000MZL2S9",
     "currency": "rub"
   },
@@ -1227,7 +1227,7 @@
     "ticker": "POSI",
     "name": "Группа Позитив",
     "lotSize": 1,
-    "price": 989.2,
+    "price": 989,
     "figi": "TCS00A103X66",
     "currency": "rub"
   },
@@ -1235,7 +1235,7 @@
     "ticker": "PRFN",
     "name": "ЧЗПСН-Профнастил",
     "lotSize": 100,
-    "price": 3.746,
+    "price": 3.7199999999999998,
     "figi": "TCS00A0JNXF9",
     "currency": "rub"
   },
@@ -1243,7 +1243,7 @@
     "ticker": "PRMB",
     "name": "Приморье Банк",
     "lotSize": 1,
-    "price": 24800,
+    "price": 24600,
     "figi": "BBG001P1VKH0",
     "currency": "rub"
   },
@@ -1251,7 +1251,7 @@
     "ticker": "PRMD",
     "name": "Промомед",
     "lotSize": 1,
-    "price": 399.7,
+    "price": 398,
     "figi": "TCS30A108JF7",
     "currency": "rub"
   },
@@ -1259,7 +1259,7 @@
     "ticker": "RAGR",
     "name": "РусАгро",
     "lotSize": 1,
-    "price": 109,
+    "price": 105.8,
     "figi": "TCS90A0JQUZ6",
     "currency": "rub"
   },
@@ -1267,7 +1267,7 @@
     "ticker": "RASP",
     "name": "Распадская",
     "lotSize": 10,
-    "price": 131.6,
+    "price": 133.3,
     "figi": "BBG004S68696",
     "currency": "rub"
   },
@@ -1275,7 +1275,7 @@
     "ticker": "RBCM",
     "name": "РБК",
     "lotSize": 100,
-    "price": 9.28,
+    "price": 9.215,
     "figi": "TCS10A0JR6A6",
     "currency": "rub"
   },
@@ -1283,7 +1283,7 @@
     "ticker": "RDRB",
     "name": "РосДорБанк",
     "lotSize": 10,
-    "price": 116.2,
+    "price": 119.6,
     "figi": "BBG0078NQQ09",
     "currency": "rub"
   },
@@ -1291,7 +1291,7 @@
     "ticker": "RENI",
     "name": "Ренессанс Страхование",
     "lotSize": 10,
-    "price": 85.3,
+    "price": 85.34,
     "figi": "BBG00QKJSX05",
     "currency": "rub"
   },
@@ -1299,7 +1299,7 @@
     "ticker": "RGSS",
     "name": "Росгосстрах",
     "lotSize": 1000,
-    "price": 0.1898,
+    "price": 0.191,
     "figi": "BBG005S5WCS4",
     "currency": "rub"
   },
@@ -1307,7 +1307,7 @@
     "ticker": "RKKE",
     "name": "РКК Энергия им.С.П.Королева",
     "lotSize": 1,
-    "price": 13980,
+    "price": 13900,
     "figi": "BBG000LWNRP3",
     "currency": "rub"
   },
@@ -1315,7 +1315,7 @@
     "ticker": "RNFT",
     "name": "РуссНефть",
     "lotSize": 1,
-    "price": 111.05,
+    "price": 108.15,
     "figi": "BBG00F9XX7H4",
     "currency": "rub"
   },
@@ -1323,7 +1323,7 @@
     "ticker": "ROLO",
     "name": "Русолово",
     "lotSize": 1000,
-    "price": 0.394,
+    "price": 0.3952,
     "figi": "BBG004Z2RGW8",
     "currency": "rub"
   },
@@ -1331,7 +1331,7 @@
     "ticker": "ROSN",
     "name": "Роснефть",
     "lotSize": 1,
-    "price": 422.95,
+    "price": 413,
     "figi": "BBG004731354",
     "currency": "rub"
   },
@@ -1339,7 +1339,7 @@
     "ticker": "ROST",
     "name": "Росинтер Ресторантс Холдинг",
     "lotSize": 10,
-    "price": 82,
+    "price": 80.2,
     "figi": "TCS00A0JP922",
     "currency": "rub"
   },
@@ -1347,7 +1347,7 @@
     "ticker": "RTGZ",
     "name": "Ростовоблгаз",
     "lotSize": 1,
-    "price": 40200,
+    "price": 40800,
     "figi": "BBG003M5Q5B5",
     "currency": "rub"
   },
@@ -1355,7 +1355,7 @@
     "ticker": "RTKM",
     "name": "Ростелеком",
     "lotSize": 10,
-    "price": 53.31,
+    "price": 53,
     "figi": "BBG004S682Z6",
     "currency": "rub"
   },
@@ -1363,7 +1363,7 @@
     "ticker": "RTKMP",
     "name": "Ростелеком - Привилегированные акции",
     "lotSize": 10,
-    "price": 56.1,
+    "price": 55.8,
     "figi": "BBG004S685M3",
     "currency": "rub"
   },
@@ -1371,7 +1371,7 @@
     "ticker": "RTSB",
     "name": "ТНС энерго Ростов-на-Дону",
     "lotSize": 1000,
-    "price": 3.11,
+    "price": 3.065,
     "figi": "BBG000GQSRP7",
     "currency": "rub"
   },
@@ -1379,7 +1379,7 @@
     "ticker": "RTSBP",
     "name": "ТНС энерго Ростов-на-Дону - привилегированные акции",
     "lotSize": 1000,
-    "price": 1.476,
+    "price": 1.474,
     "figi": "BBG000GVFKL9",
     "currency": "rub"
   },
@@ -1387,7 +1387,7 @@
     "ticker": "RUAL",
     "name": "РУСАЛ",
     "lotSize": 10,
-    "price": 39.415,
+    "price": 39.295,
     "figi": "BBG008F2T3T2",
     "currency": "rub"
   },
@@ -1395,7 +1395,7 @@
     "ticker": "RUSI",
     "name": "РУСС-ИНВЕСТ",
     "lotSize": 10,
-    "price": 68.7,
+    "price": 67.8,
     "figi": "BBG0028Z77G9",
     "currency": "rub"
   },
@@ -1403,7 +1403,7 @@
     "ticker": "RZSB",
     "name": "Рязанская энергетическая сбытовая компания",
     "lotSize": 100,
-    "price": 38.12,
+    "price": 37.88,
     "figi": "BBG000FJ81J0",
     "currency": "rub"
   },
@@ -1411,7 +1411,7 @@
     "ticker": "SAGO",
     "name": "Самараэнерго",
     "lotSize": 1000,
-    "price": 2.625,
+    "price": 2.61,
     "figi": "BBG000NLDS29",
     "currency": "rub"
   },
@@ -1419,7 +1419,7 @@
     "ticker": "SAGOP",
     "name": "Самараэнерго - привилегированные акции",
     "lotSize": 1000,
-    "price": 2.515,
+    "price": 2.54,
     "figi": "BBG000NLDYT7",
     "currency": "rub"
   },
@@ -1427,7 +1427,7 @@
     "ticker": "SARE",
     "name": "Саратовэнерго",
     "lotSize": 10000,
-    "price": 0.725,
+    "price": 0.743,
     "figi": "BBG000CV7ZG5",
     "currency": "rub"
   },
@@ -1435,7 +1435,7 @@
     "ticker": "SAREP",
     "name": "Саратовэнерго - привилегированные акции",
     "lotSize": 10000,
-    "price": 0.4155,
+    "price": 0.423,
     "figi": "BBG000CV8026",
     "currency": "rub"
   },
@@ -1443,7 +1443,7 @@
     "ticker": "SBER",
     "name": "Сбер Банк",
     "lotSize": 1,
-    "price": 322,
+    "price": 320,
     "figi": "BBG004730N88",
     "currency": "rub"
   },
@@ -1451,7 +1451,7 @@
     "ticker": "SBERP",
     "name": "Сбер Банк - привилегированные акции",
     "lotSize": 1,
-    "price": 321.78,
+    "price": 320.31,
     "figi": "BBG0047315Y7",
     "currency": "rub"
   },
@@ -1459,7 +1459,7 @@
     "ticker": "SELG",
     "name": "Селигдар",
     "lotSize": 10,
-    "price": 46.31,
+    "price": 46.65,
     "figi": "BBG002458LF8",
     "currency": "rub"
   },
@@ -1467,7 +1467,7 @@
     "ticker": "SFIN",
     "name": "ЭсЭфАй",
     "lotSize": 1,
-    "price": 1019.8,
+    "price": 1017,
     "figi": "BBG003LYCMB1",
     "currency": "rub"
   },
@@ -1475,7 +1475,7 @@
     "ticker": "SGZH",
     "name": "Сегежа",
     "lotSize": 100,
-    "price": 0.876,
+    "price": 0.865,
     "figi": "BBG0100R9963",
     "currency": "rub"
   },
@@ -1483,7 +1483,7 @@
     "ticker": "SIBN",
     "name": "Газпром нефть",
     "lotSize": 1,
-    "price": 511.7,
+    "price": 509,
     "figi": "BBG004S684M6",
     "currency": "rub"
   },
@@ -1491,7 +1491,7 @@
     "ticker": "SLEN",
     "name": "Сахалинэнерго",
     "lotSize": 100,
-    "price": 3.31,
+    "price": 3.325,
     "figi": "BBG00FX0RGJ4",
     "currency": "rub"
   },
@@ -1499,7 +1499,7 @@
     "ticker": "SMLT",
     "name": "ГК Самолет",
     "lotSize": 1,
-    "price": 575,
+    "price": 586.2,
     "figi": "BBG00F6NKQX3",
     "currency": "rub"
   },
@@ -1507,7 +1507,7 @@
     "ticker": "SNGS",
     "name": "Сургутнефтегаз",
     "lotSize": 100,
-    "price": 19.72,
+    "price": 19.515,
     "figi": "BBG0047315D0",
     "currency": "rub"
   },
@@ -1515,7 +1515,7 @@
     "ticker": "SNGSP",
     "name": "Сургутнефтегаз - привилегированные акции",
     "lotSize": 10,
-    "price": 42.865,
+    "price": 41.985,
     "figi": "BBG004S681M2",
     "currency": "rub"
   },
@@ -1523,7 +1523,7 @@
     "ticker": "SOFL",
     "name": "Софтлайн",
     "lotSize": 10,
-    "price": 66.38,
+    "price": 65.98,
     "figi": "TCS00A0ZZBC2",
     "currency": "rub"
   },
@@ -1531,7 +1531,7 @@
     "ticker": "STSB",
     "name": "Ставропольэнергосбыт",
     "lotSize": 1000,
-    "price": 3.665,
+    "price": 3.865,
     "figi": "BBG000VDT0D0",
     "currency": "rub"
   },
@@ -1539,7 +1539,7 @@
     "ticker": "STSBP",
     "name": "Ставропольэнергосбыт - привилегированные акции",
     "lotSize": 1000,
-    "price": 4.6850000000000005,
+    "price": 4.665,
     "figi": "BBG000VDT2X4",
     "currency": "rub"
   },
@@ -1547,7 +1547,7 @@
     "ticker": "SVAV",
     "name": "СОЛЛЕРС",
     "lotSize": 1,
-    "price": 456,
+    "price": 455.5,
     "figi": "BBG004S68JR8",
     "currency": "rub"
   },
@@ -1555,7 +1555,7 @@
     "ticker": "SVCB",
     "name": "Совкомбанк",
     "lotSize": 100,
-    "price": 12.14,
+    "price": 12.135,
     "figi": "TCS00A0ZZAC4",
     "currency": "rub"
   },
@@ -1563,7 +1563,7 @@
     "ticker": "SVET",
     "name": "Светофор Групп",
     "lotSize": 1,
-    "price": 12.06,
+    "price": 12.2,
     "figi": "BBG00M8JQW11",
     "currency": "rub"
   },
@@ -1571,7 +1571,7 @@
     "ticker": "SVETP",
     "name": "Светофор Групп-ап",
     "lotSize": 1,
-    "price": 22.95,
+    "price": 22.9,
     "figi": "TCS00A1005A9",
     "currency": "rub"
   },
@@ -1579,7 +1579,7 @@
     "ticker": "T",
     "name": "Т-Технологии",
     "lotSize": 1,
-    "price": 310.14,
+    "price": 309.84,
     "figi": "TCS80A107UL4",
     "currency": "rub"
   },
@@ -1587,7 +1587,7 @@
     "ticker": "TASB",
     "name": "Тамбовская энергосбытовая компания",
     "lotSize": 1000,
-    "price": 2.01,
+    "price": 2.086,
     "figi": "BBG000MD2ST1",
     "currency": "rub"
   },
@@ -1595,7 +1595,7 @@
     "ticker": "TASBP",
     "name": "Тамбовская энергосбытовая компания - привилегированные акции",
     "lotSize": 10000,
-    "price": 0.968,
+    "price": 0.972,
     "figi": "BBG000MD2WC0",
     "currency": "rub"
   },
@@ -1603,7 +1603,7 @@
     "ticker": "TATN",
     "name": "Татнефть",
     "lotSize": 1,
-    "price": 581.3,
+    "price": 570.5,
     "figi": "BBG004RVFFC0",
     "currency": "rub"
   },
@@ -1611,7 +1611,7 @@
     "ticker": "TATNP",
     "name": "Татнефть - привилегированные акции",
     "lotSize": 1,
-    "price": 548.7,
+    "price": 541,
     "figi": "BBG004S68829",
     "currency": "rub"
   },
@@ -1619,7 +1619,7 @@
     "ticker": "TGKA",
     "name": "ТГК-1",
     "lotSize": 100000,
-    "price": 0.005986,
+    "price": 0.006008,
     "figi": "BBG000QFH687",
     "currency": "rub"
   },
@@ -1627,7 +1627,7 @@
     "ticker": "TGKB",
     "name": "ТГК-2",
     "lotSize": 1000000,
-    "price": 0.005885,
+    "price": 0.006005,
     "figi": "BBG000Q7GG57",
     "currency": "rub"
   },
@@ -1635,7 +1635,7 @@
     "ticker": "TGKBP",
     "name": "ТГК-2 - акции привилегированные",
     "lotSize": 100000,
-    "price": 0.0091,
+    "price": 0.00911,
     "figi": "BBG000Q7GJ60",
     "currency": "rub"
   },
@@ -1643,7 +1643,7 @@
     "ticker": "TGKN",
     "name": "ТГК-14",
     "lotSize": 100000,
-    "price": 0.00525,
+    "price": 0.00529,
     "figi": "BBG000RG4ZQ4",
     "currency": "rub"
   },
@@ -1651,7 +1651,7 @@
     "ticker": "TNSE",
     "name": "ТНС энерго",
     "lotSize": 1,
-    "price": 3930,
+    "price": 3870,
     "figi": "BBG009CWKVN0",
     "currency": "rub"
   },
@@ -1659,7 +1659,7 @@
     "ticker": "TORS",
     "name": "Томская распределительная компания",
     "lotSize": 10000,
-    "price": 0.712,
+    "price": 0.72,
     "figi": "BBG000MDCJV7",
     "currency": "rub"
   },
@@ -1675,7 +1675,7 @@
     "ticker": "TRMK",
     "name": "Трубная Металлургическая Компания",
     "lotSize": 10,
-    "price": 87.1,
+    "price": 87.4,
     "figi": "BBG004TC84Z8",
     "currency": "rub"
   },
@@ -1683,7 +1683,7 @@
     "ticker": "TRNFP",
     "name": "Транснефть - привилегированные акции",
     "lotSize": 1,
-    "price": 1386.4,
+    "price": 1393.4,
     "figi": "BBG00475KHX6",
     "currency": "rub"
   },
@@ -1691,7 +1691,7 @@
     "ticker": "TTLK",
     "name": "Таттелеком",
     "lotSize": 1000,
-    "price": 0.6105,
+    "price": 0.5955,
     "figi": "BBG000RJL816",
     "currency": "rub"
   },
@@ -1699,7 +1699,7 @@
     "ticker": "TUZA",
     "name": "Туймазинский завод автобетоновозов",
     "lotSize": 10,
-    "price": 107.2,
+    "price": 105.6,
     "figi": "BBG000R4K9Y2",
     "currency": "rub"
   },
@@ -1707,7 +1707,7 @@
     "ticker": "UGLD",
     "name": "Южуралзолото ГК",
     "lotSize": 1000,
-    "price": 0.7419,
+    "price": 0.7481,
     "figi": "TCS00A0JPP37",
     "currency": "rub"
   },
@@ -1715,7 +1715,7 @@
     "ticker": "UKUZ",
     "name": "Южный Кузбасс",
     "lotSize": 1,
-    "price": 726,
+    "price": 728,
     "figi": "BBG000RK0SD9",
     "currency": "rub"
   },
@@ -1723,7 +1723,7 @@
     "ticker": "UNAC",
     "name": "Объединенная авиастроительная корпорация",
     "lotSize": 1000,
-    "price": 0.397,
+    "price": 0.396,
     "figi": "BBG000Q7ZZY2",
     "currency": "rub"
   },
@@ -1731,7 +1731,7 @@
     "ticker": "UNKL",
     "name": "ЮУНК",
     "lotSize": 1,
-    "price": 4210,
+    "price": 4200,
     "figi": "BBG002YFXL29",
     "currency": "rub"
   },
@@ -1739,7 +1739,7 @@
     "ticker": "UPRO",
     "name": "Юнипро",
     "lotSize": 1000,
-    "price": 1.3835,
+    "price": 1.376,
     "figi": "BBG004S686W0",
     "currency": "rub"
   },
@@ -1747,7 +1747,7 @@
     "ticker": "URKZ",
     "name": "Уралкуз",
     "lotSize": 1,
-    "price": 262.8,
+    "price": 262.6,
     "figi": "BBG002Z691S1",
     "currency": "rub"
   },
@@ -1755,7 +1755,7 @@
     "ticker": "USBN",
     "name": "Банк УРАЛСИБ",
     "lotSize": 10000,
-    "price": 0.1209,
+    "price": 0.121,
     "figi": "BBG000BY39G2",
     "currency": "rub"
   },
@@ -1763,7 +1763,7 @@
     "ticker": "UTAR",
     "name": "Utair",
     "lotSize": 100,
-    "price": 10.97,
+    "price": 11.22,
     "figi": "BBG000BDMZ51",
     "currency": "rub"
   },
@@ -1771,7 +1771,7 @@
     "ticker": "UWGN",
     "name": "ОВК",
     "lotSize": 1,
-    "price": 24,
+    "price": 23.9,
     "figi": "TCS90A0JVBT9",
     "currency": "rub"
   },
@@ -1779,7 +1779,7 @@
     "ticker": "VGSB",
     "name": "Волгоградэнергосбыт",
     "lotSize": 1000,
-    "price": 17,
+    "price": 15.85,
     "figi": "BBG000FJ6LN3",
     "currency": "rub"
   },
@@ -1787,7 +1787,7 @@
     "ticker": "VGSBP",
     "name": "Волгоградэнергосбыт - привилегированные акции",
     "lotSize": 1000,
-    "price": 12.85,
+    "price": 13,
     "figi": "BBG000FJ6S03",
     "currency": "rub"
   },
@@ -1795,7 +1795,7 @@
     "ticker": "VJGZ",
     "name": "Варьеганнефтегаз",
     "lotSize": 1,
-    "price": 3685,
+    "price": 3455,
     "figi": "BBG002B9PYV7",
     "currency": "rub"
   },
@@ -1803,7 +1803,7 @@
     "ticker": "VJGZP",
     "name": "Варьеганнефтегаз - привилегированные акции",
     "lotSize": 1,
-    "price": 1580,
+    "price": 1486,
     "figi": "BBG002B9WQ73",
     "currency": "rub"
   },
@@ -1811,7 +1811,7 @@
     "ticker": "VKCO",
     "name": "ВК",
     "lotSize": 1,
-    "price": 238.1,
+    "price": 241.2,
     "figi": "TCS00A106YF0",
     "currency": "rub"
   },
@@ -1827,7 +1827,7 @@
     "ticker": "VRSB",
     "name": "ТНС энерго Воронеж",
     "lotSize": 10,
-    "price": 352.5,
+    "price": 347,
     "figi": "BBG000BX7DH0",
     "currency": "rub"
   },
@@ -1835,7 +1835,7 @@
     "ticker": "VRSBP",
     "name": "ТНС энерго Воронеж - привилегированные акции",
     "lotSize": 10,
-    "price": 155.6,
+    "price": 154.4,
     "figi": "BBG000JXYY95",
     "currency": "rub"
   },
@@ -1843,7 +1843,7 @@
     "ticker": "VSEH",
     "name": "ВИ.РУ",
     "lotSize": 1,
-    "price": 72.34,
+    "price": 72.84,
     "figi": "TCS10A108K09",
     "currency": "rub"
   },
@@ -1851,7 +1851,7 @@
     "ticker": "VSMO",
     "name": "ВСМПО-АВИСМА",
     "lotSize": 1,
-    "price": 24380,
+    "price": 24300,
     "figi": "BBG004S68CV8",
     "currency": "rub"
   },
@@ -1859,7 +1859,7 @@
     "ticker": "VSYD",
     "name": "ВыбСудЗ",
     "lotSize": 1,
-    "price": 9350,
+    "price": 9300,
     "figi": "TCS006334372",
     "currency": "rub"
   },
@@ -1867,7 +1867,7 @@
     "ticker": "VSYDP",
     "name": "ВыбСудЗ ап",
     "lotSize": 1,
-    "price": 7200,
+    "price": 7150,
     "figi": "TCS006334380",
     "currency": "rub"
   },
@@ -1875,7 +1875,7 @@
     "ticker": "VTBR",
     "name": "Банк ВТБ",
     "lotSize": 1,
-    "price": 91.5,
+    "price": 92.04,
     "figi": "BBG004730ZJ9",
     "currency": "rub"
   },
@@ -1883,7 +1883,7 @@
     "ticker": "WTCM",
     "name": "Центр международной торговли",
     "lotSize": 100,
-    "price": 14.2,
+    "price": 14.08,
     "figi": "BBG000TG6T57",
     "currency": "rub"
   },
@@ -1891,7 +1891,7 @@
     "ticker": "WTCMP",
     "name": "Центр международной торговли - привилегированные акции",
     "lotSize": 100,
-    "price": 12.3,
+    "price": 12.12,
     "figi": "BBG000TG6VR8",
     "currency": "rub"
   },
@@ -1899,7 +1899,7 @@
     "ticker": "WUSH",
     "name": "Whoosh",
     "lotSize": 1,
-    "price": 80.76,
+    "price": 80.07,
     "figi": "TCS00A105EX7",
     "currency": "rub"
   },
@@ -1907,7 +1907,7 @@
     "ticker": "X5",
     "name": "Корпоративный Центр Икс 5",
     "lotSize": 1,
-    "price": 2324.5,
+    "price": 2345,
     "figi": "TCS03A108X38",
     "currency": "rub"
   },
@@ -1915,7 +1915,7 @@
     "ticker": "YAKG",
     "name": "ЯТЭК",
     "lotSize": 10,
-    "price": 43,
+    "price": 42.25,
     "figi": "BBG002B298N6",
     "currency": "rub"
   },
@@ -1923,7 +1923,7 @@
     "ticker": "YDEX",
     "name": "Яндекс",
     "lotSize": 1,
-    "price": 4069.5,
+    "price": 4052.5,
     "figi": "TCS00A107T19",
     "currency": "rub"
   },
@@ -1931,7 +1931,7 @@
     "ticker": "YKEN",
     "name": "Якутскэнерго",
     "lotSize": 10000,
-    "price": 0.369,
+    "price": 0.36,
     "figi": "BBG000HJXDM0",
     "currency": "rub"
   },
@@ -1939,7 +1939,7 @@
     "ticker": "YKENP",
     "name": "Якутскэнерго - привилегированные акции",
     "lotSize": 10000,
-    "price": 0.304,
+    "price": 0.303,
     "figi": "BBG000PQYM17",
     "currency": "rub"
   },
@@ -1947,7 +1947,7 @@
     "ticker": "YRSB",
     "name": "ТНС энерго Ярославль",
     "lotSize": 10,
-    "price": 752,
+    "price": 772,
     "figi": "BBG000DG57V4",
     "currency": "rub"
   },
@@ -1955,7 +1955,7 @@
     "ticker": "YRSBP",
     "name": "ТНС энерго Ярославль - привилегированные акции",
     "lotSize": 10,
-    "price": 193,
+    "price": 195,
     "figi": "BBG000DG5L16",
     "currency": "rub"
   },
@@ -1963,7 +1963,7 @@
     "ticker": "ZAYM",
     "name": "Займер",
     "lotSize": 10,
-    "price": 138.6,
+    "price": 139.2,
     "figi": "TCS00A107RM8",
     "currency": "rub"
   },
@@ -1971,7 +1971,7 @@
     "ticker": "ZILL",
     "name": "ЗИЛ",
     "lotSize": 1,
-    "price": 4380,
+    "price": 4465,
     "figi": "BBG000NN26P0",
     "currency": "rub"
   },
