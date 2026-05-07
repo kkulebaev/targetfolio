@@ -363,7 +363,7 @@ function formatRub(value: number): string {
       </p>
 
       <Table
-        class="min-h-0 flex-1 table-fixed min-w-200 transition-opacity"
+        class="table-fixed min-w-200 transition-opacity"
         :class="{ 'opacity-60': isTinkoff && tinkoffStatus === 'loading' }"
       >
         <TableHeader>
