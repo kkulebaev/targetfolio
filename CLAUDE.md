@@ -39,7 +39,7 @@ Vue 3 (Composition API, `<script setup>`) · TypeScript strict · Vite · Pinia 
 
 - TypeScript strict. В доменном слое — без `any`.
 - Vue: только `<script setup lang="ts">`, Composition API, `storeToRefs` для деструктуризации Pinia.
-- Tailwind: используем utility‑классы напрямую, без `@apply`. Произвольные значения (`[appearance:textfield]`, `[&::-webkit-...]`) — допустимы для точечных кейсов.
+- Tailwind: используем utility‑классы напрямую, без `@apply`. Произвольные значения в скобках `[...]` (`min-w-[800px]`, `w-[12rem]`) не используем — берём стандартную шкалу Tailwind v4, включая динамический spacing (`min-w-200` = 50rem, `min-w-130` = 32.5rem). Исключение — variant‑селекторы и арбитрарные CSS‑свойства, для которых нет утилитарного эквивалента (`[appearance:textfield]`, `[&::-webkit-inner-spin-button]:appearance-none`).
 - Форматирование — `oxfmt`. Линт — `oxlint`. Не выключай правила локально без причины.
 - Файлы тестов — рядом с исходником, `*.test.ts`.
 
