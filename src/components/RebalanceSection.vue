@@ -83,12 +83,12 @@ function formatRub(value: number): string {
 </script>
 
 <template>
-  <Card class="h-full min-h-0">
+  <Card class="xl:h-full xl:min-h-0">
     <CardHeader>
       <CardTitle>Рекомендации</CardTitle>
       <CardDescription>Что докупить, чтобы приблизиться к таргету</CardDescription>
     </CardHeader>
-    <CardContent class="flex min-h-0 flex-1 flex-col gap-4">
+    <CardContent class="flex flex-col gap-4 xl:min-h-0 xl:flex-1">
       <div class="grid w-fit max-w-full gap-2">
         <Label for="cash">Свободно для покупки, ₽</Label>
         <div class="flex items-center gap-2">

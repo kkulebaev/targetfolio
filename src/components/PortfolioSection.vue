@@ -233,7 +233,7 @@ function formatRub(value: number): string {
 </script>
 
 <template>
-  <Card class="h-full min-h-0">
+  <Card class="xl:h-full xl:min-h-0">
     <CardHeader>
       <div class="flex flex-wrap items-center justify-between gap-4">
         <div>
@@ -294,7 +294,7 @@ function formatRub(value: number): string {
         </div>
       </div>
     </CardHeader>
-    <CardContent class="flex min-h-0 flex-1 flex-col gap-4">
+    <CardContent class="flex flex-col gap-4 xl:min-h-0 xl:flex-1">
       <div v-if="isTinkoff && needsTokenForm" class="grid gap-3">
         <p class="text-muted-foreground text-sm">
           Чтобы загрузить портфель, создайте read-only токен в&nbsp;настройках Т-Инвестиций и&nbsp;вставьте его ниже.
