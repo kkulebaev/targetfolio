@@ -161,7 +161,7 @@ function formatRub(value: number): string {
         </p>
       </div>
       <template v-else>
-        <Table class="min-h-0 flex-1 table-fixed">
+        <Table class="min-h-0 flex-1 table-fixed min-w-130">
           <TableHeader>
             <TableRow>
               <SortableTableHead
@@ -177,6 +177,7 @@ function formatRub(value: number): string {
                 sort-key="name"
                 :active="sortKey"
                 :dir="sortDir"
+                class="min-w-40"
                 @toggle="toggleSort"
               >
                 Название

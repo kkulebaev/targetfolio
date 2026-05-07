@@ -247,7 +247,7 @@ function formatRub(value: number): string {
             :disabled="tinkoffStatus === 'loading'"
             @update:model-value="onTinkoffAccountChange"
           >
-            <SelectTrigger class="w-56">
+            <SelectTrigger class="w-full sm:w-56">
               <SelectValue placeholder="Счёт" />
             </SelectTrigger>
             <SelectContent>
@@ -256,39 +256,41 @@ function formatRub(value: number): string {
               </SelectItem>
             </SelectContent>
           </Select>
-          <Select :model-value="source" @update:model-value="onSourceChange">
-            <SelectTrigger class="w-44">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="mock">Демо</SelectItem>
-              <SelectItem value="manual">Ручной ввод</SelectItem>
-              <SelectItem value="tinkoff">Т-Инвестиции</SelectItem>
-            </SelectContent>
-          </Select>
-          <Button
-            v-if="isTinkoff && tinkoffToken && !showTokenForm"
-            variant="ghost"
-            size="icon-sm"
-            aria-label="Обновить портфель"
-            :disabled="tinkoffStatus === 'loading'"
-            @click="onRefreshTinkoff"
-          >
-            <RefreshCw
-              class="size-4"
-              :class="{ 'animate-spin': tinkoffStatus === 'loading' }"
-            />
-          </Button>
-          <Button
-            v-if="source === 'manual'"
-            variant="ghost"
-            size="icon-sm"
-            aria-label="Очистить портфель"
-            :disabled="positions.length === 0"
-            @click="clearDialogOpen = true"
-          >
-            <Trash2 class="size-4" />
-          </Button>
+          <div class="flex w-full items-center gap-2 sm:w-auto">
+            <Select :model-value="source" @update:model-value="onSourceChange">
+              <SelectTrigger class="flex-1 sm:w-44 sm:flex-none">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="mock">Демо</SelectItem>
+                <SelectItem value="manual">Ручной ввод</SelectItem>
+                <SelectItem value="tinkoff">Т-Инвестиции</SelectItem>
+              </SelectContent>
+            </Select>
+            <Button
+              v-if="isTinkoff && tinkoffToken && !showTokenForm"
+              variant="ghost"
+              size="icon-sm"
+              aria-label="Обновить портфель"
+              :disabled="tinkoffStatus === 'loading'"
+              @click="onRefreshTinkoff"
+            >
+              <RefreshCw
+                class="size-4"
+                :class="{ 'animate-spin': tinkoffStatus === 'loading' }"
+              />
+            </Button>
+            <Button
+              v-if="source === 'manual'"
+              variant="ghost"
+              size="icon-sm"
+              aria-label="Очистить портфель"
+              :disabled="positions.length === 0"
+              @click="clearDialogOpen = true"
+            >
+              <Trash2 class="size-4" />
+            </Button>
+          </div>
         </div>
       </div>
     </CardHeader>
@@ -306,7 +308,7 @@ function formatRub(value: number): string {
           </a>
         </p>
         <div class="flex flex-wrap items-end gap-3">
-          <div class="grid min-w-64 flex-1 gap-2">
+          <div class="grid flex-1 gap-2 sm:min-w-64">
             <label class="text-sm font-medium">Токен Т-Инвестиций (read-only)</label>
             <Input
               v-model="tokenInput"
@@ -354,14 +356,14 @@ function formatRub(value: number): string {
 
       <p
         v-if="isTinkoff && tinkoffStatus === 'error' && tinkoffError"
-        class="text-destructive bg-destructive/5 border-destructive/30 flex items-start justify-between gap-3 rounded-md border p-3 text-sm"
+        class="text-destructive bg-destructive/5 border-destructive/30 flex flex-wrap items-start justify-between gap-3 rounded-md border p-3 text-sm"
       >
         <span>{{ tinkoffError }}</span>
         <Button size="sm" variant="ghost" @click="onRefreshTinkoff">Повторить</Button>
       </p>
 
       <Table
-        class="min-h-0 flex-1 table-fixed transition-opacity"
+        class="min-h-0 flex-1 table-fixed min-w-200 transition-opacity"
         :class="{ 'opacity-60': isTinkoff && tinkoffStatus === 'loading' }"
       >
         <TableHeader>
@@ -379,6 +381,7 @@ function formatRub(value: number): string {
               sort-key="name"
               :active="sortKey"
               :dir="sortDir"
+              class="min-w-40"
               @toggle="toggleSort"
             >
               Название
