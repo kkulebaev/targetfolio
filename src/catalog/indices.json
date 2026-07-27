@@ -2,19 +2,19 @@
   {
     "code": "IMOEX",
     "name": "Индекс МосБиржи",
-    "fetchedAt": "2026-07-17",
+    "fetchedAt": "2026-07-24",
     "constituents": [
       {
         "ticker": "AFKS",
-        "weight": 0.29
+        "weight": 0.3
       },
       {
         "ticker": "AFLT",
-        "weight": 0.46
+        "weight": 0.44
       },
       {
         "ticker": "ALRS",
-        "weight": 0.32
+        "weight": 0.35
       },
       {
         "ticker": "BSPB",
@@ -22,43 +22,43 @@
       },
       {
         "ticker": "CBOM",
-        "weight": 0.83
+        "weight": 0.81
       },
       {
         "ticker": "CHMF",
-        "weight": 0.78
+        "weight": 0.8
       },
       {
         "ticker": "CNRU",
-        "weight": 0.32
+        "weight": 0.31
       },
       {
         "ticker": "DOMRF",
-        "weight": 0.73
+        "weight": 0.67
       },
       {
         "ticker": "ENPG",
-        "weight": 0.4
+        "weight": 0.44
       },
       {
         "ticker": "FLOT",
-        "weight": 0.34
+        "weight": 0.35
       },
       {
         "ticker": "GAZP",
-        "weight": 8.74
+        "weight": 9.2
       },
       {
         "ticker": "GMKN",
-        "weight": 3.96
+        "weight": 3.99
       },
       {
         "ticker": "HEAD",
-        "weight": 1.16
+        "weight": 1.15
       },
       {
         "ticker": "IRAO",
-        "weight": 0.95
+        "weight": 1.02
       },
       {
         "ticker": "LENT",
@@ -66,7 +66,7 @@
       },
       {
         "ticker": "LKOH",
-        "weight": 16.14
+        "weight": 16.88
       },
       {
         "ticker": "MAGN",
@@ -74,47 +74,47 @@
       },
       {
         "ticker": "MDMG",
-        "weight": 0.38
+        "weight": 0.39
       },
       {
         "ticker": "MOEX",
-        "weight": 1.1
+        "weight": 1.16
       },
       {
         "ticker": "MSNG",
-        "weight": 0.16
+        "weight": 0.17
       },
       {
         "ticker": "MTSS",
-        "weight": 1.02
+        "weight": 1.04
       },
       {
         "ticker": "NLMK",
-        "weight": 0.7
+        "weight": 0.73
       },
       {
         "ticker": "NVTK",
-        "weight": 4.39
+        "weight": 4.6
       },
       {
         "ticker": "OZON",
-        "weight": 3.32
+        "weight": 2.64
       },
       {
         "ticker": "PHOR",
-        "weight": 0.59
+        "weight": 0.65
       },
       {
         "ticker": "PLZL",
-        "weight": 2.24
+        "weight": 2.61
       },
       {
         "ticker": "POSI",
-        "weight": 0.25
+        "weight": 0.27
       },
       {
         "ticker": "RAGR",
-        "weight": 0.21
+        "weight": 0.33
       },
       {
         "ticker": "RENI",
@@ -122,55 +122,55 @@
       },
       {
         "ticker": "ROSN",
-        "weight": 2.73
+        "weight": 2.92
       },
       {
         "ticker": "RTKM",
-        "weight": 0.49
+        "weight": 0.48
       },
       {
         "ticker": "RUAL",
-        "weight": 0.74
+        "weight": 0.8
       },
       {
         "ticker": "SBER",
-        "weight": 14.24
+        "weight": 12.41
       },
       {
         "ticker": "SBERP",
-        "weight": 2.77
+        "weight": 2.41
       },
       {
         "ticker": "SNGS",
-        "weight": 1.61
+        "weight": 1.59
       },
       {
         "ticker": "SNGSP",
-        "weight": 1.92
+        "weight": 1.82
       },
       {
         "ticker": "SVCB",
-        "weight": 0.53
+        "weight": 0.51
       },
       {
         "ticker": "T",
-        "weight": 4.95
+        "weight": 5.06
       },
       {
         "ticker": "TATN",
-        "weight": 4.55
+        "weight": 5.08
       },
       {
         "ticker": "TATNP",
-        "weight": 0.81
+        "weight": 0.88
       },
       {
         "ticker": "TRNFP",
-        "weight": 0.55
+        "weight": 0.43
       },
       {
         "ticker": "UGLD",
-        "weight": 0.28
+        "weight": 0.26
       },
       {
         "ticker": "VKCO",
@@ -178,89 +178,89 @@
       },
       {
         "ticker": "VTBR",
-        "weight": 3
+        "weight": 2.73
       },
       {
         "ticker": "X5",
-        "weight": 2.79
+        "weight": 2.71
       },
       {
         "ticker": "YDEX",
-        "weight": 6.71
+        "weight": 7.03
       }
     ]
   },
   {
     "code": "MOEXBC",
     "name": "Индекс голубых фишек",
-    "fetchedAt": "2026-07-17",
+    "fetchedAt": "2026-07-24",
     "constituents": [
       {
         "ticker": "GAZP",
-        "weight": 11.64
+        "weight": 12.24
       },
       {
         "ticker": "GMKN",
-        "weight": 5.27
+        "weight": 5.31
       },
       {
         "ticker": "LKOH",
-        "weight": 16.21
+        "weight": 16.92
       },
       {
         "ticker": "MOEX",
-        "weight": 1.46
+        "weight": 1.55
       },
       {
         "ticker": "NVTK",
-        "weight": 5.85
+        "weight": 6.11
       },
       {
         "ticker": "OZON",
-        "weight": 4.42
+        "weight": 3.51
       },
       {
         "ticker": "PLZL",
-        "weight": 2.99
+        "weight": 3.47
       },
       {
         "ticker": "ROSN",
-        "weight": 3.64
+        "weight": 3.89
       },
       {
         "ticker": "SBER",
-        "weight": 17.07
+        "weight": 14.84
       },
       {
         "ticker": "SNGS",
-        "weight": 2.15
+        "weight": 2.11
       },
       {
         "ticker": "T",
-        "weight": 6.59
+        "weight": 6.73
       },
       {
         "ticker": "TATN",
-        "weight": 6.06
+        "weight": 6.75
       },
       {
         "ticker": "VTBR",
-        "weight": 3.99
+        "weight": 3.62
       },
       {
         "ticker": "X5",
-        "weight": 3.71
+        "weight": 3.6
       },
       {
         "ticker": "YDEX",
-        "weight": 8.94
+        "weight": 9.35
       }
     ]
   },
   {
     "code": "MOEXBMI",
     "name": "Индекс широкого рынка",
-    "fetchedAt": "2026-07-17",
+    "fetchedAt": "2026-07-24",
     "constituents": [
       {
         "ticker": "AFKS",
@@ -268,19 +268,19 @@
       },
       {
         "ticker": "AFLT",
-        "weight": 0.42
+        "weight": 0.4
       },
       {
         "ticker": "AKRN",
-        "weight": 0.47
+        "weight": 0.48
       },
       {
         "ticker": "ALRS",
-        "weight": 0.29
+        "weight": 0.32
       },
       {
         "ticker": "APTK",
-        "weight": 0.11
+        "weight": 0.12
       },
       {
         "ticker": "AQUA",
@@ -288,11 +288,11 @@
       },
       {
         "ticker": "ASTR",
-        "weight": 0.09
+        "weight": 0.11
       },
       {
         "ticker": "BANEP",
-        "weight": 0.21
+        "weight": 0.23
       },
       {
         "ticker": "BAZA",
@@ -308,15 +308,15 @@
       },
       {
         "ticker": "CBOM",
-        "weight": 0.75
+        "weight": 0.74
       },
       {
         "ticker": "CHMF",
-        "weight": 0.71
+        "weight": 0.72
       },
       {
         "ticker": "CNRU",
-        "weight": 0.29
+        "weight": 0.28
       },
       {
         "ticker": "DATA",
@@ -328,7 +328,7 @@
       },
       {
         "ticker": "DOMRF",
-        "weight": 0.66
+        "weight": 0.61
       },
       {
         "ticker": "ELFV",
@@ -336,7 +336,7 @@
       },
       {
         "ticker": "ENPG",
-        "weight": 0.37
+        "weight": 0.39
       },
       {
         "ticker": "ETLN",
@@ -344,11 +344,11 @@
       },
       {
         "ticker": "EUTR",
-        "weight": 0.02
+        "weight": 0.03
       },
       {
         "ticker": "FEES",
-        "weight": 0.12
+        "weight": 0.14
       },
       {
         "ticker": "FESH",
@@ -360,23 +360,23 @@
       },
       {
         "ticker": "FLOT",
-        "weight": 0.31
+        "weight": 0.32
       },
       {
         "ticker": "GAZP",
-        "weight": 7.92
+        "weight": 8.33
       },
       {
         "ticker": "GEMC",
-        "weight": 0.15
+        "weight": 0.14
       },
       {
         "ticker": "GLRX",
-        "weight": 0.02
+        "weight": 0.03
       },
       {
         "ticker": "GMKN",
-        "weight": 3.59
+        "weight": 3.61
       },
       {
         "ticker": "HEAD",
@@ -388,11 +388,11 @@
       },
       {
         "ticker": "HYDR",
-        "weight": 0.12
+        "weight": 0.13
       },
       {
         "ticker": "IRAO",
-        "weight": 0.86
+        "weight": 0.92
       },
       {
         "ticker": "LENT",
@@ -400,11 +400,11 @@
       },
       {
         "ticker": "LKOH",
-        "weight": 16.13
+        "weight": 16.85
       },
       {
         "ticker": "LSNGP",
-        "weight": 0.33
+        "weight": 0.35
       },
       {
         "ticker": "LSRG",
@@ -420,7 +420,7 @@
       },
       {
         "ticker": "MDMG",
-        "weight": 0.35
+        "weight": 0.36
       },
       {
         "ticker": "MGNT",
@@ -428,15 +428,15 @@
       },
       {
         "ticker": "MOEX",
-        "weight": 0.99
+        "weight": 1.05
       },
       {
         "ticker": "MRKC",
-        "weight": 0.07
+        "weight": 0.08
       },
       {
         "ticker": "MRKP",
-        "weight": 0.17
+        "weight": 0.18
       },
       {
         "ticker": "MRKU",
@@ -444,11 +444,11 @@
       },
       {
         "ticker": "MRKV",
-        "weight": 0.12
+        "weight": 0.11
       },
       {
         "ticker": "MSNG",
-        "weight": 0.14
+        "weight": 0.15
       },
       {
         "ticker": "MSRS",
@@ -460,11 +460,11 @@
       },
       {
         "ticker": "MTLRP",
-        "weight": 0.03
+        "weight": 0.04
       },
       {
         "ticker": "MTSS",
-        "weight": 0.93
+        "weight": 0.94
       },
       {
         "ticker": "NKHP",
@@ -476,15 +476,15 @@
       },
       {
         "ticker": "NLMK",
-        "weight": 0.64
+        "weight": 0.66
       },
       {
         "ticker": "NMTP",
-        "weight": 0.15
+        "weight": 0.16
       },
       {
         "ticker": "NVTK",
-        "weight": 3.98
+        "weight": 4.16
       },
       {
         "ticker": "OGKB",
@@ -492,27 +492,27 @@
       },
       {
         "ticker": "OZON",
-        "weight": 3.01
+        "weight": 2.39
       },
       {
         "ticker": "OZPH",
-        "weight": 0.15
+        "weight": 0.16
       },
       {
         "ticker": "PHOR",
-        "weight": 0.53
+        "weight": 0.59
       },
       {
         "ticker": "PIKK",
-        "weight": 0.99
+        "weight": 0.92
       },
       {
         "ticker": "PLZL",
-        "weight": 2.03
+        "weight": 2.36
       },
       {
         "ticker": "POSI",
-        "weight": 0.23
+        "weight": 0.25
       },
       {
         "ticker": "PRMD",
@@ -520,7 +520,7 @@
       },
       {
         "ticker": "RAGR",
-        "weight": 0.19
+        "weight": 0.3
       },
       {
         "ticker": "RASP",
@@ -532,11 +532,11 @@
       },
       {
         "ticker": "RNFT",
-        "weight": 0.09
+        "weight": 0.1
       },
       {
         "ticker": "ROSN",
-        "weight": 2.48
+        "weight": 2.65
       },
       {
         "ticker": "RTKM",
@@ -548,67 +548,67 @@
       },
       {
         "ticker": "RUAL",
-        "weight": 0.67
+        "weight": 0.72
       },
       {
         "ticker": "SBER",
-        "weight": 14.23
+        "weight": 12.38
       },
       {
         "ticker": "SBERP",
-        "weight": 2.77
+        "weight": 2.4
       },
       {
         "ticker": "SELG",
-        "weight": 0.12
+        "weight": 0.13
       },
       {
         "ticker": "SFIN",
-        "weight": 0.02
+        "weight": 0.03
       },
       {
         "ticker": "SGZH",
-        "weight": 0.03
+        "weight": 0.04
       },
       {
         "ticker": "SMLT",
-        "weight": 0.08
+        "weight": 0.1
       },
       {
         "ticker": "SNGS",
-        "weight": 1.46
+        "weight": 1.44
       },
       {
         "ticker": "SNGSP",
-        "weight": 1.74
+        "weight": 1.65
       },
       {
         "ticker": "SOFL",
-        "weight": 0.05
+        "weight": 0.06
       },
       {
         "ticker": "SPBE",
-        "weight": 0.03
+        "weight": 0.04
       },
       {
         "ticker": "SVAV",
-        "weight": 0.02
+        "weight": 0.03
       },
       {
         "ticker": "SVCB",
-        "weight": 0.48
+        "weight": 0.46
       },
       {
         "ticker": "T",
-        "weight": 4.49
+        "weight": 4.58
       },
       {
         "ticker": "TATN",
-        "weight": 4.12
+        "weight": 4.6
       },
       {
         "ticker": "TATNP",
-        "weight": 0.73
+        "weight": 0.8
       },
       {
         "ticker": "TGKA",
@@ -616,51 +616,51 @@
       },
       {
         "ticker": "TRMK",
-        "weight": 0.05
-      },
-      {
-        "ticker": "TRNFP",
-        "weight": 0.5
-      },
-      {
-        "ticker": "UGLD",
-        "weight": 0.25
-      },
-      {
-        "ticker": "UPRO",
-        "weight": 0.11
-      },
-      {
-        "ticker": "UWGN",
-        "weight": 0.08
-      },
-      {
-        "ticker": "VKCO",
-        "weight": 0.22
-      },
-      {
-        "ticker": "VSEH",
         "weight": 0.06
       },
       {
+        "ticker": "TRNFP",
+        "weight": 0.39
+      },
+      {
+        "ticker": "UGLD",
+        "weight": 0.24
+      },
+      {
+        "ticker": "UPRO",
+        "weight": 0.12
+      },
+      {
+        "ticker": "UWGN",
+        "weight": 0.09
+      },
+      {
+        "ticker": "VKCO",
+        "weight": 0.23
+      },
+      {
+        "ticker": "VSEH",
+        "weight": 0.07
+      },
+      {
         "ticker": "VSMO",
-        "weight": 0.22
+        "weight": 0.24
       },
       {
         "ticker": "VTBR",
-        "weight": 2.72
+        "weight": 2.47
       },
       {
         "ticker": "WUSH",
-        "weight": 0.02
+        "weight": 0.03
       },
       {
         "ticker": "X5",
-        "weight": 2.53
+        "weight": 2.45
       },
       {
         "ticker": "YDEX",
-        "weight": 6.08
+        "weight": 6.37
       }
     ]
   }
