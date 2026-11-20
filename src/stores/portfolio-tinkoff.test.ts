@@ -82,7 +82,7 @@ describe("usePortfolioStore T-Invest loading", () => {
     ]);
     expect(store.tinkoffFreeCash).toBe(1750.5);
     expect(store.tinkoffSkipped).toEqual([
-      { figi: "BBG_TMOS", label: "TMOS", instrumentType: "etf", quantity: 7 },
+      { key: "figi:BBG_TMOS", label: "TMOS", instrumentType: "etf", quantity: 7 },
     ]);
     expect(store.tinkoffSkippedCount).toBe(1);
   });

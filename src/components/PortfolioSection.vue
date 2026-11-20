@@ -515,7 +515,7 @@ function formatRub(value: number): string {
           Не учтено позиций вне каталога акций MOEX: {{ tinkoffSkippedCount }}
         </summary>
         <ul class="mt-2 flex flex-wrap gap-x-4 gap-y-1">
-          <li v-for="item in tinkoffSkipped" :key="item.figi">
+          <li v-for="item in tinkoffSkipped" :key="item.key">
             <span class="text-foreground font-medium">{{ item.label }}</span>
             · {{ instrumentTypeLabel(item.instrumentType) }} ·
             {{ quantityFormatter.format(item.quantity) }} шт.

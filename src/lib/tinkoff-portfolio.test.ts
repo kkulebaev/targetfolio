@@ -48,8 +48,27 @@ describe("mergeTinkoffPortfolios", () => {
     );
     expect(result.positions).toEqual([]);
     expect(result.skipped).toEqual([
-      { figi: "FIGI_TMOS", label: "TMOS", instrumentType: "etf", quantity: 120 },
-      { figi: "FIGI_BOND", label: "FIGI_BOND", instrumentType: "bond", quantity: 3 },
+      { key: "figi:FIGI_TMOS", label: "TMOS", instrumentType: "etf", quantity: 120 },
+      { key: "figi:FIGI_BOND", label: "FIGI_BOND", instrumentType: "bond", quantity: 3 },
+    ]);
+  });
+
+  it("never merges skipped positions that have no identifier", () => {
+    const result = mergeTinkoffPortfolios(
+      [
+        [
+          pos("", "1", 0, { instrumentType: "bond" }),
+          pos("", "2", 0, { instrumentType: "etf" }),
+          pos("", "3", 0, { instrumentType: "etf", ticker: "TMOS" }),
+          pos("", "4", 0, { instrumentType: "etf", ticker: "TMOS" }),
+        ],
+      ],
+      FIGI_TO_TICKER,
+    );
+    expect(result.skipped).toEqual([
+      { key: "unknown:0", label: "без тикера", instrumentType: "bond", quantity: 1 },
+      { key: "unknown:1", label: "без тикера", instrumentType: "etf", quantity: 2 },
+      { key: "ticker:TMOS", label: "TMOS", instrumentType: "etf", quantity: 7 },
     ]);
   });
 
@@ -86,7 +105,7 @@ describe("sumFreeRub", () => {
         ],
       },
       { money: [{ currency: "RUB", units: "250", nano: 0 }] },
-      {},
+      { money: [] },
     ]);
     expect(total).toBe(1250.5);
   });

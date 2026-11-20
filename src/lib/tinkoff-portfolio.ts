@@ -2,8 +2,8 @@ import type { Position, Ticker } from "@/domain/types";
 import { quotationToNumber, type TinkoffPortfolioPosition, type TinkoffPositions } from "./tinkoff";
 
 export type SkippedPosition = {
-  figi: string;
-  /** Ticker reported by T-Invest, or FIGI when the API did not send one. */
+  /** Merge identity across accounts; unique within the list. */
+  key: string;
   label: string;
   instrumentType: string;
   quantity: number;
@@ -30,7 +30,7 @@ export function mergeTinkoffPortfolios(
   figiToTicker: ReadonlyMap<string, Ticker>,
 ): MergedPortfolio {
   const quantityByTicker = new Map<Ticker, number>();
-  const skippedByFigi = new Map<string, SkippedPosition>();
+  const skippedByKey = new Map<string, SkippedPosition>();
 
   for (const portfolio of portfolios) {
     for (const raw of portfolio) {
@@ -46,13 +46,20 @@ export function mergeTinkoffPortfolios(
         );
         continue;
       }
-      const existing = skippedByFigi.get(raw.figi);
+      // FIGI can be omitted by the API; without any identifier a position is never merged,
+      // since summing unrelated instruments would misreport both.
+      const key = raw.figi
+        ? `figi:${raw.figi}`
+        : raw.ticker
+          ? `ticker:${raw.ticker}`
+          : `unknown:${skippedByKey.size}`;
+      const existing = skippedByKey.get(key);
       if (existing) {
         existing.quantity = roundQuotation(existing.quantity + quantity);
       } else {
-        skippedByFigi.set(raw.figi, {
-          figi: raw.figi,
-          label: raw.ticker || raw.figi,
+        skippedByKey.set(key, {
+          key,
+          label: raw.ticker || raw.figi || "без тикера",
           instrumentType: raw.instrumentType,
           quantity,
         });
@@ -62,14 +69,14 @@ export function mergeTinkoffPortfolios(
 
   return {
     positions: [...quantityByTicker].map(([ticker, quantity]) => ({ ticker, quantity })),
-    skipped: [...skippedByFigi.values()],
+    skipped: [...skippedByKey.values()],
   };
 }
 
 export function sumFreeRub(accounts: readonly TinkoffPositions[]): number {
   let total = 0;
   for (const account of accounts) {
-    for (const money of account.money ?? []) {
+    for (const money of account.money) {
       if (money.currency.toLowerCase() !== "rub") continue;
       total += quotationToNumber(money);
     }
