@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
 import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/components/ui/table";
 import { useIsXl } from "@/composables/useIsXl";
 import { useTablePagination } from "@/composables/useTablePagination";
@@ -19,7 +20,7 @@ import { useRebalanceStore } from "@/stores/rebalance";
 
 const rebalance = useRebalanceStore();
 const portfolio = usePortfolioStore();
-const { state, cashAvailable } = storeToRefs(rebalance);
+const { state, cashAvailable, includeNonTarget, nonTargetValue } = storeToRefs(rebalance);
 const { instrumentsByTicker, source, tinkoffStatus } = storeToRefs(portfolio);
 const isXl = useIsXl();
 
@@ -120,6 +121,26 @@ function formatRub(value: number): string {
           >
             +{{ numberFormatter.format(amount) }}
           </Button>
+        </div>
+      </div>
+
+      <div class="flex items-start gap-3">
+        <Switch
+          id="include-non-target"
+          :model-value="includeNonTarget"
+          @update:model-value="rebalance.setIncludeNonTarget"
+        />
+        <div class="grid gap-1">
+          <Label for="include-non-target">Учитывать бумаги вне таргета</Label>
+          <p class="text-muted-foreground text-sm">
+            <template v-if="includeNonTarget">
+              Веса таргета считаются от всего портфеля. Бумаги вне таргета не докупаются.
+            </template>
+            <template v-else>Веса таргета считаются только от бумаг, входящих в таргет.</template>
+            <template v-if="nonTargetValue > 0">
+              Вне таргета: {{ formatRub(nonTargetValue) }}.
+            </template>
+          </p>
         </div>
       </div>
 

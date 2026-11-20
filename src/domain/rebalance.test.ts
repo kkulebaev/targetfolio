@@ -155,4 +155,60 @@ describe("calculateBuys", () => {
     expect(result.recommendations[0]!.lotsToBuy).toBe(14);
     expect(result.recommendations[0]!.sharesToBuy).toBe(14);
   });
+  it("skips an expensive lot that would overshoot its target more than it is short", () => {
+    const BIG: Instrument = { ticker: "BIG", name: "Big", lotSize: 1, price: 10000 };
+    const SMALL: Instrument = { ticker: "SMALL", name: "Small", lotSize: 1, price: 100 };
+    const targets: TargetWeight[] = [
+      { ticker: "BIG", weightPercent: 50 },
+      { ticker: "SMALL", weightPercent: 50 },
+    ];
+    const result = calculateBuys(instruments(BIG, SMALL), [], targets, 10000);
+    expect(result.recommendations).toEqual([
+      { ticker: "SMALL", lotsToBuy: 50, sharesToBuy: 50, estimatedCost: 5000 },
+    ]);
+    expect(result.unusedCash).toBe(5000);
+  });
+
+  it("ignores instruments with a non-positive lot cost instead of looping forever", () => {
+    const FREE: Instrument = { ticker: "FREE", name: "Free", lotSize: 1, price: 0 };
+    const targets: TargetWeight[] = [
+      { ticker: "FREE", weightPercent: 50 },
+      { ticker: "TMOS", weightPercent: 50 },
+    ];
+    const result = calculateBuys(instruments(FREE, TMOS), [], targets, 70);
+    expect(result.recommendations.map((r) => r.ticker)).toEqual(["TMOS"]);
+  });
+
+  describe("holdings outside the target", () => {
+    const AAA: Instrument = { ticker: "AAA", name: "A", lotSize: 1, price: 100 };
+    const BBB: Instrument = { ticker: "BBB", name: "B", lotSize: 1, price: 100 };
+    const OTHER: Instrument = { ticker: "OTHER", name: "Other", lotSize: 1, price: 100 };
+    const all = instruments(AAA, BBB, OTHER);
+    const positions: Position[] = [
+      { ticker: "AAA", quantity: 8 },
+      { ticker: "OTHER", quantity: 100 },
+    ];
+    const targets: TargetWeight[] = [
+      { ticker: "AAA", weightPercent: 80 },
+      { ticker: "BBB", weightPercent: 20 },
+    ];
+
+    it("are ignored by default, so weights are relative to the target tickers only", () => {
+      // AAA is 800 of the 900 target-only total, already above its 80%.
+      const result = calculateBuys(all, positions, targets, 100);
+      expect(result.recommendations.map((r) => r.ticker)).toEqual(["BBB"]);
+    });
+
+    it("count toward the total when includeNonTarget is on, but are never bought", () => {
+      // Against the 10 900 whole-portfolio total AAA is far below 80%.
+      const result = calculateBuys(all, positions, targets, 100, { includeNonTarget: true });
+      expect(result.recommendations.map((r) => r.ticker)).toEqual(["AAA"]);
+    });
+
+    it("skip non-target positions without a registered instrument", () => {
+      const withUnknown: Position[] = [...positions, { ticker: "UNKNOWN", quantity: 1000 }];
+      const result = calculateBuys(all, withUnknown, targets, 100, { includeNonTarget: true });
+      expect(result.recommendations.map((r) => r.ticker)).toEqual(["AAA"]);
+    });
+  });
 });

@@ -15,6 +15,21 @@ export type RebalanceState =
 
 export const useRebalanceStore = defineStore("rebalance", () => {
   const cashAvailable = ref(0);
+  const includeNonTarget = ref(false);
+
+  const nonTargetValue = computed(() => {
+    const portfolio = usePortfolioStore();
+    const target = useTargetStore();
+    const targetTickers = new Set(target.targetWeights.map((w) => w.ticker));
+    let total = 0;
+    for (const position of portfolio.positions) {
+      if (targetTickers.has(position.ticker)) continue;
+      const instrument = portfolio.instrumentsByTicker.get(position.ticker);
+      if (!instrument) continue;
+      total += position.quantity * instrument.price;
+    }
+    return total;
+  });
 
   const state = computed<RebalanceState>(() => {
     const portfolio = usePortfolioStore();
@@ -31,6 +46,7 @@ export const useRebalanceStore = defineStore("rebalance", () => {
       portfolio.positions,
       target.targetWeights,
       cashAvailable.value,
+      { includeNonTarget: includeNonTarget.value },
     );
 
     if (result.recommendations.length === 0) {
@@ -43,5 +59,16 @@ export const useRebalanceStore = defineStore("rebalance", () => {
     cashAvailable.value = value;
   }
 
-  return { cashAvailable, state, setCash };
+  function setIncludeNonTarget(value: boolean) {
+    includeNonTarget.value = value;
+  }
+
+  return {
+    cashAvailable,
+    includeNonTarget,
+    nonTargetValue,
+    state,
+    setCash,
+    setIncludeNonTarget,
+  };
 });

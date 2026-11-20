@@ -39,4 +39,20 @@ describe("useRebalanceStore", () => {
       expect(store.state.result.recommendations[0]!.ticker).toBe("SBER");
     }
   });
+
+  it("reports the value of holdings outside the target", () => {
+    const portfolio = usePortfolioStore();
+    portfolio.setSource("manual");
+    portfolio.setManualPositions([
+      { ticker: "SBER", quantity: 10 },
+      { ticker: "GAZP", quantity: 10 },
+    ]);
+    const target = useTargetStore();
+    target.addTicker("SBER");
+    target.setWeight("SBER", 100);
+
+    const store = useRebalanceStore();
+    const gazp = portfolio.instrumentsByTicker.get("GAZP")!;
+    expect(store.nonTargetValue).toBeCloseTo(10 * gazp.price, 6);
+  });
 });
