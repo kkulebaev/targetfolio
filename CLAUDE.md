@@ -18,7 +18,7 @@ pnpm test:coverage    # покрытие
 pnpm lint             # oxlint
 pnpm format           # oxfmt
 pnpm format:check     # oxfmt --check
-pnpm typecheck        # vue-tsc --noEmit
+pnpm typecheck        # vue-tsc --build
 ```
 
 После значимых изменений запускай `pnpm typecheck` и `pnpm lint`. Тесты — `pnpm test:run`.

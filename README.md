@@ -88,7 +88,7 @@ pnpm test:run         # vitest однократно
 pnpm test:coverage    # покрытие
 pnpm lint             # oxlint
 pnpm format           # oxfmt
-pnpm typecheck        # vue-tsc --noEmit
+pnpm typecheck        # vue-tsc --build
 ```
 
 ## 🗂 Структура проекта
