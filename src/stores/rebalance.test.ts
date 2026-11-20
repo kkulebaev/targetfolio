@@ -40,6 +40,24 @@ describe("useRebalanceStore", () => {
     }
   });
 
+  it("still reports the current deviation when nothing can be bought", () => {
+    const portfolio = usePortfolioStore();
+    portfolio.setSource("manual");
+    portfolio.setManualPositions([{ ticker: "SBER", quantity: 10 }]);
+    const target = useTargetStore();
+    target.addTicker("SBER");
+    target.setWeight("SBER", 50);
+    target.addTicker("GAZP");
+    target.setWeight("GAZP", 50);
+
+    const store = useRebalanceStore();
+    store.setCash(1);
+    expect(store.state.status).toBe("no-recommendations");
+    if (store.state.status === "no-recommendations") {
+      expect(store.state.allocation.deviationBefore).toBe(50);
+    }
+  });
+
   it("reports the value of holdings outside the target", () => {
     const portfolio = usePortfolioStore();
     portfolio.setSource("manual");

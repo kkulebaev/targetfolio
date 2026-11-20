@@ -1,6 +1,7 @@
 import { computed, ref } from "vue";
 import { defineStore } from "pinia";
 
+import { compareAllocation, type AllocationComparison } from "@/domain/allocation";
 import { calculateBuys } from "@/domain/rebalance";
 import type { RebalanceResult } from "@/domain/types";
 import { usePortfolioStore } from "./portfolio";
@@ -10,8 +11,8 @@ export type RebalanceState =
   | { status: "no-targets" }
   | { status: "invalid-weights"; total: number }
   | { status: "no-cash" }
-  | { status: "no-recommendations"; unusedCash: number }
-  | { status: "ok"; result: RebalanceResult };
+  | { status: "no-recommendations"; unusedCash: number; allocation: AllocationComparison }
+  | { status: "ok"; result: RebalanceResult; allocation: AllocationComparison };
 
 export const useRebalanceStore = defineStore("rebalance", () => {
   const cashAvailable = ref(0);
@@ -49,10 +50,17 @@ export const useRebalanceStore = defineStore("rebalance", () => {
       { includeNonTarget: includeNonTarget.value },
     );
 
+    const allocation = compareAllocation(
+      portfolio.instrumentsByTicker,
+      portfolio.positions,
+      target.targetWeights,
+      result.recommendations,
+      { includeNonTarget: includeNonTarget.value },
+    );
     if (result.recommendations.length === 0) {
-      return { status: "no-recommendations", unusedCash: result.unusedCash };
+      return { status: "no-recommendations", unusedCash: result.unusedCash, allocation };
     }
-    return { status: "ok", result };
+    return { status: "ok", result, allocation };
   });
 
   function setCash(value: number) {

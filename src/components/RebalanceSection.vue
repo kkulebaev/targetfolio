@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, watch } from "vue";
+import { computed, ref, watch } from "vue";
 import { X } from "@lucide/vue";
 import { storeToRefs } from "pinia";
 
@@ -14,7 +14,7 @@ import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/components
 import { useIsXl } from "@/composables/useIsXl";
 import { useTablePagination } from "@/composables/useTablePagination";
 import { useTableSort } from "@/composables/useTableSort";
-import type { BuyRecommendation } from "@/domain/types";
+import type { AllocationRow } from "@/domain/allocation";
 import { ALL_ACCOUNTS, usePortfolioStore } from "@/stores/portfolio";
 import { useRebalanceStore } from "@/stores/rebalance";
 
@@ -59,16 +59,54 @@ function addCash(amount: number) {
   rebalance.setCash(cashAvailable.value + amount);
 }
 
-const recommendations = computed<BuyRecommendation[]>(() =>
-  state.value.status === "ok" ? state.value.result.recommendations : [],
-);
+type ResultRow = AllocationRow & {
+  lotsToBuy: number;
+  sharesToBuy: number;
+  estimatedCost: number;
+};
+
+const showAllTargets = ref(false);
+
+const rows = computed<ResultRow[]>(() => {
+  if (state.value.status !== "ok") return [];
+  const recByTicker = new Map(state.value.result.recommendations.map((r) => [r.ticker, r]));
+  const result: ResultRow[] = [];
+  for (const row of state.value.allocation.rows) {
+    const rec = recByTicker.get(row.ticker);
+    if (!rec && !showAllTargets.value) continue;
+    result.push({
+      ...row,
+      lotsToBuy: rec?.lotsToBuy ?? 0,
+      sharesToBuy: rec?.sharesToBuy ?? 0,
+      estimatedCost: rec?.estimatedCost ?? 0,
+    });
+  }
+  return result;
+});
+
+const percentFormatter = new Intl.NumberFormat("ru-RU", {
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2,
+});
+
+function formatPercent(value: number | null): string {
+  return value === null ? "—" : `${percentFormatter.format(value)}%`;
+}
+
+function movesTowardTarget(row: ResultRow): boolean {
+  if (row.currentPercent === null || row.afterPercent === null) return false;
+  return (
+    Math.abs(row.afterPercent - row.targetPercent) <
+    Math.abs(row.currentPercent - row.targetPercent) - 0.005
+  );
+}
 
 const {
   sortedItems: sortedRecommendations,
   sortKey,
   sortDir,
   toggle: toggleSort,
-} = useTableSort(recommendations, {
+} = useTableSort(rows, {
   storageKey: "targetfolio:sort:rebalance",
   accessors: {
     ticker: (r) => r.ticker,
@@ -76,6 +114,9 @@ const {
     lotsToBuy: (r) => r.lotsToBuy,
     sharesToBuy: (r) => r.sharesToBuy,
     estimatedCost: (r) => r.estimatedCost,
+    currentPercent: (r) => r.currentPercent,
+    afterPercent: (r) => r.afterPercent,
+    targetPercent: (r) => r.targetPercent,
   },
 });
 
@@ -107,73 +148,82 @@ function formatRub(value: number): string {
       <CardDescription>Что докупить, чтобы приблизиться к таргету</CardDescription>
     </CardHeader>
     <CardContent class="flex flex-col gap-4 xl:min-h-0 xl:flex-1">
-      <div class="grid w-fit max-w-full gap-2">
-        <Label for="cash">Свободно для покупки, ₽</Label>
-        <div class="flex items-center gap-2">
-          <Input
-            id="cash"
-            v-model="cashModel"
-            type="text"
-            inputmode="numeric"
-            placeholder="0"
-            class="flex-1"
-          />
-          <Button
-            variant="ghost"
-            size="icon-sm"
-            aria-label="Очистить сумму"
-            :disabled="!cashAvailable"
-            @click="rebalance.setCash(0)"
+      <div class="flex flex-wrap items-start gap-x-10 gap-y-4">
+        <div class="grid max-w-full gap-2">
+          <Label for="cash">Свободно для покупки, ₽</Label>
+          <div class="flex flex-wrap items-center gap-2">
+            <div class="flex items-center gap-1">
+              <Input
+                id="cash"
+                v-model="cashModel"
+                type="text"
+                inputmode="numeric"
+                placeholder="0"
+                class="w-36"
+              />
+              <Button
+                variant="ghost"
+                size="icon-sm"
+                aria-label="Очистить сумму"
+                :disabled="!cashAvailable"
+                @click="rebalance.setCash(0)"
+              >
+                <X class="size-4" />
+              </Button>
+            </div>
+            <Button
+              v-for="amount in QUICK_ADD_AMOUNTS"
+              :key="amount"
+              variant="outline"
+              size="sm"
+              @click="addCash(amount)"
+            >
+              +{{ numberFormatter.format(amount) }}
+            </Button>
+          </div>
+          <p
+            v-if="brokerFreeCash !== null"
+            class="text-muted-foreground flex items-center gap-2 text-sm"
           >
-            <X class="size-4" />
-          </Button>
-        </div>
-        <div class="flex flex-wrap gap-2">
-          <Button
-            v-for="amount in QUICK_ADD_AMOUNTS"
-            :key="amount"
-            variant="outline"
-            size="sm"
-            @click="addCash(amount)"
-          >
-            +{{ numberFormatter.format(amount) }}
-          </Button>
-        </div>
-        <p
-          v-if="brokerFreeCash !== null"
-          class="text-muted-foreground flex items-center gap-2 text-sm"
-        >
-          {{ tinkoffAccountId === ALL_ACCOUNTS ? "На счетах" : "На счёте" }} свободно
-          {{ formatRub(brokerFreeCash) }}
-          <Button
-            variant="link"
-            size="sm"
-            class="h-auto p-0"
-            :disabled="cashAvailable === brokerFreeCash"
-            @click="rebalance.setCash(brokerFreeCash)"
-          >
-            Подставить
-          </Button>
-        </p>
-      </div>
-
-      <div class="flex items-start gap-3">
-        <Switch
-          id="include-non-target"
-          :model-value="includeNonTarget"
-          @update:model-value="rebalance.setIncludeNonTarget"
-        />
-        <div class="grid gap-1">
-          <Label for="include-non-target">Учитывать бумаги вне таргета</Label>
-          <p class="text-muted-foreground text-sm">
-            <template v-if="includeNonTarget">
-              Веса таргета считаются от всего портфеля. Бумаги вне таргета не докупаются.
-            </template>
-            <template v-else>Веса таргета считаются только от бумаг, входящих в таргет.</template>
-            <template v-if="nonTargetValue > 0">
-              Вне таргета: {{ formatRub(nonTargetValue) }}.
-            </template>
+            {{ tinkoffAccountId === ALL_ACCOUNTS ? "На счетах" : "На счёте" }} свободно
+            {{ formatRub(brokerFreeCash) }}
+            <Button
+              variant="link"
+              size="sm"
+              class="h-auto p-0"
+              :disabled="cashAvailable === brokerFreeCash"
+              @click="rebalance.setCash(brokerFreeCash)"
+            >
+              Подставить
+            </Button>
           </p>
+        </div>
+
+        <div class="grid gap-2">
+          <div class="flex items-center gap-3">
+            <Switch
+              id="include-non-target"
+              :model-value="includeNonTarget"
+              @update:model-value="rebalance.setIncludeNonTarget"
+            />
+            <Label
+              for="include-non-target"
+              :title="
+                includeNonTarget
+                  ? 'Веса таргета считаются от всего портфеля. Бумаги вне таргета не докупаются.'
+                  : 'Веса таргета считаются только от бумаг, входящих в таргет.'
+              "
+            >
+              Учитывать бумаги вне таргета
+              <span v-if="nonTargetValue > 0" class="text-muted-foreground font-normal">
+                ({{ formatRub(nonTargetValue) }})
+              </span>
+            </Label>
+          </div>
+          <div class="flex items-center gap-3">
+            <Switch id="show-all-targets" v-model="showAllTargets" />
+            <Label for="show-all-targets">Показывать все бумаги таргета</Label>
+          </div>
         </div>
       </div>
 
@@ -210,76 +260,126 @@ function formatRub(value: number): string {
           <span class="text-muted-foreground">Неиспользованный остаток: </span>
           <span class="font-semibold">{{ formatRub(state.unusedCash) }}</span>
         </p>
+        <p v-if="state.allocation.deviationBefore !== null" class="mt-1">
+          <span class="text-muted-foreground">Текущее отклонение от таргета: </span>
+          <span class="font-semibold">{{ formatPercent(state.allocation.deviationBefore) }}</span>
+        </p>
       </div>
       <template v-else>
-        <Table class="table-fixed min-w-130">
-          <TableHeader>
-            <TableRow>
-              <SortableTableHead
-                sort-key="ticker"
-                :active="sortKey"
-                :dir="sortDir"
-                class="w-24"
-                @toggle="toggleSort"
+        <div class="xl:min-h-0 xl:flex-1 xl:overflow-y-auto">
+          <Table class="table-fixed min-w-190">
+            <TableHeader>
+              <TableRow>
+                <SortableTableHead
+                  sort-key="ticker"
+                  :active="sortKey"
+                  :dir="sortDir"
+                  class="w-24"
+                  @toggle="toggleSort"
+                >
+                  Тикер
+                </SortableTableHead>
+                <SortableTableHead
+                  sort-key="name"
+                  :active="sortKey"
+                  :dir="sortDir"
+                  class="min-w-40"
+                  @toggle="toggleSort"
+                >
+                  Название
+                </SortableTableHead>
+                <SortableTableHead
+                  sort-key="lotsToBuy"
+                  :active="sortKey"
+                  :dir="sortDir"
+                  align="right"
+                  class="w-20 text-right"
+                  @toggle="toggleSort"
+                >
+                  Лотов
+                </SortableTableHead>
+                <SortableTableHead
+                  sort-key="sharesToBuy"
+                  :active="sortKey"
+                  :dir="sortDir"
+                  align="right"
+                  class="w-20 text-right"
+                  @toggle="toggleSort"
+                >
+                  Акций
+                </SortableTableHead>
+                <SortableTableHead
+                  sort-key="estimatedCost"
+                  :active="sortKey"
+                  :dir="sortDir"
+                  align="right"
+                  class="w-32 text-right"
+                  @toggle="toggleSort"
+                >
+                  Стоимость ₽
+                </SortableTableHead>
+                <SortableTableHead
+                  sort-key="currentPercent"
+                  :active="sortKey"
+                  :dir="sortDir"
+                  align="right"
+                  class="w-24 text-right"
+                  @toggle="toggleSort"
+                >
+                  Сейчас
+                </SortableTableHead>
+                <SortableTableHead
+                  sort-key="afterPercent"
+                  :active="sortKey"
+                  :dir="sortDir"
+                  align="right"
+                  class="w-24 text-right"
+                  @toggle="toggleSort"
+                >
+                  После
+                </SortableTableHead>
+                <SortableTableHead
+                  sort-key="targetPercent"
+                  :active="sortKey"
+                  :dir="sortDir"
+                  align="right"
+                  class="w-24 text-right"
+                  @toggle="toggleSort"
+                >
+                  Цель
+                </SortableTableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              <TableRow
+                v-for="rec in isXl ? sortedRecommendations : pagedRecommendations"
+                :key="rec.ticker"
               >
-                Тикер
-              </SortableTableHead>
-              <SortableTableHead
-                sort-key="name"
-                :active="sortKey"
-                :dir="sortDir"
-                class="min-w-40"
-                @toggle="toggleSort"
-              >
-                Название
-              </SortableTableHead>
-              <SortableTableHead
-                sort-key="lotsToBuy"
-                :active="sortKey"
-                :dir="sortDir"
-                align="right"
-                class="w-20 text-right"
-                @toggle="toggleSort"
-              >
-                Лотов
-              </SortableTableHead>
-              <SortableTableHead
-                sort-key="sharesToBuy"
-                :active="sortKey"
-                :dir="sortDir"
-                align="right"
-                class="w-20 text-right"
-                @toggle="toggleSort"
-              >
-                Акций
-              </SortableTableHead>
-              <SortableTableHead
-                sort-key="estimatedCost"
-                :active="sortKey"
-                :dir="sortDir"
-                align="right"
-                class="w-32 text-right"
-                @toggle="toggleSort"
-              >
-                Стоимость ₽
-              </SortableTableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            <TableRow
-              v-for="rec in isXl ? sortedRecommendations : pagedRecommendations"
-              :key="rec.ticker"
-            >
-              <TableCell class="font-medium">{{ rec.ticker }}</TableCell>
-              <TableCell class="truncate">
-                {{ instrumentsByTicker.get(rec.ticker)?.name ?? "—" }}
-              </TableCell>
-              <TableCell class="text-right">{{ rec.lotsToBuy }}</TableCell>
-              <TableCell class="text-right">{{ rec.sharesToBuy }}</TableCell>
-              <TableCell class="text-right">{{ formatRub(rec.estimatedCost) }}</TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
+                <TableCell class="font-medium">{{ rec.ticker }}</TableCell>
+                <TableCell class="truncate">
+                  {{ instrumentsByTicker.get(rec.ticker)?.name ?? "—" }}
+                </TableCell>
+                <TableCell class="text-right">{{ rec.lotsToBuy || "—" }}</TableCell>
+                <TableCell class="text-right">{{ rec.sharesToBuy || "—" }}</TableCell>
+                <TableCell class="text-right">
+                  {{ rec.estimatedCost ? formatRub(rec.estimatedCost) : "—" }}
+                </TableCell>
+                <TableCell class="text-muted-foreground text-right">
+                  {{ formatPercent(rec.currentPercent) }}
+                </TableCell>
+                <TableCell
+                  class="text-right font-medium"
+                  :class="{ 'text-emerald-600 dark:text-emerald-400': movesTowardTarget(rec) }"
+                >
+                  {{ formatPercent(rec.afterPercent) }}
+                </TableCell>
+                <TableCell class="text-muted-foreground text-right">
+                  {{ formatPercent(rec.targetPercent) }}
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </div>
 
         <TablePagination
           v-if="!isXl"
@@ -289,9 +389,28 @@ function formatRub(value: number): string {
           @update:page="setPage"
         />
 
-        <div class="flex items-center justify-between border-t pt-4">
-          <span class="text-muted-foreground text-sm">Неиспользованный остаток</span>
-          <span class="text-lg font-semibold">{{ formatRub(state.result.unusedCash) }}</span>
+        <div
+          class="flex flex-wrap items-center justify-between gap-x-6 gap-y-2 border-t pt-4 text-sm"
+        >
+          <div
+            class="flex flex-wrap items-baseline gap-x-2"
+            title="Половина суммы |вес − цель| по бумагам: какая доля портфеля лежит не там, где должна. 0% — портфель точно совпадает с таргетом."
+          >
+            <span class="text-muted-foreground">Отклонение от таргета</span>
+            <span class="font-semibold">{{ formatPercent(state.allocation.deviationBefore) }}</span>
+            <span class="text-muted-foreground">→</span>
+            <span class="font-semibold text-emerald-600 dark:text-emerald-400">
+              {{ formatPercent(state.allocation.deviationAfter) }}
+            </span>
+            <span v-if="(state.allocation.nonTargetBefore ?? 0) > 0" class="text-muted-foreground">
+              (вне таргета {{ formatPercent(state.allocation.nonTargetBefore) }} →
+              {{ formatPercent(state.allocation.nonTargetAfter) }})
+            </span>
+          </div>
+          <div class="flex items-baseline gap-2">
+            <span class="text-muted-foreground">Неиспользованный остаток</span>
+            <span class="text-lg font-semibold">{{ formatRub(state.result.unusedCash) }}</span>
+          </div>
         </div>
       </template>
     </CardContent>

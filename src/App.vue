@@ -45,7 +45,7 @@ useIncludeNonTargetUrlSync();
     </header>
 
     <main
-      class="grid grid-cols-1 gap-6 p-4 md:p-6 xl:min-h-0 xl:flex-1 xl:grid-cols-2 xl:grid-rows-[3fr_2fr]"
+      class="grid grid-cols-1 gap-6 p-4 md:p-6 xl:min-h-0 xl:flex-1 xl:grid-cols-2 xl:grid-rows-2"
     >
       <PortfolioSection />
       <TargetSection />
