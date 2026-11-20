@@ -19,15 +19,15 @@
     "indices:fetch": "node scripts/fetch-indices.mjs"
   },
   "dependencies": {
-    "@lucide/vue": "^1.77.0",
+    "@lucide/vue": "^1.76.0",
     "@vue/devtools-api": "^8.2.1",
     "@vueuse/core": "^15.0.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "pinia": "^4.1.0",
     "reka-ui": "^2.11.0",
-    "tailwind-merge": "^3.7.1",
-    "vue": "^3.5.46",
+    "tailwind-merge": "^3.7.0",
+    "vue": "^3.5.45",
     "vue-router": "^5.5.1",
     "vue-sonner": "^2.0.9"
   },
