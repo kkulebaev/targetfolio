@@ -1,3 +1,7 @@
 allowBuilds:
   # postinstall качает Go-бинарь lefthook и регистрирует git-хуки из lefthook.yml
   lefthook: true
+
+# Совпадает со значением по умолчанию в pnpm 12, но перекрывает глобальный конфиг разработчика:
+# иначе свежий пакет проходит локально и роняет деплой и CI на `pnpm install --frozen-lockfile`
+minimumReleaseAge: 1440
