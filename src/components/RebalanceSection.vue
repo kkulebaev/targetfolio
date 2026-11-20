@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, watch } from "vue";
 import { X } from "@lucide/vue";
 import { storeToRefs } from "pinia";
 
@@ -15,13 +15,14 @@ import { useIsXl } from "@/composables/useIsXl";
 import { useTablePagination } from "@/composables/useTablePagination";
 import { useTableSort } from "@/composables/useTableSort";
 import type { BuyRecommendation } from "@/domain/types";
-import { usePortfolioStore } from "@/stores/portfolio";
+import { ALL_ACCOUNTS, usePortfolioStore } from "@/stores/portfolio";
 import { useRebalanceStore } from "@/stores/rebalance";
 
 const rebalance = useRebalanceStore();
 const portfolio = usePortfolioStore();
 const { state, cashAvailable, includeNonTarget, nonTargetValue } = storeToRefs(rebalance);
-const { instrumentsByTicker, source, tinkoffStatus } = storeToRefs(portfolio);
+const { instrumentsByTicker, source, tinkoffStatus, tinkoffFreeCash, tinkoffAccountId } =
+  storeToRefs(portfolio);
 const isXl = useIsXl();
 
 const isLoading = computed(() => source.value === "tinkoff" && tinkoffStatus.value === "loading");
@@ -37,6 +38,22 @@ const cashModel = computed({
     rebalance.setCash(Number.isFinite(parsed) ? parsed : 0);
   },
 });
+
+// The cash input accepts whole roubles only, so kopecks are dropped rather than rounded up
+// to an amount the account does not have.
+const brokerFreeCash = computed(() => {
+  if (source.value !== "tinkoff" || tinkoffStatus.value !== "success") return null;
+  const value = tinkoffFreeCash.value;
+  return value !== null && value >= 1 ? Math.floor(value) : null;
+});
+
+watch(
+  brokerFreeCash,
+  (value) => {
+    if (value !== null && cashAvailable.value <= 0) rebalance.setCash(value);
+  },
+  { immediate: true },
+);
 
 function addCash(amount: number) {
   rebalance.setCash(cashAvailable.value + amount);
@@ -122,6 +139,22 @@ function formatRub(value: number): string {
             +{{ numberFormatter.format(amount) }}
           </Button>
         </div>
+        <p
+          v-if="brokerFreeCash !== null"
+          class="text-muted-foreground flex items-center gap-2 text-sm"
+        >
+          {{ tinkoffAccountId === ALL_ACCOUNTS ? "На счетах" : "На счёте" }} свободно
+          {{ formatRub(brokerFreeCash) }}
+          <Button
+            variant="link"
+            size="sm"
+            class="h-auto p-0"
+            :disabled="cashAvailable === brokerFreeCash"
+            @click="rebalance.setCash(brokerFreeCash)"
+          >
+            Подставить
+          </Button>
+        </p>
       </div>
 
       <div class="flex items-start gap-3">

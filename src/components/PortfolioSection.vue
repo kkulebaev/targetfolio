@@ -37,7 +37,7 @@ import { useTablePagination } from "@/composables/useTablePagination";
 import { useTableSort } from "@/composables/useTableSort";
 import { validatePosition } from "@/domain/validation";
 import type { TinkoffAccount } from "@/lib/tinkoff";
-import { usePortfolioStore } from "@/stores/portfolio";
+import { ALL_ACCOUNTS, usePortfolioStore } from "@/stores/portfolio";
 
 const store = usePortfolioStore();
 const {
@@ -52,6 +52,7 @@ const {
   tinkoffAccountId,
   tinkoffStatus,
   tinkoffError,
+  tinkoffSkipped,
   tinkoffSkippedCount,
 } = storeToRefs(store);
 const isXl = useIsXl();
@@ -113,6 +114,21 @@ function onTinkoffAccountChange(id: unknown) {
   if (typeof id !== "string") return;
   store.setTinkoffAccountId(id);
   void store.loadFromTinkoff();
+}
+
+const quantityFormatter = new Intl.NumberFormat("ru-RU", { maximumFractionDigits: 6 });
+
+const INSTRUMENT_TYPE_LABELS: Record<string, string> = {
+  share: "акция",
+  etf: "фонд",
+  bond: "облигация",
+  futures: "фьючерс",
+  option: "опцион",
+  sp: "структурная нота",
+};
+
+function instrumentTypeLabel(type: string): string {
+  return INSTRUMENT_TYPE_LABELS[type] ?? type;
 }
 
 function accountLabel(a: TinkoffAccount): string {
@@ -249,6 +265,7 @@ function formatRub(value: number): string {
               <SelectValue placeholder="Счёт" />
             </SelectTrigger>
             <SelectContent>
+              <SelectItem :value="ALL_ACCOUNTS">Все счета</SelectItem>
               <SelectItem v-for="acc in tinkoffAccounts" :key="acc.id" :value="acc.id">
                 {{ accountLabel(acc) }}
               </SelectItem>
@@ -465,7 +482,7 @@ function formatRub(value: number): string {
                   @update:model-value="(v) => updateQuantity(position.ticker, String(v))"
                 />
               </template>
-              <template v-else>{{ position.quantity }}</template>
+              <template v-else>{{ quantityFormatter.format(position.quantity) }}</template>
             </TableCell>
             <TableCell class="text-right">
               <template v-if="instrumentsByTicker.get(position.ticker)">
@@ -493,9 +510,18 @@ function formatRub(value: number): string {
         </TableBody>
       </Table>
 
-      <p v-if="isTinkoff && tinkoffSkippedCount > 0" class="text-muted-foreground text-sm">
-        Не показано {{ tinkoffSkippedCount }} позиций вне списка MOEX shares.
-      </p>
+      <details v-if="isTinkoff && tinkoffSkippedCount > 0" class="text-muted-foreground text-sm">
+        <summary class="cursor-pointer select-none">
+          Не учтено позиций вне каталога акций MOEX: {{ tinkoffSkippedCount }}
+        </summary>
+        <ul class="mt-2 flex flex-wrap gap-x-4 gap-y-1">
+          <li v-for="item in tinkoffSkipped" :key="item.figi">
+            <span class="text-foreground font-medium">{{ item.label }}</span>
+            · {{ instrumentTypeLabel(item.instrumentType) }} ·
+            {{ quantityFormatter.format(item.quantity) }} шт.
+          </li>
+        </ul>
+      </details>
 
       <TablePagination
         v-if="!isXl"

@@ -16,6 +16,11 @@ export type TinkoffPortfolioPosition = {
   instrumentType: string;
   quantity: Quotation;
   currentPrice?: MoneyValue;
+  ticker?: string;
+};
+
+export type TinkoffPositions = {
+  money?: MoneyValue[];
 };
 
 type GetAccountsResponse = { accounts: TinkoffAccount[] };
@@ -60,6 +65,10 @@ export async function getPortfolio(
     currency: "RUB",
   });
   return res.positions ?? [];
+}
+
+export async function getPositions(token: string, accountId: string): Promise<TinkoffPositions> {
+  return call<TinkoffPositions>(token, "OperationsService", "GetPositions", { accountId });
 }
 
 export function quotationToNumber(q: Quotation): number {

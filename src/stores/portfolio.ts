@@ -4,7 +4,8 @@ import { defineStore } from "pinia";
 import { INSTRUMENTS, INSTRUMENTS_BY_TICKER } from "@/catalog/instruments";
 import portfolioFixture from "@/fixtures/portfolio.json";
 import type { Position, Ticker } from "@/domain/types";
-import { getAccounts, getPortfolio, quotationToNumber, type TinkoffAccount } from "@/lib/tinkoff";
+import { getAccounts, getPortfolio, getPositions, type TinkoffAccount } from "@/lib/tinkoff";
+import { mergeTinkoffPortfolios, sumFreeRub, type SkippedPosition } from "@/lib/tinkoff-portfolio";
 import {
   clearSavedToken as clearSavedTokenFromStorage,
   loadSavedToken,
@@ -13,6 +14,9 @@ import {
 
 export type Source = "mock" | "manual" | "tinkoff";
 export type TinkoffStatus = "idle" | "loading" | "success" | "error";
+
+/** Pseudo account id that aggregates every open account into one portfolio. */
+export const ALL_ACCOUNTS = "all";
 
 type FixtureShape = {
   positions: Position[];
@@ -30,7 +34,9 @@ export const usePortfolioStore = defineStore("portfolio", () => {
   const tinkoffAccountId = ref<string | null>(null);
   const tinkoffStatus = ref<TinkoffStatus>("idle");
   const tinkoffError = ref<string | null>(null);
-  const tinkoffSkippedCount = ref(0);
+  const tinkoffSkipped = ref<SkippedPosition[]>([]);
+  const tinkoffSkippedCount = computed(() => tinkoffSkipped.value.length);
+  const tinkoffFreeCash = ref<number | null>(null);
 
   const positions = computed<Position[]>(() =>
     source.value === "tinkoff" ? tinkoffPositions.value : localPositions.value,
@@ -110,6 +116,7 @@ export const usePortfolioStore = defineStore("portfolio", () => {
   }
 
   function resetTinkoff() {
+    loadSeq += 1;
     clearSavedTokenFromStorage();
     tinkoffToken.value = "";
     tinkoffTokenSaved.value = false;
@@ -118,14 +125,21 @@ export const usePortfolioStore = defineStore("portfolio", () => {
     tinkoffPositions.value = [];
     tinkoffStatus.value = "idle";
     tinkoffError.value = null;
-    tinkoffSkippedCount.value = 0;
+    tinkoffSkipped.value = [];
+    tinkoffFreeCash.value = null;
   }
 
   function setTinkoffAccountId(id: string) {
     tinkoffAccountId.value = id;
   }
 
+  // Account switches and refreshes can overlap; only the latest load may write state,
+  // otherwise a slow response for a previous account overwrites the current one.
+  let loadSeq = 0;
+
   async function loadFromTinkoff() {
+    const run = ++loadSeq;
+    const isStale = () => run !== loadSeq;
     const token = tinkoffToken.value.trim();
     if (!token) {
       tinkoffError.value = "Введите токен";
@@ -136,38 +150,42 @@ export const usePortfolioStore = defineStore("portfolio", () => {
     tinkoffError.value = null;
     try {
       if (tinkoffAccounts.value.length === 0) {
-        tinkoffAccounts.value = await getAccounts(token);
+        const fetched = await getAccounts(token);
+        if (isStale()) return;
+        tinkoffAccounts.value = fetched;
       }
       const accounts = tinkoffAccounts.value;
       if (accounts.length === 0) throw new Error("В аккаунте нет счетов");
-      if (!tinkoffAccountId.value || !accounts.some((a) => a.id === tinkoffAccountId.value)) {
-        tinkoffAccountId.value = accounts[0]!.id;
-      }
-      const raw = await getPortfolio(token, tinkoffAccountId.value);
+      const selectedId = tinkoffAccountId.value;
+      const isKnown = selectedId === ALL_ACCOUNTS || accounts.some((a) => a.id === selectedId);
+      if (!selectedId || !isKnown) tinkoffAccountId.value = accounts[0]!.id;
+
+      const accountIds =
+        tinkoffAccountId.value === ALL_ACCOUNTS
+          ? accounts.filter((a) => a.status !== "ACCOUNT_STATUS_CLOSED").map((a) => a.id)
+          : [tinkoffAccountId.value!];
+      if (accountIds.length === 0) throw new Error("Нет открытых счетов");
+
+      // Free cash is a convenience: if any balance request fails, hide it instead of failing
+      // the portfolio, and never show a partial sum across accounts.
+      const [portfolios, balances] = await Promise.all([
+        Promise.all(accountIds.map((id) => getPortfolio(token, id))),
+        Promise.all(accountIds.map((id) => getPositions(token, id))).catch(() => null),
+      ]);
+      if (isStale()) return;
 
       const figiToTicker = new Map<string, Ticker>();
       for (const inst of INSTRUMENTS) {
         if (inst.figi) figiToTicker.set(inst.figi, inst.ticker);
       }
+      const merged = mergeTinkoffPortfolios(portfolios, figiToTicker);
 
-      const matched: Position[] = [];
-      let skipped = 0;
-      for (const p of raw) {
-        if (p.instrumentType === "currency") continue;
-        const ticker = figiToTicker.get(p.figi);
-        if (!ticker) {
-          skipped += 1;
-          continue;
-        }
-        const qty = Math.round(quotationToNumber(p.quantity));
-        if (qty <= 0) continue;
-        matched.push({ ticker, quantity: qty });
-      }
-
-      tinkoffPositions.value = matched;
-      tinkoffSkippedCount.value = skipped;
+      tinkoffPositions.value = merged.positions;
+      tinkoffSkipped.value = merged.skipped;
+      tinkoffFreeCash.value = balances ? sumFreeRub(balances) : null;
       tinkoffStatus.value = "success";
     } catch (err) {
+      if (isStale()) return;
       tinkoffError.value = err instanceof Error ? err.message : String(err);
       tinkoffStatus.value = "error";
     }
@@ -185,7 +203,9 @@ export const usePortfolioStore = defineStore("portfolio", () => {
     tinkoffAccountId,
     tinkoffStatus,
     tinkoffError,
+    tinkoffSkipped,
     tinkoffSkippedCount,
+    tinkoffFreeCash,
     loadFromMock,
     setSource,
     upsertPosition,
