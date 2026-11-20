@@ -1,0 +1,3 @@
+allowBuilds:
+  # postinstall качает Go-бинарь lefthook и регистрирует git-хуки из lefthook.yml
+  lefthook: true
