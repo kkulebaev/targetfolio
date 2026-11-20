@@ -1,5 +1,3 @@
 allowBuilds:
   # postinstall качает Go-бинарь lefthook и регистрирует git-хуки из lefthook.yml
   lefthook: true
-  # postinstall переключает shim между Vue 2 и 3, а по умолчанию он уже собран под Vue 3
-  vue-demi: false
