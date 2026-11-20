@@ -24,6 +24,20 @@ describe("usePortfolioStore", () => {
     expect(store.source).toBe("mock");
   });
 
+  it("setSource('mock') loads the fixture when there are no local positions", () => {
+    const store = usePortfolioStore();
+    store.setSource("mock");
+    expect(store.positions.length).toBeGreaterThan(0);
+  });
+
+  it("setSource('mock') keeps existing local positions", () => {
+    const store = usePortfolioStore();
+    store.setSource("manual");
+    store.upsertPosition({ ticker: "SBER", quantity: 10 });
+    store.setSource("mock");
+    expect(store.positions).toEqual([{ ticker: "SBER", quantity: 10 }]);
+  });
+
   it("totalValue sums quantity * price across catalog instruments", () => {
     const store = usePortfolioStore();
     store.setSource("manual");

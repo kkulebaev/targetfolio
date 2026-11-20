@@ -55,8 +55,11 @@ export const usePortfolioStore = defineStore("portfolio", () => {
     source.value = "mock";
   }
 
+  // The URL sync applies ?source=mock only after the router resolves, which is later than
+  // component mount, so the fixture has to load here rather than in an onMounted hook.
   function setSource(next: Source) {
     source.value = next;
+    if (next === "mock" && localPositions.value.length === 0) loadFromMock();
   }
 
   function upsertPosition(position: Position) {
