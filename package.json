@@ -22,7 +22,7 @@
     "@lucide/vue": "^1.77.0",
     "@tanstack/vue-table": "^8.21.3",
     "@vue/devtools-api": "^8.2.1",
-    "@vueuse/core": "^14.2.1",
+    "@vueuse/core": "^15.0.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "pinia": "^4.1.0",
