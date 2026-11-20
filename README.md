@@ -100,7 +100,7 @@ src/
   components/     секции UI + shadcn-vue в components/ui/
   composables/    URL‑sync, пагинация, breakpoints
   fixtures/       демо‑портфель
-  lib/            утилиты (cn, кодеки query‑строки и т.п.)
+  lib/            утилиты (кодеки query‑строки, хранилище токена и т.п.)
 public/           favicon
 scripts/          вспомогательные node‑скрипты (каталог инструментов, индексы)
 ```
