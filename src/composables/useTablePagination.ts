@@ -26,11 +26,7 @@ export function useTablePagination<T>(
   const fallback = options.defaultPageSize ?? 10;
   const pageSize = useStorage<number>(options.storageKey, fallback, window.sessionStorage);
 
-  if (
-    !Number.isFinite(pageSize.value) ||
-    !Number.isInteger(pageSize.value) ||
-    pageSize.value < 0
-  ) {
+  if (!Number.isFinite(pageSize.value) || !Number.isInteger(pageSize.value) || pageSize.value < 0) {
     pageSize.value = fallback;
   }
 

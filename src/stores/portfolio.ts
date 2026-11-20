@@ -4,12 +4,7 @@ import { defineStore } from "pinia";
 import { INSTRUMENTS, INSTRUMENTS_BY_TICKER } from "@/catalog/instruments";
 import portfolioFixture from "@/fixtures/portfolio.json";
 import type { Position, Ticker } from "@/domain/types";
-import {
-  getAccounts,
-  getPortfolio,
-  quotationToNumber,
-  type TinkoffAccount,
-} from "@/lib/tinkoff";
+import { getAccounts, getPortfolio, quotationToNumber, type TinkoffAccount } from "@/lib/tinkoff";
 import {
   clearSavedToken as clearSavedTokenFromStorage,
   loadSavedToken,

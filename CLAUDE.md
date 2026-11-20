@@ -29,10 +29,10 @@ Vue 3 (Composition API, `<script setup>`) · TypeScript strict · Vite · Pinia 
 
 ## Архитектурные инварианты
 
-- **Доменный слой `src/domain/**`** — чистый TypeScript. Запрещены импорты `vue`, `pinia`, `@/components/**`, `@/stores/**` (контролируется oxlint, см. `.oxlintrc.json`). Добавляешь логику расчётов или валидации — пиши её здесь и покрывай тестами.
+- **Доменный слой `src/domain/**`** — чистый TypeScript. Запрещены импорты `vue`, `pinia`, `@/components/**`, `@/stores/**`(контролируется oxlint, см.`.oxlintrc.json`). Добавляешь логику расчётов или валидации — пиши её здесь и покрывай тестами.
 - **`src/stores/**`** — Pinia‑сторы. Источник истины для UI. Persisted‑поля задаются через `pinia-plugin-persistedstate`; следи, что персистится только то, что должно (см. PRD‑соглашения: `targetWeights`, пользовательский реестр инструментов, source, опционально токен T‑Invest).
 - **`src/composables/use*UrlSync.ts`** — двусторонняя синхронизация состояния стора с query‑параметрами. Шаблон: при монтировании читаем из URL, watch на стейт пишет обратно через `router.replace`.
-- **`src/components/ui/**`** — auto-generated shadcn-vue. Не редактируем вручную, не покрываем тестами, исключены из oxlint.
+- **`src/components/ui/**`\*\* — auto-generated shadcn-vue. Не редактируем вручную, не покрываем тестами, исключены из oxlint.
 - **Алиас `@/` → `src/`** в Vite и tsconfig.
 
 ## Стиль кода

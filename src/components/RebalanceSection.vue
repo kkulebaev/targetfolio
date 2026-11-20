@@ -123,10 +123,7 @@ function formatRub(value: number): string {
         </div>
       </div>
 
-      <p
-        v-if="isLoading"
-        class="text-muted-foreground rounded-md border border-dashed p-4 text-sm"
-      >
+      <p v-if="isLoading" class="text-muted-foreground rounded-md border border-dashed p-4 text-sm">
         Загрузка портфеля…
       </p>
       <p

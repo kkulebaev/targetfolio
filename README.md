@@ -48,19 +48,19 @@ Targetfolio решает одну боль регулярного инвесто
 
 ## 🛠 Стек
 
-| Слой         | Выбор                                                    |
-| ------------ | -------------------------------------------------------- |
-| Framework    | Vue 3 (Composition API, `<script setup>`)                |
-| Build        | Vite                                                     |
-| Language     | TypeScript (strict)                                      |
-| State        | Pinia + `pinia-plugin-persistedstate`                    |
-| Routing      | vue-router (для query‑sync)                              |
-| UI           | shadcn-vue + Tailwind CSS v4                             |
-| Иконки       | lucide-vue-next                                          |
-| Тесты        | Vitest Browser Mode (Chromium через Playwright)          |
-| Lint/Format  | oxlint + oxfmt                                           |
-| Менеджер пакетов | pnpm                                                 |
-| Деплой       | Docker + Caddy на Railway                                |
+| Слой             | Выбор                                           |
+| ---------------- | ----------------------------------------------- |
+| Framework        | Vue 3 (Composition API, `<script setup>`)       |
+| Build            | Vite                                            |
+| Language         | TypeScript (strict)                             |
+| State            | Pinia + `pinia-plugin-persistedstate`           |
+| Routing          | vue-router (для query‑sync)                     |
+| UI               | shadcn-vue + Tailwind CSS v4                    |
+| Иконки           | lucide-vue-next                                 |
+| Тесты            | Vitest Browser Mode (Chromium через Playwright) |
+| Lint/Format      | oxlint + oxfmt                                  |
+| Менеджер пакетов | pnpm                                            |
+| Деплой           | Docker + Caddy на Railway                       |
 
 ## 🚀 Быстрый старт
 

@@ -18,11 +18,7 @@ export function useTargetUrlSync() {
 
   applyFromUrl();
 
-  watch(
-    [currentPreset, targetWeights] as const,
-    () => syncToUrl(),
-    { deep: true },
-  );
+  watch([currentPreset, targetWeights] as const, () => syncToUrl(), { deep: true });
 
   watch(
     () => [route.query.preset, route.query.w] as const,

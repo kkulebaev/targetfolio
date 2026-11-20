@@ -1,11 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import {
-  isWeightsValid,
-  validatePosition,
-  validateTargetWeight,
-  weightsTotal,
-} from "./validation";
+import { isWeightsValid, validatePosition, validateTargetWeight, weightsTotal } from "./validation";
 
 describe("validatePosition", () => {
   it("accepts a valid position", () => {

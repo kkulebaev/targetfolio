@@ -47,9 +47,7 @@ async function fetchIndex(code) {
     const s = Number(r[idx.tradingsession]);
     if (Number.isFinite(s) && s > maxSession) maxSession = s;
   }
-  const onLatestSession = onLatest.filter(
-    (r) => Number(r[idx.tradingsession]) === maxSession,
-  );
+  const onLatestSession = onLatest.filter((r) => Number(r[idx.tradingsession]) === maxSession);
 
   const byTicker = new Map();
   for (const r of onLatestSession) {

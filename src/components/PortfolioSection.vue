@@ -275,10 +275,7 @@ function formatRub(value: number): string {
               :disabled="tinkoffStatus === 'loading'"
               @click="onRefreshTinkoff"
             >
-              <RefreshCw
-                class="size-4"
-                :class="{ 'animate-spin': tinkoffStatus === 'loading' }"
-              />
+              <RefreshCw class="size-4" :class="{ 'animate-spin': tinkoffStatus === 'loading' }" />
             </Button>
             <Button
               v-if="source === 'manual'"
@@ -297,7 +294,8 @@ function formatRub(value: number): string {
     <CardContent class="flex flex-col gap-4 xl:min-h-0 xl:flex-1">
       <div v-if="isTinkoff && needsTokenForm" class="grid gap-3">
         <p class="text-muted-foreground text-sm">
-          Чтобы загрузить портфель, создайте read-only токен в&nbsp;настройках Т-Инвестиций и&nbsp;вставьте его ниже.
+          Чтобы загрузить портфель, создайте read-only токен в&nbsp;настройках Т-Инвестиций
+          и&nbsp;вставьте его ниже.
           <a
             href="https://developer.tbank.ru/invest/intro/intro/token"
             target="_blank"
@@ -334,7 +332,9 @@ function formatRub(value: number): string {
         v-else-if="isTinkoff && tinkoffToken"
         class="text-muted-foreground -ml-3 flex flex-wrap items-center gap-y-1 text-sm"
       >
-        <span class="px-3">{{ tinkoffTokenSaved ? "Токен сохранён в браузере" : "Токен задан" }}</span>
+        <span class="px-3">{{
+          tinkoffTokenSaved ? "Токен сохранён в браузере" : "Токен задан"
+        }}</span>
         <Button variant="ghost" size="sm" @click="onChangeToken">Изменить</Button>
         <Button
           v-if="tinkoffStatus === 'success' && !tinkoffTokenSaved"
@@ -344,12 +344,7 @@ function formatRub(value: number): string {
         >
           Сохранить
         </Button>
-        <Button
-          v-if="tinkoffTokenSaved"
-          variant="ghost"
-          size="sm"
-          @click="onDeleteSavedToken"
-        >
+        <Button v-if="tinkoffTokenSaved" variant="ghost" size="sm" @click="onDeleteSavedToken">
           Удалить сохранённый
         </Button>
       </div>
@@ -500,10 +495,7 @@ function formatRub(value: number): string {
         </TableBody>
       </Table>
 
-      <p
-        v-if="isTinkoff && tinkoffSkippedCount > 0"
-        class="text-muted-foreground text-sm"
-      >
+      <p v-if="isTinkoff && tinkoffSkippedCount > 0" class="text-muted-foreground text-sm">
         Не показано {{ tinkoffSkippedCount }} позиций вне списка MOEX shares.
       </p>
 
