@@ -38,6 +38,7 @@ import { useTableSort } from "@/composables/useTableSort";
 import { validatePosition } from "@/domain/validation";
 import type { TinkoffAccount } from "@/lib/tinkoff";
 import { ALL_ACCOUNTS, usePortfolioStore } from "@/stores/portfolio";
+import { useTargetStore } from "@/stores/target";
 
 const store = usePortfolioStore();
 const {
@@ -55,6 +56,7 @@ const {
   tinkoffSkipped,
   tinkoffSkippedCount,
 } = storeToRefs(store);
+const { targetWeights } = storeToRefs(useTargetStore());
 const isXl = useIsXl();
 
 onMounted(() => {
@@ -150,7 +152,7 @@ const emptyText = computed(() => {
   return "Позиций нет";
 });
 
-const colspan = computed(() => (source.value === "manual" ? 8 : 7));
+const colspan = computed(() => (source.value === "manual" ? 9 : 8));
 
 function positionValue(ticker: string, quantity: number): number | null {
   const inst = instrumentsByTicker.value.get(ticker);
@@ -161,6 +163,28 @@ function positionWeight(ticker: string, quantity: number): number | null {
   const value = positionValue(ticker, quantity);
   if (value === null || totalValue.value <= 0) return null;
   return (value / totalValue.value) * 100;
+}
+
+const targetPercentByTicker = computed(
+  () => new Map(targetWeights.value.map((w) => [w.ticker, w.weightPercent])),
+);
+
+// Without a target every holding would read as pure overweight, which says nothing useful.
+function positionDeviation(ticker: string, quantity: number): number | null {
+  if (targetWeights.value.length === 0) return null;
+  const weight = positionWeight(ticker, quantity);
+  if (weight === null) return null;
+  return weight - (targetPercentByTicker.value.get(ticker) ?? 0);
+}
+
+const deviationFormatter = new Intl.NumberFormat("ru-RU", {
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2,
+  signDisplay: "exceptZero",
+});
+
+function formatDeviation(value: number | null): string {
+  return value === null ? "—" : `${deviationFormatter.format(value)}%`;
 }
 
 const {
@@ -178,6 +202,7 @@ const {
     quantity: (p) => p.quantity,
     value: (p) => positionValue(p.ticker, p.quantity),
     weightPercent: (p) => positionWeight(p.ticker, p.quantity),
+    deviation: (p) => positionDeviation(p.ticker, p.quantity),
   },
 });
 
@@ -373,7 +398,7 @@ function formatRub(value: number): string {
       </p>
 
       <Table
-        class="table-fixed min-w-200 transition-opacity"
+        class="table-fixed min-w-224 transition-opacity"
         :class="{ 'opacity-60': isTinkoff && tinkoffStatus === 'loading' }"
       >
         <TableHeader>
@@ -446,6 +471,17 @@ function formatRub(value: number): string {
             >
               Вес %
             </SortableTableHead>
+            <SortableTableHead
+              sort-key="deviation"
+              :active="sortKey"
+              :dir="sortDir"
+              align="right"
+              class="w-24 text-right"
+              title="Разница между текущим и целевым весом"
+              @toggle="toggleSort"
+            >
+              От цели
+            </SortableTableHead>
             <TableHead v-if="source === 'manual'" class="w-12" />
           </TableRow>
         </TableHeader>
@@ -495,6 +531,9 @@ function formatRub(value: number): string {
                 {{ positionWeight(position.ticker, position.quantity)!.toFixed(2) }}%
               </template>
               <template v-else>—</template>
+            </TableCell>
+            <TableCell class="text-right tabular-nums">
+              {{ formatDeviation(positionDeviation(position.ticker, position.quantity)) }}
             </TableCell>
             <TableCell v-if="source === 'manual'">
               <Button
