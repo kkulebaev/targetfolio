@@ -1,4 +1,4 @@
-FROM node:26-alpine AS build
+FROM node:26.13.1-alpine3.24 AS build
 
 ENV NPM_CONFIG_UPDATE_NOTIFIER=false
 ENV NPM_CONFIG_FUND=false
@@ -16,7 +16,7 @@ RUN pnpm install --frozen-lockfile
 COPY . ./
 RUN pnpm run build
 
-FROM caddy:alpine
+FROM caddy:2.11.9-alpine
 
 WORKDIR /app
 
