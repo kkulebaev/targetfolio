@@ -25,12 +25,12 @@ pnpm typecheck        # vue-tsc --build
 
 ## Стек
 
-Vue 3 (Composition API, `<script setup>`) · TypeScript strict · Vite · Pinia + `pinia-plugin-persistedstate` · vue-router (только для query‑sync, без страниц) · shadcn-vue + Tailwind CSS v4 · @lucide/vue · Vitest Browser Mode (Chromium через `@vitest/browser-playwright`) · oxlint + oxfmt · pnpm.
+Vue 3 (Composition API, `<script setup>`) · TypeScript strict · Vite · Pinia · vue-router (только для query‑sync, без страниц) · shadcn-vue + Tailwind CSS v4 · @lucide/vue · Vitest Browser Mode (Chromium через `@vitest/browser-playwright`) · oxlint + oxfmt · pnpm.
 
 ## Архитектурные инварианты
 
 - **Доменный слой `src/domain/**`** — чистый TypeScript. Запрещены импорты `vue`, `pinia`, `@/components/**`, `@/stores/**`(контролируется oxlint, см.`.oxlintrc.json`). Добавляешь логику расчётов или валидации — пиши её здесь и покрывай тестами.
-- **`src/stores/**`** — Pinia‑сторы. Источник истины для UI. Persisted‑поля задаются через `pinia-plugin-persistedstate`; следи, что персистится только то, что должно (см. PRD‑соглашения: `targetWeights`, пользовательский реестр инструментов, source, опционально токен T‑Invest).
+- **`src/stores/**`** — Pinia‑сторы. Источник истины для UI. Сами сторы ничего не сохраняют: таргет, source и ручной портфель живут в URL (см. `use*UrlSync`), токен T‑Invest пишется в `localStorage` только по явному «Сохранить» (`src/lib/portfolio-storage.ts`).
 - **`src/composables/use*UrlSync.ts`** — двусторонняя синхронизация состояния стора с query‑параметрами. Шаблон: при монтировании читаем из URL, watch на стейт пишет обратно через `router.replace`.
 - **`src/components/ui/**`\*\* — auto-generated shadcn-vue. Не редактируем вручную, не покрываем тестами, исключены из oxlint.
 - **Алиас `@/` → `src/`** в Vite и tsconfig.
