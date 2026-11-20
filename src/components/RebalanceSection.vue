@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import { X } from "lucide-vue-next";
+import { X } from "@lucide/vue";
 import { storeToRefs } from "pinia";
 
 import SortableTableHead from "./SortableTableHead.vue";

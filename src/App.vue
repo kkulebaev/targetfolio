@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { Github, Target } from "lucide-vue-next";
+import { Target } from "@lucide/vue";
 
+import GithubIcon from "@/components/GithubIcon.vue";
 import PortfolioSection from "@/components/PortfolioSection.vue";
 import RebalanceSection from "@/components/RebalanceSection.vue";
 import TargetSection from "@/components/TargetSection.vue";
@@ -33,7 +34,7 @@ useCashUrlSync();
         <div class="flex items-center gap-1">
           <Button variant="ghost" size="icon" as-child aria-label="GitHub репозиторий">
             <a :href="REPO_URL" target="_blank" rel="noopener noreferrer">
-              <Github class="size-4" />
+              <GithubIcon class="size-4" />
             </a>
           </Button>
           <ThemeToggle />

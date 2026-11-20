@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, onMounted, ref, watch } from "vue";
-import { Plus, RefreshCw, Trash2 } from "lucide-vue-next";
+import { Plus, RefreshCw, Trash2 } from "@lucide/vue";
 import { storeToRefs } from "pinia";
 
 import SortableTableHead from "./SortableTableHead.vue";

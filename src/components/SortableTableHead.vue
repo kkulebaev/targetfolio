@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, type HTMLAttributes } from "vue";
-import { ArrowDown, ArrowUp, ArrowUpDown } from "lucide-vue-next";
+import { ArrowDown, ArrowUp, ArrowUpDown } from "@lucide/vue";
 
 import { TableHead } from "@/components/ui/table";
 

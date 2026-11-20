@@ -19,11 +19,11 @@
     "indices:fetch": "node scripts/fetch-indices.mjs"
   },
   "dependencies": {
+    "@lucide/vue": "^1.77.0",
     "@tanstack/vue-table": "^8.21.3",
     "@vueuse/core": "^14.2.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "lucide-vue-next": "^1.0.0",
     "pinia": "^3.0.4",
     "pinia-plugin-persistedstate": "^4.7.1",
     "reka-ui": "^2.11.0",

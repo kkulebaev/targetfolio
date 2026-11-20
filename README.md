@@ -56,7 +56,7 @@ Targetfolio решает одну боль регулярного инвесто
 | State            | Pinia + `pinia-plugin-persistedstate`           |
 | Routing          | vue-router (для query‑sync)                     |
 | UI               | shadcn-vue + Tailwind CSS v4                    |
-| Иконки           | lucide-vue-next                                 |
+| Иконки           | @lucide/vue                                     |
 | Тесты            | Vitest Browser Mode (Chromium через Playwright) |
 | Lint/Format      | oxlint + oxfmt                                  |
 | Менеджер пакетов | pnpm                                            |
