@@ -25,7 +25,7 @@ pnpm typecheck        # vue-tsc --noEmit
 
 ## Стек
 
-Vue 3 (Composition API, `<script setup>`) · TypeScript strict · Vite · Pinia + `pinia-plugin-persistedstate` · vue-router (только для query‑sync, без страниц) · shadcn-vue + Tailwind CSS v4 · lucide-vue-next · Vitest (`jsdom`) · oxlint + oxfmt · pnpm.
+Vue 3 (Composition API, `<script setup>`) · TypeScript strict · Vite · Pinia + `pinia-plugin-persistedstate` · vue-router (только для query‑sync, без страниц) · shadcn-vue + Tailwind CSS v4 · lucide-vue-next · Vitest Browser Mode (Chromium через `@vitest/browser-playwright`) · oxlint + oxfmt · pnpm.
 
 ## Архитектурные инварианты
 

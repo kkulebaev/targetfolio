@@ -2,6 +2,7 @@
 import { defineConfig } from "vitest/config";
 import vue from "@vitejs/plugin-vue";
 import tailwindcss from "@tailwindcss/vite";
+import { playwright } from "@vitest/browser-playwright";
 import path from "node:path";
 
 export default defineConfig({
@@ -12,11 +13,14 @@ export default defineConfig({
     },
   },
   test: {
-    environment: "jsdom",
     globals: false,
     include: ["src/**/*.test.ts"],
-    // Node 25+ exposes a built-in localStorage that is undefined without --localstorage-file
-    // and shadows the jsdom implementation, so tests would crash on localStorage.clear().
-    execArgv: ["--no-webstorage"],
+    browser: {
+      enabled: true,
+      headless: true,
+      provider: playwright(),
+      instances: [{ browser: "chromium" }],
+      screenshotFailures: false,
+    },
   },
 });

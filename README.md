@@ -57,7 +57,7 @@ Targetfolio решает одну боль регулярного инвесто
 | Routing      | vue-router (для query‑sync)                              |
 | UI           | shadcn-vue + Tailwind CSS v4                             |
 | Иконки       | lucide-vue-next                                          |
-| Тесты        | Vitest (`jsdom`)                                         |
+| Тесты        | Vitest Browser Mode (Chromium через Playwright)          |
 | Lint/Format  | oxlint + oxfmt                                           |
 | Менеджер пакетов | pnpm                                                 |
 | Деплой       | Docker + Caddy на Railway                                |
@@ -70,6 +70,12 @@ pnpm dev
 ```
 
 Дальше открой `http://localhost:5173` — встретит демо‑портфель и пустой таргет.
+
+Тесты запускаются в Chromium через Vitest Browser Mode, поэтому перед первым запуском нужно скачать браузер:
+
+```bash
+pnpm exec playwright install --only-shell chromium
+```
 
 ## 📜 Скрипты
 
