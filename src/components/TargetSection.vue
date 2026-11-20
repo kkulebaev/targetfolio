@@ -94,6 +94,8 @@ const {
   toggle: toggleSort,
 } = useTableSort(targetWeights, {
   storageKey: "targetfolio:sort:target",
+  defaultKey: "weightPercent",
+  defaultDir: "desc",
   accessors: {
     ticker: (w) => w.ticker,
     name: (w) => instrumentsByTicker.value.get(w.ticker)?.name ?? "",
