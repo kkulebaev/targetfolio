@@ -1,6 +1,6 @@
 import { watch } from "vue";
 import { storeToRefs } from "pinia";
-import { useRoute, useRouter } from "vue-router";
+import { useRoute, useRouter, type LocationQueryRaw } from "vue-router";
 
 import { decodeCustomWeights, encodeCustomWeights } from "@/lib/target-url";
 import { DEFAULT_PRESET_ID, PRESETS, type PresetId } from "@/presets";
@@ -46,7 +46,7 @@ export function useTargetUrlSync() {
 
   function syncToUrl() {
     const { preset: _p, w: _w, ...rest } = route.query;
-    const next: Record<string, unknown> = { ...rest };
+    const next: LocationQueryRaw = { ...rest };
 
     if (currentPreset.value === "custom") {
       if (targetWeights.value.length > 0) {

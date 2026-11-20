@@ -14,7 +14,7 @@
     "lint": "oxlint .",
     "format": "oxfmt .",
     "format:check": "oxfmt --check .",
-    "typecheck": "vue-tsc --noEmit",
+    "typecheck": "vue-tsc --build",
     "catalog:fetch": "node scripts/fetch-catalog.mjs",
     "indices:fetch": "node scripts/fetch-indices.mjs"
   },

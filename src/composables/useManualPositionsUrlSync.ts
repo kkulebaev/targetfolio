@@ -1,6 +1,6 @@
 import { watch } from "vue";
 import { storeToRefs } from "pinia";
-import { useRoute, useRouter } from "vue-router";
+import { useRoute, useRouter, type LocationQueryRaw } from "vue-router";
 
 import { decodeManualPositions, encodeManualPositions } from "@/lib/manual-positions-url";
 import { usePortfolioStore } from "@/stores/portfolio";
@@ -43,7 +43,7 @@ export function useManualPositionsUrlSync() {
   function syncToUrl() {
     if (source.value !== "manual") return;
     const { p: _drop, ...rest } = route.query;
-    const next: Record<string, unknown> = { ...rest };
+    const next: LocationQueryRaw = { ...rest };
     if (positions.value.length > 0) {
       next.p = encodeManualPositions(positions.value);
     }
