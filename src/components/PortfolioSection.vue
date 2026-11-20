@@ -35,6 +35,7 @@ import {
 import { useIsXl } from "@/composables/useIsXl";
 import { useTablePagination } from "@/composables/useTablePagination";
 import { useTableSort } from "@/composables/useTableSort";
+import { type DeviationLevel, deviationLevel } from "@/domain/deviation";
 import { validatePosition } from "@/domain/validation";
 import type { TinkoffAccount } from "@/lib/tinkoff";
 import { ALL_ACCOUNTS, usePortfolioStore } from "@/stores/portfolio";
@@ -185,6 +186,16 @@ const deviationFormatter = new Intl.NumberFormat("ru-RU", {
 
 function formatDeviation(value: number | null): string {
   return value === null ? "—" : `${deviationFormatter.format(value)}%`;
+}
+
+const deviationColor: Record<DeviationLevel, string> = {
+  ok: "text-emerald-600 dark:text-emerald-400",
+  warn: "text-amber-600 dark:text-amber-400",
+  high: "text-destructive",
+};
+
+function deviationClass(value: number | null): string | undefined {
+  return value === null ? undefined : deviationColor[deviationLevel(value)];
 }
 
 const {
@@ -534,7 +545,10 @@ function formatRub(value: number): string {
               </template>
               <template v-else>—</template>
             </TableCell>
-            <TableCell class="text-right tabular-nums">
+            <TableCell
+              class="text-right tabular-nums"
+              :class="deviationClass(positionDeviation(position.ticker, position.quantity))"
+            >
               {{ formatDeviation(positionDeviation(position.ticker, position.quantity)) }}
             </TableCell>
             <TableCell v-if="source === 'manual'">
