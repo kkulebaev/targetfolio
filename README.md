@@ -109,7 +109,7 @@ scripts/          вспомогательные node‑скрипты (ката
 
 В корне есть `Dockerfile` и `Caddyfile` под рекомендованный Railway‑рецепт:
 
-- multi‑stage сборка: `node:26-alpine` ставит pnpm через corepack и собирает Vite‑бандл,
+- multi‑stage сборка: `node:26-alpine` ставит pnpm через `npm install -g` и собирает Vite‑бандл,
 - финальный stage на `caddy:alpine` отдаёт `dist/` с gzip и SPA‑fallback на `index.html`,
 - Caddy слушает `:{$PORT:3000}` — Railway сам подставит порт.
 

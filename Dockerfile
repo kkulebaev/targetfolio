@@ -5,11 +5,12 @@ ENV NPM_CONFIG_FUND=false
 ENV PNPM_HOME=/pnpm
 ENV PATH=$PNPM_HOME:$PATH
 
-RUN corepack enable && corepack prepare pnpm@10.33.2 --activate
+# Node.js 25+ больше не поставляет corepack
+RUN npm install -g pnpm@12.21.0
 
 WORKDIR /app
 
-COPY package.json pnpm-lock.yaml ./
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 RUN pnpm install --frozen-lockfile
 
 COPY . ./
